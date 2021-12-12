@@ -104,14 +104,14 @@
                             <a href="#" onclick="getServiceContractDetails({{ $item->id }})" class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
                             <a href="{{ route('service_contract.edit', $item->id) }}" class="dropdown-item has-icon"><i class="far fa-edit"></i> Edit</a>
                             <div class="dropdown-divider"></div>
-                            <a href="#" onclick="form_alert('service_contract-{{ $item->id }}','Want to delete this Service Contract')" class="dropdown-item has-icon text-danger"><i class="far fa-trash-alt"></i>
-                              Delete</a>
+                            <!-- <a href="#" onclick="form_alert('service_contract-{{ $item->id }}','Want to delete this Service Contract')" class="dropdown-item has-icon text-danger"><i class="far fa-trash-alt"></i>
+                              Delete</a> -->
                           </div>
                         </div>
-                        <form action="{{ route('service_contract.delete', $item->id) }}"
+                        <!-- <form action="{{ route('service_contract.delete', $item->id) }}"
                             method="post" id="service_contract-{{ $item->id }}">
                             @csrf @method('delete')
-                        </form>
+                        </form> -->
                       </td>
                     </tr>
                     @endforeach

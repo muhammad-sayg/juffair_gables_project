@@ -67,7 +67,7 @@ Juffair Gable
                               @if(request()->user()->can('edit-tenant'))
                               <a href="{{ route('tenants.edit',$tenant->id) }}" class="dropdown-item has-icon"><i class="far fa-edit"></i> Edit</a>
                               @endif
-                             
+
                               <div class="dropdown-divider"></div>
                               <a href="{{ route('tenants.passed', $tenant->id) }}"  class="dropdown-item has-icon"><i class="far fa-user"></i>
                                 Passed</a>
@@ -116,9 +116,11 @@ Juffair Gable
                             <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Action</a>
                             <div class="dropdown-menu">
                               <a href="{{ route('tenants.show',$tenant->id) }}" class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
-                              @if(request()->user()->can('edit-tenant'))
+                              <!-- @if(request()->user()->can('edit-tenant'))
                               <a href="{{ route('tenants.edit',$tenant->id) }}" class="dropdown-item has-icon"><i class="far fa-edit"></i> Edit</a>
-                              @endif
+                              @endif -->
+                              <a href="{{ route('tenants.reactivate',$tenant->id) }}" class="dropdown-item has-icon"><i class="fas fa-sync-alt"></i> Reactivate</a>
+
                             </div>
                           </div>
                           

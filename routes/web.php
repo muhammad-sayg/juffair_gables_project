@@ -241,6 +241,8 @@ Route::group(['middleware' => ['auth:web']], function() {
         Route::post('/tenant/update/{id}', [TenantController::class, 'update'])->name('update');
         Route::delete('/tenant/delete/{id}', [TenantController::class, 'destroy'])->name('delete');
         Route::get('/tenant/passed/{id}', [TenantController::class, 'tenant_passed'])->name('passed');
+        Route::get('/tenant/reactivate/{id}', [TenantController::class, 'reactivate'])->name('reactivate');
+
     });
 
      // Employee routes

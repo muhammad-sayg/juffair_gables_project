@@ -81,6 +81,7 @@ class TenantController extends Controller
             'tenant_date_of_birth' => 'required',
             'floor_id' => 'required',
             'unit_id' => 'required',
+            'total_rent'=>'required',
             'tenant_present_address' => 'required',
             'tenant_permanent_address' => 'required',
             'home_country_address' => 'required',
@@ -96,6 +97,8 @@ class TenantController extends Controller
             'tenant_passport_copy' => 'required',
             'tenant_cpr_copy' => 'required',
             'tenant_contract_copy' => 'required',
+        ],[
+            'unit_id.required' => 'Please select the apartment first.'
         ]);
 
         $tenant = new Tenant();
@@ -257,6 +260,7 @@ class TenantController extends Controller
             'tenant_date_of_birth' => 'required',
             'floor_id' => 'required',
             'unit_id' => 'required',
+            'total_rent'=>'required',
             'tenant_present_address' => 'required',
             'tenant_permanent_address' => 'required',
             'home_country_address' => 'required',
@@ -267,6 +271,8 @@ class TenantController extends Controller
             'emergancy_contact_number' => 'required',
             'emergancy_email' => 'required|email',
             'tenant_type_code' => 'required',
+        ],[
+            'unit_id.required' => 'Please select the apartment first.'
         ]);
 
         
@@ -290,6 +296,8 @@ class TenantController extends Controller
         $tenant->tenant_type_code = $request['tenant_type_code'];
         $tenant->tenant_rent = $request['total_rent'];
         $tenant->tenant_facilities_list = explode(',',$request['all_facilities']);
+        $tenant->is_passed = null;
+
 
         //save tenant image
         if($request->file('tenant_image'))
@@ -416,4 +424,17 @@ class TenantController extends Controller
             return back();
         }
     }
+    public function reactivate($id)
+    {
+        
+        $tenant = Tenant::find($id);
+        $floor_types = FloorType::where('floor_type_code', '!=', 1)->get();
+        $tenant_types = TenantType::all();
+        $units = Unit::where('floor_id' , $tenant->floor_id)->get();
+       
+        
+        $floors = FloorDetail::where('floor_type_code' , $tenant->unit->floor->floor_type_code)->get();
+        return view('admin.tenants.reactivate',compact('tenant','floor_types','tenant_types','units','floors'));
+    }
+
 }
