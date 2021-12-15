@@ -151,7 +151,7 @@
             
             <div class="card-body">
               <div class="table-responsive">
-                <table id="table-1" class="table table-striped display nowrap"  width="100%">
+                <table id="tableExport1" class="table table-responsive table-striped display nowrap"  width="100%">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -272,7 +272,7 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table id="table-3" class="table table-striped display nowrap"  width="100%">
+              <table id="tableExport3" class="table table-striped display nowrap"  width="100%">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -376,7 +376,7 @@
             
             <div class="card-body">
               <div class="table-responsive">
-                <table id="table-4" class="table table-striped">
+                <table id="tableExport4" class="table table-striped">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -647,114 +647,181 @@
 <script src="{{ asset('public/admin/assets/') }}/bundles/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
 <script src="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <script>
-  $('#tableExport2').DataTable({
-    dom: 'Bfrtip',
-    "ordering": false,
+  $('#tableExport1').DataTable({
+    dom: 'lBfrtip',
+    "ordering": true,
     buttons: [
-      'excel', 'pdf', 'print'
-    ]
-  })
-
-  $("#table-3").dataTable({
-    
-    order: [[0, "asc"]], //column indexes is zero based
-
-  });
-
-  $("#table-4").dataTable({
-    
-    order: [[0, "asc"]], //column indexes is zero based
-
-  });
-
-  $("#table-5").dataTable({
-    "columnDefs": [
-      { "sortable": false, "targets": [0, 2, 3] }
+        {
+            extend: 'excel',
+            text: 'Excel',
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5,6,7]
+            },
+            filename: function(){
+                return 'tasks_list';
+            },
+        },
+        {
+            extend: 'csv',
+            text: 'Csv',
+            className: 'btn btn-secondary',
+            exportOptions: {
+                columns: [0,1,2,3,4,5,6,7]
+            },
+            filename: function(){
+                return 'tasks_list';
+            },
+        },
+        {
+            extend: 'pdf',
+            text: 'Pdf',
+            title : function() {
+                    return "All Tasks";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5,6,7]
+            },
+            filename: function(){
+                return 'tasks_list';
+            },
+        },
+        {
+            extend: 'print',
+            text: 'Print',
+            title : function() {
+                    return "All Tasks";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5,6,7]
+            },
+            filename: function(){
+                return 'tasks_list';
+            },
+        },
     ],
-    order: [[0, "asc"]], //column indexes is zero based
-
-  });
-
-  $(".complete-task-button").click(function(){
-    let task_id = $(this).attr('data-task_id')
-   
-    let action = $("#completeTaskForm").attr("action") + '/tasks/task/complete/' + task_id
+    "lengthMenu": [10,25,50,100],
     
-    $("#completeTaskForm").attr("action", action)
-  })
-
-  $(".resubmit-task").on('click',function(){
-    let task_id = $(this).attr('data-task_id')
-    $("#resubmitTaskHiddenInput").val(task_id)
-    $("#resubmitModal").modal("show")
-  })
-  
-  function get_request_details(id) {
-    $.get({
-        url: '{{route('request.show', '')}}' + "/"+ id,
-        dataType: 'json',
-        success: function (data) {
-            $("#requestDetailModal tbody").html(data.html_response)
-            $("#requestDetailModal").modal("show")
-        }
     });
-  }
 
-</script>
-<script>
-  $("tr.tasktable td:not(:last-child)").click(function() {
-      window.location = $(this).data("href");
-  });
-
-  $(".assign_task").on("click", function(){
-    let task_id = $(this).attr('data-task_id')
-    $("#assignTaskModalHiddenInput").val(task_id)
-    $("#assignTaskModal").modal("show")
-  })
-</script>
-<script>
-  $("tr.activeTask td:not(:nth-last-child(2),:nth-last-child(1))").click(function() {
-      window.location = $(this).data("href");
-  });
-</script>
-<script>
-  $(".task-status-button").click(function(){
-    let task_id = $(this).attr('data-task_id')
-    let task_status_code = $(this).attr('data-task_status_code')
+  $('#tableExport3').DataTable({
+    dom: 'lBfrtip',
+    "ordering": true,
+    buttons: [
+        {
+            extend: 'excel',
+            text: 'Excel',
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5]
+            },
+            filename: function(){
+                return 'active_task_list';
+            },
+        },
+        {
+            extend: 'csv',
+            text: 'Csv',
+            className: 'btn btn-secondary',
+            exportOptions: {
+                columns: [0,1,2,3,4,5]
+            },
+            filename: function(){
+                return 'active_task_list';
+            },
+        },
+        {
+            extend: 'pdf',
+            text: 'Pdf',
+            title : function() {
+                    return "Active Task List";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5]
+            },
+            filename: function(){
+                return 'active_task_list';
+            },
+        },
+        {
+            extend: 'print',
+            text: 'Print',
+            title : function() {
+                    return "Active Task List";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5]
+            },
+            filename: function(){
+                return 'active_task_list';
+            },
+        },
+    ],
+    "lengthMenu": [10,25,50,100],
     
-    if(task_status_code == 1)
-    {
-      $(".task-confirm-message").html("Do you confirm the task has been in progress?")
-      $("#confirmTaskId").val(task_id)
-      $("#confirmTaskStatusCode").val(2)
-    }
-    else
-    {
-      $("#confirmTaskId").val(task_id)
-      $("#confirmTaskStatusCode").val(3)
-      $(".task-confirm-message").html("Do you confirm the task has been completed?")
-    }
+    });
 
-
-    $("#taskConfirmModal").modal("show")
-
-   
-  })
-
-  $('input[type=checkbox]').change(function() {
-     
-     if (this.checked) {
-         $(".assign_schedule").hide() 
-     } else {
-       $(".assign_schedule").show()
-     }
-   });
- 
- 
-   $(".datepicker1").daterangepicker({
-         locale: { format: "YYYY-MM-DD" },
-         singleDatePicker: true,
-         minDate : moment(new Date(),"YYYY-MM-DD").add('days', 1),
-   });
+    $('#tableExport4').DataTable({
+    dom: 'lBfrtip',
+    "ordering": true,
+    buttons: [
+        {
+            extend: 'excel',
+            text: 'Excel',
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5,6]
+            },
+            filename: function(){
+                return 'completed_task_list';
+            },
+        },
+        {
+            extend: 'csv',
+            text: 'Csv',
+            className: 'btn btn-secondary',
+            exportOptions: {
+                columns: [0,1,2,3,4,5,6]
+            },
+            filename: function(){
+                return 'completed_task_list';
+            },
+        },
+        {
+            extend: 'pdf',
+            text: 'Pdf',
+            title : function() {
+                    return "Completed Task List";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5,6]
+            },
+            filename: function(){
+                return 'completed_task_list';
+            },
+        },
+        {
+            extend: 'print',
+            text: 'Print',
+            title : function() {
+                    return "Completed Task List";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5,6]
+            },
+            filename: function(){
+                return 'completed_task_list';
+            },
+        },
+    ],
+    "lengthMenu": [10,25,50,100],
+    
+    });
 </script>
 @stop

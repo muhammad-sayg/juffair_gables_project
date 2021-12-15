@@ -30,7 +30,7 @@
     </ul> --}}
       <div class="row">
         <div class="col-12">
-          <a href="{{ route('request.create') }}" class="btn btn-primary float-right mb-4" style="padding:7px 35px;" role="button">Add Request</a>
+          <a href="{{ route('request.create') }}" class="btn btn-primary float-right mb-4" style="padding:7px 35px;" role="button">Add Maintenance Request</a>
 
         </div>
         <div class="col-12">
@@ -46,7 +46,7 @@
           </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table id="table-2" class="table table-striped">
+                <table id="tableExport1" class="table table-striped">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -263,11 +263,15 @@
 @stop
 @section('footer_scripts')
 <!-- JS Libraies -->
-<script src="{{ asset('public/admin/assets/') }}/bundles/datatables/datatables.min.js"></script>
-<script src="{{ asset('public/admin/assets/') }}/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
-<script src="{{ asset('public/admin/assets/') }}/bundles/jquery-ui/jquery-ui.min.js"></script>
-<!-- Page Specific JS File -->
-<script src="{{ asset('public/admin/assets/') }}/js/page/datatables.js"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/datatables.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/dataTables.buttons.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/buttons.flash.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/jszip.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/pdfmake.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/vfs_fonts.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/buttons.print.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/js/page/datatables.js')}}"></script>
 <script src="{{ asset('public/admin/assets/') }}/bundles/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
 <script src="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 
@@ -309,5 +313,64 @@ function getRequestMentenanceDetails(id) {
         }
     });
   }
+
+  $('#tableExport1').DataTable({
+    dom: 'lBfrtip',
+    "ordering": true,
+    buttons: [
+        {
+            extend: 'excel',
+            text: 'Excel',
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4]
+            },
+            filename: function(){
+                return 'maintenance_requests';
+            },
+        },
+        {
+            extend: 'csv',
+            text: 'Csv',
+            className: 'btn btn-secondary',
+            exportOptions: {
+                columns: [0,1,2,3,4]
+            },
+            filename: function(){
+                return 'maintenance_requests';
+            },
+        },
+        {
+            extend: 'pdf',
+            text: 'Pdf',
+            title : function() {
+                    return "Maintenance Requests";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4]
+            },
+            filename: function(){
+                return 'maintenance_requests';
+            },
+        },
+        {
+            extend: 'print',
+            text: 'Print',
+            title : function() {
+                    return "Maintenance Requests";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4]
+            },
+            filename: function(){
+                return 'maintenance_requests';
+            },
+        },
+    ],
+    "lengthMenu": [10,25,50,100],
+    
+    });
 </script>
 @stop

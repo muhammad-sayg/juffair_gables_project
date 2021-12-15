@@ -56,13 +56,13 @@ box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1), 0 0.9375rem 1.40625re
               @if(Auth::user()->userType == 'general-manager' || Auth::user()->userType == 'Admin')
               Approve Leaves
               @else
-              Apply Leave
+              All Leave Requests
               @endif
             </h4>
           </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table id="table-2" class="table table-striped display nowrap">
+                <table id="tableExport2" class="table table-striped display nowrap">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -316,11 +316,15 @@ box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1), 0 0.9375rem 1.40625re
 @stop
 @section('footer_scripts')
 <!-- JS Libraies -->
-<script src="{{ asset('public/admin/assets/') }}/bundles/datatables/datatables.min.js"></script>
-<script src="{{ asset('public/admin/assets/') }}/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
-<script src="{{ asset('public/admin/assets/') }}/bundles/jquery-ui/jquery-ui.min.js"></script>
-<!-- Page Specific JS File -->
-<script src="{{ asset('public/admin/assets/') }}/js/page/datatables.js"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/datatables.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/dataTables.buttons.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/buttons.flash.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/jszip.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/pdfmake.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/vfs_fonts.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/buttons.print.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/js/page/datatables.js')}}"></script>
 <script src="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 
 <script>
@@ -363,5 +367,65 @@ box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1), 0 0.9375rem 1.40625re
     $("#leaveForm button").text("Dispprove")
     $("#leaveModal").modal("show")
   })
+</script>
+<script>
+  $('#tableExport2').DataTable({
+    dom: 'lBfrtip',
+    "ordering": true,
+    buttons: [
+        {
+            extend: 'excel',
+            text: 'Excel',
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5]
+            },
+            filename: function(){
+                return 'leave_requests';
+            },
+        },
+        {
+            extend: 'csv',
+            text: 'Csv',
+            className: 'btn btn-secondary',
+            exportOptions: {
+                columns: [0,1,2,3,4,5]
+            },
+            filename: function(){
+                return 'leave_requests';
+            },
+        },
+        {
+            extend: 'pdf',
+            text: 'Pdf',
+            title : function() {
+                    return "All Leave Requests";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5]
+            },
+            filename: function(){
+                return 'leave_requests';
+            },
+        },
+        {
+            extend: 'print',
+            text: 'Print',
+            title : function() {
+                    return "All Leave Requests";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5]
+            },
+            filename: function(){
+                return 'leave_requests';
+            },
+        },
+    ],
+    "lengthMenu": [10,25,50,100],
+    
+    });
 </script>
 @stop

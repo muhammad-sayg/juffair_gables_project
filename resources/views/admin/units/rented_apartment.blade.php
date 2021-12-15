@@ -94,10 +94,10 @@ Juffair Gable
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="table-2" class="table table-striped display nowrap"  width="100%" style="">
+                    <table id="tableExport1" class="table table-striped display nowrap"  width="100%" style="">
                     <thead>
                         <tr>
-                            <th>Floor</th>
+                            {{-- <th>Floor</th> --}}
                             <th>Apartment No.</th>
                             <th>Renter Name</th>
                             <th>No. of bedrooms</th>
@@ -116,7 +116,7 @@ Juffair Gable
                         @foreach($units as $unit)
                             
                             <tr @if($user_type == 'employee') style="cursor: pointer" class='clickable-row' data-href='{{route('units.rented_apartment.show', $unit->id)}}' @endif>
-                                <td>{{ isset($unit->floor) ? $unit->floor->number : '' }}</td>
+                                {{-- <td>{{ isset($unit->floor) ? $unit->floor->number : '' }}</td> --}}
                                 <td>{{ $unit->unit_number }}</td>
                                 <td>{{ $unit->tenant ? $unit->tenant->tenant_first_name . ' '. $unit->tenant->tenant_last_name : '' }}</td>
                                 <td>{{ $unit->no_of_bed_rooms }}</td>
@@ -186,6 +186,65 @@ Juffair Gable
 <script>
     $(".clickable-row").click(function() {
         window.location = $(this).data("href");
+    });
+
+    $('#tableExport1').DataTable({
+    dom: 'lBfrtip',
+    "ordering": true,
+    buttons: [
+        {
+            extend: 'excel',
+            text: 'Excel',
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4]
+            },
+            filename: function(){
+                return 'rented_apartment_list';
+            },
+        },
+        {
+            extend: 'csv',
+            text: 'Csv',
+            className: 'btn btn-secondary',
+            exportOptions: {
+                columns: [0,1,2,3,4]
+            },
+            filename: function(){
+                return 'rented_apartment_list';
+            },
+        },
+        {
+            extend: 'pdf',
+            text: 'Pdf',
+            title : function() {
+                    return "Rented Apartment List";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4]
+            },
+            filename: function(){
+                return 'rented_apartment_list';
+            },
+        },
+        {
+            extend: 'print',
+            text: 'Print',
+            title : function() {
+                    return "Rented Apartment List";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4]
+            },
+            filename: function(){
+                return 'rented_apartment_list';
+            },
+        },
+    ],
+    "lengthMenu": [10,25,50,100],
+    
     });
 </script>
 @stop

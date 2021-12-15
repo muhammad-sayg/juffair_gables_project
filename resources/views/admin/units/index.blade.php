@@ -242,7 +242,7 @@ Juffair Gable
             text: 'Excel',
             className: 'btn btn-default',
             exportOptions: {
-                columns: [0,1,2,3,4,5]
+                columns: [0,1,2,3,4]
             },
             filename: function(){
                 return 'apartment';
@@ -253,7 +253,7 @@ Juffair Gable
             text: 'Csv',
             className: 'btn btn-secondary',
             exportOptions: {
-                columns: [0,1,2,3,4,5]
+                columns: [0,1,2,3,4]
             },
             filename: function(){
                 return 'apartment';
@@ -267,7 +267,7 @@ Juffair Gable
             },
             className: 'btn btn-default',
             exportOptions: {
-                columns: [0,1,2,3,4,5]
+                columns: [0,1,2,3,4]
             },
             filename: function(){
                 return 'apartment';
@@ -281,7 +281,7 @@ Juffair Gable
             },
             className: 'btn btn-default',
             exportOptions: {
-                columns: [0,1,2,3,4,5]
+                columns: [0,1,2,3,4]
             },
             filename: function(){
                 return 'apartment';

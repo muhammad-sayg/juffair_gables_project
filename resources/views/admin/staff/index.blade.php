@@ -48,21 +48,27 @@ Juffair Gable
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover" id="table-1" style="width:100%;">
+                        <table class="table table-striped table-hover" id="tableExport1" style="width:100%;">
                             <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Name</th>
+                                <th>Email</th>
                                 <th>Conctact No</th>
                                 <th>Image</th>
-                                <th>Email</th>
                                 <th>Designation</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
+                                @php
+                                $key = 1;
+                            @endphp
                             @foreach (collect($staffs)->where('is_passed', '!=', 1) as $staff)
                             <tr style="cursor:pointer">
+                            <td data-href='{{ route('staff.show',$staff['id']) }}'> {{ $key }}</td>
                             <td data-href='{{ route('staff.show',$staff['id']) }}'> {{ $staff['name'] }}</td>
+                            <td data-href='{{ route('staff.show',$staff['id']) }}'>{{ $staff['email']}}</td>
                             <td data-href='{{ route('staff.show',$staff['id']) }}'>{{ $staff['number'] }}</td>
                             <td data-href='{{ route('staff.show',$staff['id']) }}'>
                                 @if(!empty($staff['image']))
@@ -71,8 +77,7 @@ Juffair Gable
                                 <img src="{{asset('public/admin/assets/img/staff/no-image.png')}}" alt="" width="100" height="100">
                                 @endif
                             </td>
-                            <td data-href='{{ route('staff.show',$staff['id']) }}'>{{ $staff['email']}}</td>
-                            <td data-href='{{ route('staff.show',$staff['id']) }}'>{{ $staff['userType'] }}</td>
+                            <td data-href='{{ route('staff.show',$staff['id']) }}'>{{ ucwords(str_replace("-"," ",$staff['userType'])) }}</td>
                             
                                 {{-- <td>
                                     @if($staff['status'] ==1)
@@ -100,7 +105,10 @@ Juffair Gable
                                     </form>
                                     @endif
                                 </td>
-                            </tr>  
+                            </tr>
+                            @php
+                                $key++;
+                            @endphp  
                             @endforeach
                             </tbody>
                         </table>
@@ -113,21 +121,27 @@ Juffair Gable
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover" id="table-2" style="width:100%;">
+                        <table class="table table-striped table-hover" id="tableExport2" style="width:100%;">
                             <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Name</th>
+                                <th>Email</th>
                                 <th>Conctact No</th>
                                 <th>Image</th>
-                                <th>Email</th>
                                 <th>Designation</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
+                            @php
+                                $key = 1;
+                            @endphp
                             @foreach (collect($staffs)->where('is_passed', 1) as $staff)
                             <tr style="cursor:pointer">
+                            <td data-href='{{ route('staff.show',$staff['id']) }}'> {{ $key }}</td>
                             <td data-href='{{ route('staff.show',$staff['id']) }}'> {{ $staff['name'] }}</td>
+                            <td data-href='{{ route('staff.show',$staff['id']) }}'>{{ $staff['email']}}</td>
                             <td data-href='{{ route('staff.show',$staff['id']) }}'>{{ $staff['number'] }}</td>
                             <td data-href='{{ route('staff.show',$staff['id']) }}'>
                                 @if(!empty($staff['image']))
@@ -136,8 +150,7 @@ Juffair Gable
                                 <img src="{{asset('public/admin/assets/img/staff/no-image.png')}}" alt="" width="100" height="100">
                                 @endif
                             </td>
-                            <td data-href='{{ route('staff.show',$staff['id']) }}'>{{ $staff['email']}}</td>
-                            <td data-href='{{ route('staff.show',$staff['id']) }}'>{{ $staff['userType'] }}</td>
+                            <td data-href='{{ route('staff.show',$staff['id']) }}'>{{ ucwords(str_replace("-"," ",$staff['userType'])) }}</td>
                             
                                 {{-- <td>
                                     @if($staff['status'] ==1)
@@ -151,21 +164,24 @@ Juffair Gable
                                         <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Action</a>
                                         <div class="dropdown-menu">
                                         <a href="{{ route('staff.show',$staff['id']) }}" class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
-                                        @if(request()->user()->can('edit-staff'))
+                                        {{-- @if(request()->user()->can('edit-staff'))
                                         <a href="{{ route('staff.edit', $staff['id']) }}" class="dropdown-item has-icon"><i class="far fa-edit"></i> Edit</a>
                                         @endif
                                         <div class="dropdown-divider"></div>
                                         <a href="{{ route('staff.passed', $staff['id']) }}"  class="dropdown-item has-icon"><i class="far fa-user"></i>
-                                            Passed</a>
+                                            Passed</a> --}}
                                     </div>
-                                    @if(request()->user()->can('delete-staff'))
+                                    {{-- @if(request()->user()->can('delete-staff'))
                                     <form action="{{ route('staff.delete', $staff['id']) }}"
                                             method="post" id="staff-{{ $staff['id'] }}">
                                             @csrf @method('delete')
                                     </form>
-                                    @endif
+                                    @endif --}}
                                 </td>
-                            </tr>  
+                            </tr>
+                            @php
+                                $key++;
+                            @endphp  
                             @endforeach
                             </tbody>
                         </table>
@@ -192,6 +208,124 @@ Juffair Gable
 <script>
     $("tr td:not(:last-child)").click(function() {
         window.location = $(this).data("href");
+    });
+
+    $('#tableExport1').DataTable({
+    dom: 'lBfrtip',
+    "ordering": true,
+    buttons: [
+        {
+            extend: 'excel',
+            text: 'Excel',
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,5]
+            },
+            filename: function(){
+                return 'active_staff_list';
+            },
+        },
+        {
+            extend: 'csv',
+            text: 'Csv',
+            className: 'btn btn-secondary',
+            exportOptions: {
+                columns: [0,1,2,3,5]
+            },
+            filename: function(){
+                return 'active_staff_list';
+            },
+        },
+        {
+            extend: 'pdf',
+            text: 'Pdf',
+            title : function() {
+                    return "Active Staff List";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,5]
+            },
+            filename: function(){
+                return 'active_staff_list';
+            },
+        },
+        {
+            extend: 'print',
+            text: 'Print',
+            title : function() {
+                    return "Active Staff List";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,5]
+            },
+            filename: function(){
+                return 'active_staff_list';
+            },
+        },
+    ],
+    "lengthMenu": [10,25,50,100],
+    
+    });
+
+    $('#tableExport2').DataTable({
+    dom: 'lBfrtip',
+    "ordering": true,
+    buttons: [
+        {
+            extend: 'excel',
+            text: 'Excel',
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,5]
+            },
+            filename: function(){
+                return 'passed_staff_list';
+            },
+        },
+        {
+            extend: 'csv',
+            text: 'Csv',
+            className: 'btn btn-secondary',
+            exportOptions: {
+                columns: [0,1,2,3,5]
+            },
+            filename: function(){
+                return 'passed_staff_list';
+            },
+        },
+        {
+            extend: 'pdf',
+            text: 'Pdf',
+            title : function() {
+                    return "Passed Staff List";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,5]
+            },
+            filename: function(){
+                return 'passed_staff_list';
+            },
+        },
+        {
+            extend: 'print',
+            text: 'Print',
+            title : function() {
+                    return "Passed Staff List";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,5]
+            },
+            filename: function(){
+                return 'passed_staff_list';
+            },
+        },
+    ],
+    "lengthMenu": [10,25,50,100],
+    
     });
 </script>
 @stop

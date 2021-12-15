@@ -25,7 +25,7 @@
             
             <div class="card-body">
               <div class="table-responsive">
-                <table id="table-1" class="table table-striped">
+                <table id="tableExport1" class="table table-striped">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -108,5 +108,65 @@
         }
     });
   }
+</script>
+<script>
+  $('#tableExport1').DataTable({
+    dom: 'lBfrtip',
+    "ordering": true,
+    buttons: [
+        {
+            extend: 'excel',
+            text: 'Excel',
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4]
+            },
+            filename: function(){
+                return 'reviews';
+            },
+        },
+        {
+            extend: 'csv',
+            text: 'Csv',
+            className: 'btn btn-secondary',
+            exportOptions: {
+                columns: [0,1,2,3,4]
+            },
+            filename: function(){
+                return 'reviews';
+            },
+        },
+        {
+            extend: 'pdf',
+            text: 'Pdf',
+            title : function() {
+                    return "All Reviews";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4]
+            },
+            filename: function(){
+                return 'reviews';
+            },
+        },
+        {
+            extend: 'print',
+            text: 'Print',
+            title : function() {
+                    return "All Reviews";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4]
+            },
+            filename: function(){
+                return 'reviews';
+            },
+        },
+    ],
+    "lengthMenu": [10,25,50,100],
+    
+    });
 </script>
 @stop
