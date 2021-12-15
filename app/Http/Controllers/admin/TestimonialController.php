@@ -92,8 +92,8 @@ class TestimonialController extends Controller
      */
     public function show($id)
     {
-        $testimonial = Testimonials::find($id);
-        $html_response = view('admin.testimonial.partials.testimonial_view_modal', compact('testimonial'))->render();
+        $allreviews = Review::find($id);
+        $html_response = view('admin.testimonial.partials.testimonial_view_modal', compact('allreviews'))->render();
 
         return response()->json([
             'success' => true,
