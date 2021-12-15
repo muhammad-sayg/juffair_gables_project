@@ -15,7 +15,7 @@
 
     .bootstrap-tagsinput
    {
-       height: auto;
+       min-height: 100px;
        width: 100% !important;
    }
    

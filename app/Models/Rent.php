@@ -17,13 +17,17 @@ class Rent extends Model
         return $this->belongsTo(Unit::class, 'unit_id', 'id');
     }
 
+    public function tenant(){
+        return $this->belongsTo(Tenant::class, 'tenant_id', 'id');
+    }
+
     public function floor(){
         return $this->belongsTo(Floor::class, 'floor_id', 'id');
     }
     public function rent_type(){
         return $this->belongsTo(RentType::class, 'rent_type_code', 'rent_type_code');
     }
-    public function rent_paid_status(){
+    public function rent_status(){
         return $this->belongsTo(RentPaidStatus::class, 'rent_paid_status_code', 'rent_paid_status_code');
     }
 }

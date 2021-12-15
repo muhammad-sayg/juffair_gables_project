@@ -29,7 +29,7 @@
         
         @if(Auth::user()->userType == 'officer')
           
-          <li class="dropdown {!! (Request::is('units/full_apartment*') ? "active" : "") !!}">
+          <li class="dropdown {!! (Request::is('units/full_apartment*') ? "active" : "") !!} {!! (Request::is('units/unit/search_filter') ? "active" : "") !!} ">
             <a href="{{ route('units.full_apartment.list') }}" class="nav-link"><i class="fas fa-home"></i><span>Full Apartment List</span></a>
           </li>
           

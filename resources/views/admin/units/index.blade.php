@@ -53,23 +53,34 @@ Juffair Gable
                         </div> --}}
                         <div class="form-group col-md-3">
                             <label for="">Select Floor</label>
-                            <select class="form-control" name="floor_id"  id="floorSelect">
+                            <select class="form-control" name="floor_id" onchange="getUnits(this.value)" id="floorSelect">
                                 <option value="0" selected disabled>---Select---</option>
                                 @foreach ($floor_list as $floor)
-                                    <option value="{{ $floor->id }}">{{ $floor->number }}</option>
+                                    <option value="{{ $floor->id }}" @if(isset($floor_id) && $floor_id == $floor->id) selected @endif>{{ $floor->number }}</option>
                                 @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3" >
+                            <label>Select Apartment</label>
+                            <select class="form-control" name="unit_id" id="unitSelect" style="height: 38px;">
+                                @if(isset($floor_unit_list) && $floor_unit_list->isNotEmpty())
+                                    <option value="all" @if(isset($unit_id) && $unit_id == "all") selected @endif>All</option>
+                                    @foreach ($floor_unit_list as $item)
+                                       <option value="{{ $item->id }}" @if(isset($unit_id) && $unit_id == $item->id) selected @endif>{{ $item->unit_number }}</option>
+                                    @endforeach
+                                @endif
                             </select>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="">Select Type</label>
                             <select name="apartment_type" class="form-control" id="">
                                 <option value="0" selected disabled>---Select---</option>
-                                <option value="all">All</option>
-                                <option value="Type 1">Type 1</option>
-                                <option value="Type 2">Type 2</option>
-                                <option value="Type 3">Type 3</option>
-                                <option value="Type 4">Type 4</option>
-                                <option value="Type 5">Type 5</option>
+                                <option value="all" @if(isset($apartment_type) && $apartment_type == "all") selected @endif>All</option>
+                                <option value="Type 1" @if(isset($apartment_type) && $apartment_type == "Type 1") selected @endif>Type 1</option>
+                                <option value="Type 2" @if(isset($apartment_type) && $apartment_type == "Type 2") selected @endif>Type 2</option>
+                                <option value="Type 3" @if(isset($apartment_type) && $apartment_type == "Type 3") selected @endif>Type 3</option>
+                                <option value="Type 4" @if(isset($apartment_type) && $apartment_type == "Type 4") selected @endif>Type 4</option>
+                                <option value="Type 5" @if(isset($apartment_type) && $apartment_type == "Type 5") selected @endif>Type 5</option>
                             </select>
         
                         </div>
@@ -77,19 +88,19 @@ Juffair Gable
                             <label for="number">Status</label>
                             <select name="unit_status_code" class="form-control" id="unitStatus">
                                 <option value="0" selected disabled>---Select---</option>
-                                <option value="all">All</option>
+                                <option value="all" @if(isset($unit_status_code) && $unit_status_code == "all") selected @endif>All</option>
                                 @foreach ($unit_status as $unit_status)
-                                    <option value="{{ $unit_status->unit_status_code }}">{{ $unit_status->unit_status_name }}</option>
+                                    <option value="{{ $unit_status->unit_status_code }}" @if(isset($unit_status_code) && $unit_status_code == $unit_status->unit_status_code) selected @endif>{{ $unit_status->unit_status_name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="number">Select Color</label>
                             <select name="color_code" class="form-control" id="">
-                                <option value="">--- Select ---</option>
-                                <option value="all">All</option>
+                                <option value="0" selected disabled>--- Select ---</option>
+                                <option value="all" @if(isset($color_code) && $color_code == "all") selected @endif>All</option>
                                 @foreach ($color_codes_list as $key => $color_code_name)
-                                    <option value="{{ $key }}" style="padding:5px 25px;background-color: {{ $key }}">{{ $color_code_name }}</option>
+                                    <option value="{{ $key }}" @if(isset($color_code) && $color_code == $key) selected @endif style="padding:5px 25px;background-color: {{ $key }}">{{ $color_code_name }}</option>
                                 @endforeach
                             </select>
                            
@@ -106,10 +117,10 @@ Juffair Gable
             <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="table-2" class="table table-striped display nowrap"  width="100%" style="">
+                    <table id="tableExport1" class="table display nowrap"  width="100%" style="">
                     <thead>
                         <tr>
-                            <th>Floor</th>
+                            {{-- <th>Floor</th> --}}
                             <th>Apartment No.</th>
                             <th>Apartment Type</th>
                             <th>No. of bedrooms</th>
@@ -128,7 +139,7 @@ Juffair Gable
                         @foreach($units as $unit)
                             
                             <tr style="cursor: pointer">
-                                <td data-href='{{route('units.full_apartment.show', $unit->id)}}'>{{ isset($unit->floor) ? $unit->floor->number : '' }}</td>
+                                {{-- <td data-href='{{route('units.full_apartment.show', $unit->id)}}'>{{ isset($unit->floor) ? $unit->floor->number : '' }}</td> --}}
                                 <td data-href='{{route('units.full_apartment.show', $unit->id)}}'>{{ $unit->unit_number }}</td>
                                 <td data-href='{{route('units.full_apartment.show', $unit->id)}}'>{{ isset($unit->apartment_type) ? $unit->apartment_type : '' }}</td>
                                 <td data-href='{{route('units.full_apartment.show', $unit->id)}}'>{{ $unit->no_of_bed_rooms }}</td>
@@ -184,11 +195,15 @@ Juffair Gable
 @stop
 @section('footer_scripts')
 <!-- JS Libraies -->
-<script src="{{ asset('public/admin/assets/') }}/bundles/datatables/datatables.min.js"></script>
-<script src="{{ asset('public/admin/assets/') }}/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
-<script src="{{ asset('public/admin/assets/') }}/bundles/jquery-ui/jquery-ui.min.js"></script>
-<!-- Page Specific JS File -->
-<script src="{{ asset('public/admin/assets/') }}/js/page/datatables.js"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/datatables.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/dataTables.buttons.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/buttons.flash.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/jszip.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/pdfmake.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/vfs_fonts.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/buttons.print.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/js/page/datatables.js')}}"></script>
 <script>
     function getFloors(id) {
           $.get({
@@ -200,10 +215,81 @@ Juffair Gable
               }
           });
       }
+
+      function getUnits(id) {
+       
+       $.get({
+           url: '{{route('all_units','')}}' + "/"+ id,
+           dataType: 'json',
+           success: function (data) {
+               console.log(data.options)
+               $('#unitSelect').empty().append(data.options)
+              }
+       });
+   }
 </script>
 <script>
     $("tr td:not(:last-child)").click(function() {
         window.location = $(this).data("href");
+    });
+
+    $('#tableExport1').DataTable({
+    dom: 'lBfrtip',
+    "ordering": true,
+    buttons: [
+        {
+            extend: 'excel',
+            text: 'Excel',
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5]
+            },
+            filename: function(){
+                return 'apartment';
+            },
+        },
+        {
+            extend: 'csv',
+            text: 'Csv',
+            className: 'btn btn-secondary',
+            exportOptions: {
+                columns: [0,1,2,3,4,5]
+            },
+            filename: function(){
+                return 'apartment';
+            },
+        },
+        {
+            extend: 'pdf',
+            text: 'Pdf',
+            title : function() {
+                    return "Apartment List";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5]
+            },
+            filename: function(){
+                return 'apartment';
+            },
+        },
+        {
+            extend: 'print',
+            text: 'Print',
+            title : function() {
+                    return "Apartment List";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5]
+            },
+            filename: function(){
+                return 'apartment';
+            },
+        },
+    ],
+    "lengthMenu": [10,25,50,100],
+    
     });
 </script>
 @stop

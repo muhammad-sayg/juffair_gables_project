@@ -159,6 +159,22 @@ class PagesController extends Controller
         ]);
     }
 
+    public function all_units($floor_id)
+    {
+       
+        $res = '<option value="' . 0 . '" disabled >---Select---</option>';
+        $res .= '<option value="all">All</option>';
+        $units = Unit::where('floor_id' , $floor_id)->get();
+        
+        foreach ($units as $unit) {
+            $res .= '<option value="' . $unit->id . '"  >' . $unit->unit_number . '</option>';
+        }
+
+        return response()->json([
+            'options' => $res,
+        ]);
+    }
+
     public function testimonials_info()
     {
         $testimonial = Testimonials::all();

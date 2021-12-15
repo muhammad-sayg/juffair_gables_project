@@ -16,15 +16,15 @@ class CreateRentsTable extends Migration
         Schema::create('rents', function (Blueprint $table) {
             $table->id();
             $table->integer('tenant_id');
-            $table->decimal('rent_amount', 15, 3);
-            $table->decimal('received_amount', 15, 3);
+            $table->decimal('rent_amount', 15);
+            $table->decimal('received_amount', 15)->nullable();
             
-            $table->dateTime('received_date');
+            $table->dateTime('received_date')->nullable();
             $table->string('rent_month')->nullable();
 
             $table->string('rent_start_month')->nullable();
             $table->string('rent_end_month')->nullable();
-            $table->string('rent_receipt');
+            $table->string('rent_receipt')->nullable();
 
             $table->integer('rent_paid_status_code');
 

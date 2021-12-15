@@ -110,7 +110,7 @@
                     <div class="col-md-3 col-6">
                       <strong>Total Rent</strong>
                       <br>
-                      <p class="text-muted">{{isset($tenant->tenant_rent) ? $tenant->tenant_rent.' BD' : '' }}</p>
+                      <p class="text-muted">{{isset($tenant->tenant_rent) ? (int)$tenant->tenant_rent.' BD' : '' }}</p>
                     </div>
                   </div>
                    

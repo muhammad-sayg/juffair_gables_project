@@ -369,8 +369,11 @@ class TenantController extends Controller
             $user->address = $tenant->tenant_present_address;
             $user->status = 1;
             $user->image = $tenant->tenant_image;
-
             $user->save();
+
+            $unit = Unit::find($request['unit_id']);
+            $unit->unit_status_code = 1;
+            $unit->save();
 
         }
 
@@ -435,6 +438,21 @@ class TenantController extends Controller
         
         $floors = FloorDetail::where('floor_type_code' , $tenant->unit->floor->floor_type_code)->get();
         return view('admin.tenants.reactivate',compact('tenant','floor_types','tenant_types','units','floors'));
+    }
+
+    public function get_tenant_rent(Request $request)
+    {
+        $id = $request->input('id');
+
+        if($id)
+        {
+            $rent = Tenant::where('id', $id)->first()->tenant_rent;
+
+            return response()->json([
+                'success' => true,
+                'rent' => $rent,
+            ]);
+        }
     }
 
 }

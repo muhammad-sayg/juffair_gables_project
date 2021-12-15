@@ -68,11 +68,13 @@ Route::post('/save_job_info', [PagesController::class, 'save_job_info'])->name('
 Route::get('/login', [LoginController::class, 'showLoginForm']);
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/review/save', [TestimonialController::class, 'store'])->name('review.save');
+Route::post('/get_tenant_rent', [TenantController::class, 'get_tenant_rent'])->name('tenant.rent');
 Route::get('/testimonials',[TestimonialController::class,'display_review'])->name('display_review');
 
 Route::group(['middleware' => ['auth:web']], function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('dashboard/task/closed/{id}', [TaskController::class, 'task_closed'])->name('dashboard.task.closed');
+    Route::get('/all_units/{floor_id}',[PagesController::class,'all_units'])->name('all_units');
     
     Route::get('/fetch_floors/{floor_type_code}', [PagesController::class, 'fetch_floors'])->name('floor_type.fetch_floors');
     Route::get('/fetch_all_units_and_floors_list/{floor_type_code}', [PagesController::class, 'fetch_all_units_and_floors_list'])->name('floor_type.fetch_all_units_and_floors_list');
@@ -265,6 +267,8 @@ Route::group(['middleware' => ['auth:web']], function() {
         Route::get('/rent/edit/{id}', [RentController::class, 'edit'])->name('edit');
         Route::post('/rent/update/{id}', [RentController::class, 'update'])->name('update');
         Route::delete('/rent/delete/{id}', [RentController::class, 'destroy'])->name('delete');
+        Route::post('/search', [RentController::class, 'search_rent'])->name('search');
+    
     });
 
     //Invoice routes

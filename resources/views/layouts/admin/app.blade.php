@@ -141,6 +141,16 @@
     .main-sidebar .sidebar-menu li a span {
         margin-top: 1px !important;
     }
+
+    .buttons-csv
+    {
+      background-color: #2ab9d0 !important;
+      margin:0 5px 0 5px;
+    }
+
+    .dropdown, .dropleft, .dropright, .dropup {
+        position: unset !important;
+    }
     
   </style>
 </head>

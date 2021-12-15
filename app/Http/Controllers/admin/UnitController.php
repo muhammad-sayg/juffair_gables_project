@@ -344,17 +344,27 @@ class UnitController extends Controller
 
     public function search_filter(Request $request)
     {
-        $floor_type_code = $request->input('floor_type_code',null);
+        // dd($request->all());
+        // $floor_type_code = $request->input('floor_type_code',null);
         $floor_id = $request->input('floor_id',null);
+        $unit_id = $request->input('unit_id',null);
         $apartment_type = $request->input('apartment_type',null);
         $unit_status_code = $request->input('unit_status_code',null);
         $color_code = $request->input('color_code',null);
-
         $query = Unit::query();
 
         if($floor_id)
         {
             $query->where('floor_id', $floor_id);
+        }
+
+        if($unit_id)
+        {
+            if($unit_id != 'all')
+            {
+                $query->where('id', $unit_id);
+
+            }
         }
 
         if($apartment_type){
@@ -407,7 +417,9 @@ class UnitController extends Controller
         }
 
         $floor_list = FloorDetail::where('floor_type_code', 2)->get();
+        $floor_unit_list = Unit::where('floor_id', $floor_id)->get();
 
-        return view('admin.units.index',compact('units','floor_list','floor_types','unit_status','color_codes_list'));
+        $color_code = $request->input('color_code');
+        return view('admin.units.index',compact('units','floor_list','floor_unit_list','floor_types','unit_status','color_codes_list','floor_id','unit_id','apartment_type','unit_status_code','color_code'));
     }
 }

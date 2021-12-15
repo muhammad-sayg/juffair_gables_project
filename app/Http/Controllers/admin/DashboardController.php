@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use Session;
 use Carbon\Carbon;
+use App\Models\Rent;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -41,7 +42,31 @@ class DashboardController extends Controller
                 $average_time = floor($avg_in_minutes / 60).':'.($avg_in_minutes -   floor($avg_in_minutes / 60) * 60);
             }
         }
-        
-        return view('admin.index', compact('average_time','employee_list'));
+
+        // culculate monthly base rent
+
+        $current_year = Carbon::now()->format('Y');
+ 
+        $montly_base_total_rent = [];
+
+        $month_array = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+
+        $month_year_array = [];
+
+        foreach($month_array as $month)
+        {
+            $month_year_string = '';
+            $month_year_string = $current_year . '-' . $month;
+            array_push($month_year_array,$month_year_string);
+        }
+
+        foreach($month_year_array as $key => $value)
+        {
+            $rent_sum = Rent::where('received_date', 'like' , $value.'-%')->sum('received_amount');
+            
+            array_push($montly_base_total_rent,(int)$rent_sum);
+        }
+
+        return view('admin.index', compact('average_time','employee_list','montly_base_total_rent'));
     }
 }

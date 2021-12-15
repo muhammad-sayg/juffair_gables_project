@@ -41,7 +41,7 @@
             
             <div class="card-body">
               <div class="table-responsive">
-                <table id="table-2" class="table table-striped display nowrap"  width="100%">
+                <table id="tableExport1" class="table table-responsive table-striped display nowrap"  width="100%">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -165,5 +165,78 @@
         }
     });
   }
+
+  $('#tableExport1').DataTable({
+    dom: 'lBfrtip',
+    "ordering": true,
+    buttons: [
+        {
+            extend: 'excel',
+            text: 'Excel',
+            title : function() {
+                    return "Service Contract List";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5,6]
+            },
+            filename: function(){
+                return 'service_contract_list';
+            },
+        },
+        {
+            extend: 'csv',
+            text: 'Csv',
+            title : function() {
+                    return "Service Contract List";
+            },
+            className: 'btn btn-secondary',
+            exportOptions: {
+                columns: [0,1,2,3,4,5,6]
+            },
+            filename: function(){
+                return 'service_contract_list';
+            },
+        },
+        {
+            extend: 'pdf',
+            text: 'Pdf',
+            title : function() {
+                    return "Service Contract List";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5,6]
+            },
+            filename: function(){
+                return 'service_contract_list';
+            },
+        },
+        {
+            extend: 'print',
+            text: 'Print',
+            title : function() {
+                    return "Service Contract List";
+            },
+            className: 'btn btn-default',
+            customize: function (win) {
+                $(win.document.body)
+                    .css('font-size', '12pt');
+        
+                $(win.document.body).find('table')
+                    .addClass('compact')
+                    .css('font-size', 'inherit');
+            },
+            exportOptions: {
+              columns: ":visible"
+            },
+            filename: function(){
+                return 'service_contract_list';
+            },
+        },
+    ],
+    "lengthMenu": [10,25,50,100],
+    
+    });
 </script>
 @stop

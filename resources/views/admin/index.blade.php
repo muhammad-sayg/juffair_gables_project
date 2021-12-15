@@ -9,6 +9,7 @@ Juffair Gable
 <link rel="stylesheet" href="{{ asset('public/admin/assets/') }}/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.css') }}">
 <link rel="stylesheet" href="{{ asset('public/admin/assets/') }}/bundles/bootstrap-timepicker/css/bootstrap-timepicker.min.css">
+<link rel="stylesheet" href="{{ asset('public/admin/assets/css/components.css') }}">
 <style>
    .card-box
    {
@@ -475,6 +476,22 @@ Juffair Gable
         </div>
       </div>
       @endif
+
+      @if(\Auth::user()->userType == 'officer')
+      <div class="col-12 col-md-12 col-lg-12 pl-0 pr-0">
+        @php
+          $current_year = \Carbon\Carbon::now()->format('Y');
+        @endphp
+        <div class="card">
+          <div class="card-header">
+            <h4>Montly Base Rent Collection {{ $current_year }}</h4>
+          </div>
+          <div class="card-body">
+            <canvas id="myChart2"></canvas>
+          </div>
+        </div>
+      </div>
+      @endif
   </div>
 {{-- Confirm modal --}}
 <div class="modal" id="taskConfirmModal" tabindex="-1" role="dialog" aria-labelledby="formModal"  aria-modal="true">
@@ -623,7 +640,11 @@ Juffair Gable
 <script src="{{ asset('public/admin/assets/') }}/bundles/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
 <script src="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+ <!-- JS Libraies -->
+ <script src="{{  asset('public/admin/assets/bundles/chartjs/chart.min.js') }}"></script>
+ <!-- Page Specific JS File -->
+ <script src="{{  asset('public/admin/assets/js/page/chart-chartjs.js') }}"></script>
+ <script src="{{  asset('public/admin/assets/js/scripts.js') }}"></script>
 <script>
   $("tr.active-task-table td:not(:nth-last-child(2),:nth-last-child(1))").click(function() {
       window.location = $(this).data("href");
@@ -718,5 +739,54 @@ function getRequestMentenanceDetails(id) {
         minDate : moment(new Date(),"YYYY-MM-DD").add('days', 1),
   });
 </script>
-
+<script>
+  $(document).ready(function(){
+    var ctx = document.getElementById("myChart2").getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ["January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"],
+        datasets: [{
+          label: 'Total Rent Collected',
+          data: {!! json_encode($montly_base_total_rent)!!},
+          borderWidth: 2,
+          backgroundColor: '#6777ef',
+          borderColor: '#6777ef',
+          borderWidth: 2.5,
+          pointBackgroundColor: '#ffffff',
+          pointRadius: 4
+        }]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          yAxes: [{
+            gridLines: {
+              drawBorder: true,
+              color: '#f2f2f2',
+            },
+            ticks: {
+              beginAtZero: true,
+              stepSize: 300,
+              fontColor: "#8e8da4", // Font Color
+              callback: function(value) {
+                  return value + " BD"
+              }
+            }
+          }],
+          xAxes: [{
+            ticks: {
+              display: true
+            },
+            gridLines: {
+              display: true
+            }
+          }]
+        },
+      }
+    });
+  })
+</script>
 @stop
