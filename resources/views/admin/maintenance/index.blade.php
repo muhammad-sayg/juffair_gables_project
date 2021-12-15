@@ -27,7 +27,7 @@
             
             <div class="card-body">
               <div class="table-responsive">
-                <table id="table-2" class="table table-striped">
+                <table id="tableExport1" class="table table-striped">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -133,12 +133,15 @@
 </div>
 @stop
 @section('footer_scripts')
-<!-- JS Libraies -->
-<script src="{{ asset('public/admin/assets/') }}/bundles/datatables/datatables.min.js"></script>
-<script src="{{ asset('public/admin/assets/') }}/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
-<script src="{{ asset('public/admin/assets/') }}/bundles/jquery-ui/jquery-ui.min.js"></script>
-<!-- Page Specific JS File -->
-<script src="{{ asset('public/admin/assets/') }}/js/page/datatables.js"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/datatables.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/dataTables.buttons.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/buttons.flash.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/jszip.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/pdfmake.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/vfs_fonts.js')}}"></script>
+<script src="{{asset('public/admin/assets/bundles/datatables/export-tables/buttons.print.min.js')}}"></script>
+<script src="{{asset('public/admin/assets/js/page/datatables.js')}}"></script>
 <script>
   function getMaintenancecostDetails(id) {
     $.get({
@@ -151,5 +154,64 @@
         }
     });
   }
+
+  $('#tableExport1').DataTable({
+    dom: 'lBfrtip',
+    "ordering": true,
+    buttons: [
+        {
+            extend: 'excel',
+            text: 'Excel',
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4]
+            },
+            filename: function(){
+                return 'maintenance_cost_list';
+            },
+        },
+        {
+            extend: 'csv',
+            text: 'Csv',
+            className: 'btn btn-secondary',
+            exportOptions: {
+                columns: [0,1,2,3,4]
+            },
+            filename: function(){
+                return 'maintenance_cost_list';
+            },
+        },
+        {
+            extend: 'pdf',
+            text: 'Pdf',
+            title : function() {
+                    return "Maintenance Cost List";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4]
+            },
+            filename: function(){
+                return 'maintenance_cost_list';
+            },
+        },
+        {
+            extend: 'print',
+            text: 'Print',
+            title : function() {
+                    return "Maintenance Cost List";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4]
+            },
+            filename: function(){
+                return 'maintenance_cost_list';
+            },
+        },
+    ],
+    "lengthMenu": [10,25,50,100],
+    
+    });
 </script>
 @stop

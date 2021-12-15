@@ -30,17 +30,17 @@
             
             <div class="card-body">
               <div class="table-responsive">
-                <table id="table-1" class="table display nowrap"  width="100%">
+                <table id="tableExport1" class="table display nowrap"  width="100%">
                   <thead>
                     <tr>
                       <th>#</th>
                       <th>Reservation ID</th>
+                      <th>Tenant Name</th>
                       <th>Facility</th>
                       <th>Reservation Date</th>
                       <th>Start Time</th>
                       <th>End Time</th>
                       <th>Amount</th>
-                      <th>Tenant Name</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -49,12 +49,12 @@
                     <tr>
                         <td onclick="getReservationDetails({{ $reservation->id }})">{{ $key+1 }}</td>
                         <td onclick="getReservationDetails({{ $reservation->id }})">{{ $reservation->reservation_id}}</td>
-                        <td>{{ isset($reservation->facility) ? $reservation->facility->name : '' }}</td>
+                        <td onclick="getReservationDetails({{ $reservation->id }})">{{ $reservation->tenant_name}}</td>
+                        <td onclick="getReservationDetails({{ $reservation->id }})">{{ isset($reservation->facility) ? $reservation->facility->name : '' }}</td>
                         <td onclick="getReservationDetails({{ $reservation->id }})">{{ \Carbon\Carbon::parse($reservation->reservation_date)->toFormattedDateString() }}</td>
                         <td onclick="getReservationDetails({{ $reservation->id }})">{{ \Carbon\Carbon::parse($reservation->start_time)->format('g:i A')}}</td>
                         <td onclick="getReservationDetails({{ $reservation->id }})">{{ \Carbon\Carbon::parse($reservation->end_time)->format('g:i A')}}</td>
-                        <td onclick="getReservationDetails({{ $reservation->id }})">{{ $reservation->amount}} BD</td>
-                        <td onclick="getReservationDetails({{ $reservation->id }})">{{ $reservation->tenant_name}}</td>
+                        <td onclick="getReservationDetails({{ $reservation->id }})">{{ (int)$reservation->amount}} BD</td>
                         <td>
                           <div class="dropdown">
                             <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle" aria-expanded="false">Action</a>
@@ -123,5 +123,64 @@
         }
     });
   }
+
+  $('#tableExport1').DataTable({
+    dom: 'lBfrtip',
+    "ordering": true,
+    buttons: [
+        {
+            extend: 'excel',
+            text: 'Excel',
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5,6,7]
+            },
+            filename: function(){
+                return 'reservations_list';
+            },
+        },
+        {
+            extend: 'csv',
+            text: 'Csv',
+            className: 'btn btn-secondary',
+            exportOptions: {
+                columns: [0,1,2,3,4,5,6,7]
+            },
+            filename: function(){
+                return 'reservations_list';
+            },
+        },
+        {
+            extend: 'pdf',
+            text: 'Pdf',
+            title : function() {
+                    return "Reservation Detail";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5,6,7]
+            },
+            filename: function(){
+                return 'reservations_list';
+            },
+        },
+        {
+            extend: 'print',
+            text: 'Print',
+            title : function() {
+                    return "Reservation Detail";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1,2,3,4,5,6,7]
+            },
+            filename: function(){
+                return 'reservations_list';
+            },
+        },
+    ],
+    "lengthMenu": [10,25,50,100],
+    
+    });
 </script>
 @stop

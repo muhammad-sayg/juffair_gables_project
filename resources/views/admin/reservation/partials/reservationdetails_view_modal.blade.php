@@ -3,6 +3,10 @@
     <td>{{ isset($reservation->reservation_id) ? $reservation->reservation_id: '' }}</td>
 </tr>
 <tr>
+    <td>Tenant Name</td>
+    <td>{{ isset($reservation->tenant_name) ? $reservation->tenant_name: '' }}</td>
+</tr>
+<tr>
     <td>Facility</td>
     <td>{{ isset($reservation->facility) ? $reservation->facility->name : '' }}</td>
 </tr>
@@ -21,9 +25,5 @@
 </tr>
 <tr>
     <td>Amount</td>
-    <td>{{ isset($reservation->amount) ? $reservation->amount: '' }} BD</td>
-</tr>
-<tr>
-    <td>Tenant Name</td>
-    <td>{{ isset($reservation->tenant_name) ? $reservation->tenant_name: '' }}</td>
+    <td>{{ isset($reservation->amount) ? (int)$reservation->amount: '' }} BD</td>
 </tr>

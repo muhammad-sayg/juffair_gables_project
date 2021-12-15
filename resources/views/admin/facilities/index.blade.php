@@ -37,7 +37,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-           <h4>Facility list</h4>
+           <h4>Facilities list</h4>
             
             
             <div class="card-header-form">
@@ -49,7 +49,7 @@
             
             <div class="card-body">
               <div class="table-responsive">
-                <table id="table-2" class="table table-striped">
+                <table id="tableExport1" class="table table-striped">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -140,5 +140,64 @@
         }
     });
   }
+
+  $('#tableExport1').DataTable({
+    dom: 'lBfrtip',
+    "ordering": true,
+    buttons: [
+        {
+            extend: 'excel',
+            text: 'Excel',
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1]
+            },
+            filename: function(){
+                return 'facilities_list';
+            },
+        },
+        {
+            extend: 'csv',
+            text: 'Csv',
+            className: 'btn btn-secondary',
+            exportOptions: {
+                columns: [0,1]
+            },
+            filename: function(){
+                return 'facilities_list';
+            },
+        },
+        {
+            extend: 'pdf',
+            text: 'Pdf',
+            title : function() {
+                    return "All Facilities";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1]
+            },
+            filename: function(){
+                return 'facilities_list';
+            },
+        },
+        {
+            extend: 'print',
+            text: 'Print',
+            title : function() {
+                    return "All Facilities";
+            },
+            className: 'btn btn-default',
+            exportOptions: {
+                columns: [0,1]
+            },
+            filename: function(){
+                return 'facilities_list';
+            },
+        },
+    ],
+    "lengthMenu": [10,25,50,100],
+    
+    });
 </script>
 @stop
