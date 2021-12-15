@@ -39,10 +39,10 @@
                   <tbody>
                     @foreach($allreviews as $key => $reviews)
                     <tr>
-                        <td>{{ $key+1 }}</td>
-                        <td>{{ $reviews->name}}</td>
-                        <td>{{ $reviews->email}}</td>
-                        <td>{{ $reviews->review}}</td>
+                        <td onclick="getTestimonialDetails({{ $reviews->id }})">{{ $key+1 }}</td>
+                        <td onclick="getTestimonialDetails({{ $reviews->id }})">{{ $reviews->name}}</td>
+                        <td onclick="getTestimonialDetails({{ $reviews->id }})">{{ $reviews->email}}</td>
+                        <td onclick="getTestimonialDetails({{ $reviews->id }})">{{ $reviews->review}}</td>
                         <td>
                           @php
                           $class = '';
@@ -60,12 +60,15 @@
                           <div class="dropdown">
                             <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Action</a>
                             <div class="dropdown-menu">
+                            <a href="#" onclick="getTestimonialDetails({{ $reviews->id }})" class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
+
                             @if($reviews->review_status_code == 2)
                             <a style="color:green" href="{{ route('testimonials.update_review_status',['id'=>$reviews->id , 'current_status' => '1']) }}"  class="dropdown-item has-icon"><i class="fas fa-globe"></i>Public</a>
                             @endif
                             @if($reviews->review_status_code == 1)
                             <a style="color: #5c5cbf" href="{{ route('testimonials.update_review_status',['id'=>$reviews->id , 'current_status' => '2']) }}" class="dropdown-item has-icon"><i class="fas fa-lock"></i> Private</a>
                             @endif
+
                             <div class="dropdown-divider"></div>
                             <a href="#" onclick="form_alert('testimonial-{{ $reviews->id }}','Want to delete this review')" class="dropdown-item has-icon text-danger"><i class="far fa-trash-alt"></i>
                                 Delete</a>
@@ -87,8 +90,27 @@
       </div>
     </div>
   </section>
-{{-- visitor modal --}}
-
+{{-- review view modal --}}
+<div class="modal" id="testimonialModal" tabindex="-1" role="dialog" aria-labelledby="formModal"  aria-modal="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="formModal">View</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="card-body">
+        <form class="table-responsive">
+          <table id="mainTable" class="table table-striped">
+            <tbody>
+              @include('admin.testimonial.partials.testimonial_view_modal')
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
 @stop
 @section('footer_scripts')
 <script src="{{ asset('public/admin/assets/') }}/bundles/datatables/datatables.min.js"></script>
