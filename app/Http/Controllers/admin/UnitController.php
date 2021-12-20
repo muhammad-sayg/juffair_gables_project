@@ -14,6 +14,7 @@ use App\Models\FloorDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Tenant;
 use Brian2694\Toastr\Facades\Toastr;
 use ourcodeworld\NameThatColor\ColorInterpreter;
 
@@ -335,11 +336,26 @@ class UnitController extends Controller
     public function destroy($id)
     {
         $unit = Unit::find($id);
+        
+        //check the apartment tenants
 
-        $unit->delete();
+        $count = Tenant:: where('unit_id', $id)->count();
+        
+        if($count < 0)
+        {
+            $unit->delete();
+    
+            Toastr::success('unit deleted successfully!');
+            return redirect()->route('units.list');
 
-        Toastr::success('unit deleted successfully!');
-        return back();
+        }
+        else
+        {
+            Toastr::error('You cannot delete this apartment due to tenant.');
+            return redirect()->route('units.list');
+
+        }
+
     }
 
     public function search_filter(Request $request)

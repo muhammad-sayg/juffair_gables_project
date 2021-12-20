@@ -165,7 +165,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label style="display: block;">Aditional Facilities</label>
-                        <input type="text" name="all_facilities" class="form-control inputtags">
+                        <input type="text" name="all_facilities" class="form-control inputtags" id="tags-input">
                       </div>
                     <div class="form-group col-md-4" >
                         <label>Total Rent</label>
@@ -217,14 +217,13 @@
     
 </script>
 <script>
-    $(document).ready(function() {
-    $(window).keydown(function(event){
-        if(event.keyCode == 13) {
-        event.preventDefault();
+    $('.bootstrap-tagsinput input').keydown(function( event ) {
+    if ( event.which == 13 ) {
+        $(this).blur();
+        $(this).focus();
         return false;
-        }
-    });
-    });
+    }
+})
 </script>
 <script>
     // function getFloors(id) {

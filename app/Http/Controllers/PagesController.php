@@ -108,7 +108,7 @@ class PagesController extends Controller
         
         $filename ='';
         
-        if($request->file('image'))
+        if($request->file('cv'))
         {
           
             $file_name = time().'_'.trim($request->file('cv')->getClientOriginalName());
