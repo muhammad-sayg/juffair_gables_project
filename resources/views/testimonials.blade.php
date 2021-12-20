@@ -292,6 +292,13 @@
          max-width: 80%;
          }
          }
+
+         @media (max-width: 480px) {
+            #testimonials-list
+            {
+               margin-top: -50px;
+            }
+        }
          
 
         

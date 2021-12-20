@@ -57,7 +57,7 @@ Juffair Gable
         @endif
       </div>
     </div>
-    @if(\Auth::user()->userType == 'general-manager' OR \Auth::user()->userType == 'Admin')
+    @if(\Auth::user()->userType == 'general-manager' OR \Auth::user()->userType == 'Admin' OR \Auth::user()->userType == 'officer')
       @php
         $total_units = 0;
         $vacant_units = 0;
@@ -112,12 +112,13 @@ Juffair Gable
                 <h4 class="text-right"><i
                     class="fas fa-users pull-left bg-green c-icon"></i><span>{{ $total_tenant }}</span>
                 </h4>
-                <a href="{{ route('tenants.list') }}" class="small-box-footer text-center d-block pt-2">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('units.list') }}" class="small-box-footer text-center d-block pt-2">More info <i class="fas fa-arrow-circle-right"></i></a>
                 
               </div>
             </div>
           </div>
         </div>
+        @if(\Auth::user()->userType == 'general-manager' OR \Auth::user()->userType == 'Admin')
         <div class="col-lg-3 col-sm-6">
           <div class="card card-box">
             <div class="card-statistic-4">
@@ -132,13 +133,14 @@ Juffair Gable
             </div>
           </div>
         </div>
+        @endif
         <div class="col-lg-3 col-sm-6">
           <div class="card card-box">
             <div class="card-statistic-4">
               <div class="info-box7-block">
                 <h6 class="m-b-20 text-right">Total Rent Per Year</h6>
                 <h4 class="text-right"><i
-                    class="fas fa-dollar-sign pull-left bg-green c-icon"></i><span>4514.000 BD</span>
+                    class="fas fa-dollar-sign pull-left bg-green c-icon"></i><span>{{ (int)$total_rent_per_year }} BD</span>
                 </h4>
                 <a href="" class="small-box-footer text-center d-block pt-2">More info <i class="fas fa-arrow-circle-right"></i></a>
                 
@@ -146,13 +148,14 @@ Juffair Gable
             </div>
           </div>
         </div>
+      @if(\Auth::user()->userType == 'general-manager' OR \Auth::user()->userType == 'Admin')
       <div class="col-lg-3 col-sm-6">
           <div class="card card-box">
             <div class="card-statistic-4">
               <div class="info-box7-block">
                 <h6 class="m-b-20 text-right">Maintenance Cost Per Year</h6>
                 <h4 class="text-right"><i
-                    class="fas fa-toolbox pull-left bg-green c-icon"></i><span>{{ $total_maintenance_cost }} BD</span>
+                    class="fas fa-toolbox pull-left bg-green c-icon"></i><span>{{ (int)$total_maintenance_cost_per_year }} BD</span>
                 </h4>
                 <a href="{{ route('maintenancecosts.list') }}" class="small-box-footer text-center d-block pt-2">More info <i class="fas fa-arrow-circle-right"></i></a>
                 
@@ -160,6 +163,8 @@ Juffair Gable
             </div>
           </div>
         </div>
+        @endif
+        @if(\Auth::user()->userType == 'general-manager' OR \Auth::user()->userType == 'Admin')
         <div class="col-lg-3 col-sm-6">
           <div class="card card-box">
             <div class="card-statistic-4">
@@ -175,6 +180,8 @@ Juffair Gable
           </div>
         </div>
       </div>
+      @endif
+      @if(\Auth::user()->userType == 'general-manager' OR \Auth::user()->userType == 'Admin')
       <div class="row">
         <div class="col-12">
         <div class="card">
@@ -293,7 +300,7 @@ Juffair Gable
           </div>
         </div>
       </div>
-      
+      @endif
       @endif
       @if(\Auth::user()->userType == 'employee')
       @php
@@ -477,7 +484,7 @@ Juffair Gable
       </div>
       @endif
 
-      @if(\Auth::user()->userType == 'officer')
+      @if(\Auth::user()->userType != 'employee')
       <div class="col-12 col-md-12 col-lg-12 pl-0 pr-0">
         @php
           $current_year = \Carbon\Carbon::now()->format('Y');

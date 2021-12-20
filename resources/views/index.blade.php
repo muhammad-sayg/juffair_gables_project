@@ -245,7 +245,19 @@
             color: #fff !important;
          }
 
+         @media (max-width: 480px) {
+            table {
+               table-layout: fixed;
+               width: 100%;   
+            }
+
+            th,td {
+               word-wrap: break-word;
+            }
+        }
+
          
+               
          .home-blog-area .single-team .team-caption h3 a
          {
             color:#4c4c4c !important;
@@ -1263,10 +1275,10 @@
                      <div class="subscribe-area section-bg pt-95">
                         <div class="row">
                            <div class="col-lg-12">
-                              <!-- Section Tittle -->
                               <div class="section-tittle text-center mb-90">
                                  <h2>Floor Plan</h2>
                               </div>
+
                            </div>
                            <div class="col-xl-6 col-lg-6 col-12">
                               <!-- Section Tittle -->

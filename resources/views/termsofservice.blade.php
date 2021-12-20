@@ -273,6 +273,14 @@
          margin-top:70px;
          }
          }
+
+         @media (max-width: 480px) {
+            .testimonials h1{
+                margin-top: 50px;
+                font-size: 24px;
+                font-weight: 600;
+            }
+        }
       </style>
    </head>
    <body>

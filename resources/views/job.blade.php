@@ -211,6 +211,13 @@
          margin-bottom: 15px;
          font-weight: normal;
          }
+
+         @media (max-width: 480px) {
+            .card
+            {
+               margin-top:80px !important;
+            }
+        }
       </style>
    </head>
    <body>
@@ -250,7 +257,7 @@
          <section class="section" style="margin-top:120px;">
          <div class="section-body">
             <div class="row">
-               <div class="col-12 col-md-6 col-lg-6 form">
+               <div class="col-12 col-md-6 col-lg-6 form" style="padding-right: 15px;padding-left:15px;">
                   <div class="card" style="margin-top:50px;">
                      @if(session()->has('message'))
                      <div class="alert alert-success">
@@ -331,10 +338,10 @@
                      </div>
                   </div>
                </div>
-               <div class="col-12 col-md-6 col-lg-6 gables">
+               <div class="col-12 col-md-6 col-lg-6 gables" style="padding-right: 15px;padding-left:15px;">
                   <div class="single-team mb-30" style="margin-top:50px;">
                      <div class="team-img1">
-                        <img src="{{ asset('public/assets/img/gallery/003.jpg') }}" width="100%" height="100%" alt="">
+                        <img src="{{ asset('public/assets/img/gallery/003.jpg') }}" width="100%" height="820" alt="">
                      </div>
                   </div>
                </div>

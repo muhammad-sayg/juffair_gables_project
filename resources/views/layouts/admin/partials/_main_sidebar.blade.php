@@ -129,7 +129,7 @@
         
         @if(Auth::user()->userType == 'general-manager' || Auth::user()->userType == 'Admin')
         <li class="dropdown {!! (Request::is('tasks/*') ? "active" : "") !!}">
-          <a href="{{ route('tasks.list') }}" class="nav-link"><span>@if(\Auth::user()->userType != 'employee')<i class="fas fa-book"></i>Tasks @endif</span></a>
+          <a href="{{ route('tasks.list') }}" class="nav-link">@if(\Auth::user()->userType != 'employee')<i class="fas fa-book"></i><span>Tasks</span> @endif</a>
         </li>
         @endif
         

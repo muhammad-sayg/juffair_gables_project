@@ -8,6 +8,7 @@ use App\Models\Rent;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\MaintenanceCost;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -67,6 +68,13 @@ class DashboardController extends Controller
             array_push($montly_base_total_rent,(int)$rent_sum);
         }
 
-        return view('admin.index', compact('average_time','employee_list','montly_base_total_rent'));
+        $total_rent_per_year = 0;
+        $total_rent_per_year = Rent::where('received_date', 'like' , $current_year.'-%')->sum('received_amount');
+        
+        $total_maintenance_cost_per_year = 0;
+        $total_maintenance_cost_per_year = MaintenanceCost::where('maintenance_date', 'like' , $current_year.'-%')->sum('maintenance_cost_total_amount');
+
+
+        return view('admin.index', compact('average_time','employee_list','montly_base_total_rent','total_rent_per_year','total_maintenance_cost_per_year'));
     }
 }

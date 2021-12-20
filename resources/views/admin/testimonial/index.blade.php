@@ -6,7 +6,9 @@
 <link rel="stylesheet" href="{{ asset('public/admin/assets/') }}/bundles/datatables/datatables.min.css">
 <link rel="stylesheet" href="{{ asset('public/admin/assets/') }}/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
 <style>
-   
+   tr:hover {
+    background: #a3a3a3 !important;
+   }
 </style>
 @stop
 @section('content')

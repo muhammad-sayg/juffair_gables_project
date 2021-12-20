@@ -24,10 +24,7 @@
          .header-transparent{
          position: unset !important;
          }
-         .col-lg-6 {
-         padding-left: 0px !important;
-         padding-right: 0px !important;
-         }
+         
          .w-100 {
          width: 100% !important;
          }
@@ -335,7 +332,7 @@
          border:1px solid hsl(30, 80%, 55%);
          }
          #card1{
-         width:95%;
+         width: 100%;
          }
          .learn-more > a{
          text-decoration:none;
@@ -349,6 +346,10 @@
          .card2 {
          width:100% !important;
          }
+            .building
+            {
+               margin-top: -25px;
+            }
          }
       </style>
    </head>
@@ -387,15 +388,15 @@
       <main>
          <div class="testimonials">
             <div class="testimonial-inner">
-               <h1 class="mb-3 mt-5">Contact Us</h1>
+               <h1 class="mb-3 mt-3">Contact Us</h1>
                <!-- <div class="mb-5 mt-5"></div> -->
                <div class="container "style="margin-top: 5rem;">
                   <div class="row">
-                     <div class="col-lg-6 col-12 " style="padding-bottom:35px;">
-                        <img src="{{ asset('public/assets/img/gallery/001.svg') }}" class="building" height="400" alt="">
+                     <div class="col-lg-6 col-12 " style="padding-bottom:35px;padding-right: 15px;padding-left:15px;" >
+                        <img src="{{ asset('public/assets/img/gallery/001.svg') }}" class="building img-fluid" height="400" alt="">
                      </div>
-                     <div class="col-lg-6 col-12">
-                        <div class="card card2" id="card1">
+                     <div class="col-lg-6 col-12" style="padding-right: 15px;padding-left:15px;">
+                        <div class="card card2" id="card1" style="height: 462px !important">
                            <div class="card-title">
                               <h1 class="mb-5" style="color:hsl(25.3, 80.5%, 65.9%); ">Contact Details</h1>
                            </div>
