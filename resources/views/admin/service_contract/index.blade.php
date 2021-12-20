@@ -8,12 +8,21 @@
 <link rel="stylesheet" href="{{ asset('public/admin/assets/') }}/bundles/datatables/datatables.min.css">
 <link rel="stylesheet" href="{{ asset('public/admin/assets/') }}/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
 <style>
+
+  #tableExport1
+  {
+    color:#fff !important;
+  }
    tr:hover {
     background: #a3a3a3 !important;
    }
    .finished-contract
    {
      background:#c17676 !important;
+   }
+   .contract-running
+   {
+      background-color: #63e863  !important;
    }
 </style>
 @stop
@@ -51,7 +60,7 @@
                       <th>Contract Start Date</th>
                       <th>Contract End Date</th>
                       <th>Auto Renewal</th>
-                      {{-- <th>Status</th> --}}
+                      <th>Status</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -61,7 +70,7 @@
                       $current_date = \Carbon\Carbon::now()->format('Y-m-d');
                       $contract_end_date = \Carbon\Carbon::parse($item->contract_end_date)->format('Y-m-d');
                       
-                      $class = '';
+                      $class = 'contract-running';
                       if(\Carbon\Carbon::parse($current_date)->gt(\Carbon\Carbon::parse($contract_end_date)))
                       {
                         $class = 'finished-contract';
@@ -70,7 +79,7 @@
                     <tr style="cursor:pointer" class="@if($class) {{$class}} @endif">
                       <td onclick="getServiceContractDetails({{ $item->id }})">{{ $key+1 }}</td>
                       <td onclick="getServiceContractDetails({{ $item->id }})">{{ $item->Title }}</td>
-                      <td onclick="getServiceContractDetails({{ $item->id }})">{{ $item->amount }} BD</td>
+                      <td onclick="getServiceContractDetails({{ $item->id }})">{{ (int)$item->amount }} BD</td>
                       <td onclick="getServiceContractDetails({{ $item->id }})">{{ $item->frequency_of_pay }}</td>
                       <td onclick="getServiceContractDetails({{ $item->id }})">{{ \Carbon\Carbon::parse($item->contract_start_date)->toFormattedDateString() }}</td>
                       <td onclick="getServiceContractDetails({{ $item->id }})">{{ \Carbon\Carbon::parse($item->contract_end_date)->toFormattedDateString() }}</td>
@@ -83,7 +92,7 @@
                           @endif
                         </span>
                       </td>
-                      {{-- <td>
+                      <td>
                         @php
                           $class = '';
                           switch ($item->service_contract_status_code) {
@@ -96,7 +105,7 @@
                           }
                         @endphp
                         <span class="badge {{ $class }}">{{ isset($item->service_contract_status_code) ? $item->service_contract_status->service_contract_status_name : ''}}</span>
-                      </td> --}}
+                      </td>
                       <td>
                         <div class="dropdown">
                           <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Action</a>
