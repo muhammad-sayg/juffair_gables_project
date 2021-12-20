@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\ServiceContract;
+use App\Models\ServiceContractStatus;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Intervention\Image\Facades\Image;
@@ -19,8 +20,9 @@ class ServiceController extends Controller
     public function index()
     {
         $services_contract_list = ServiceContract::orderBy('id', 'desc')->get();
-        
-        return view('admin.service_contract.index', compact('services_contract_list'));
+        $service_contract_status = ServiceContractStatus::all();
+
+        return view('admin.service_contract.index', compact('services_contract_list','service_contract_status'));
     }
 
     /**
@@ -213,5 +215,35 @@ class ServiceController extends Controller
             Toastr::success('This service contract deleted successfully!');
             return back();
         }
+    }
+    public function search_service(Request $request)
+    {
+   
+        $query = ServiceContract::query();
+
+        if($request['frequency_of_pay'])
+        {
+            if($request['frequency_of_pay'] != 'all'){
+                $query->where('frequency_of_pay', $request['frequency_of_pay']);
+            }
+        }
+
+        if($request['service_contract_status_code'])
+        { 
+            if($request['service_contract_status_code'] != 'all')
+            {
+              $query->where('service_contract_status_code', $request['service_contract_status_code']);
+            }
+        }
+
+        $services_contract_list = $query->get();
+
+        $frequency_of_pay = $request['frequency_of_pay'];
+        $service_contract_status_code = $request['service_contract_status_code'];
+
+        $service_contract_status = ServiceContractStatus::all();
+        //$services_contract_list = ServiceContract::orderBy('id', 'desc')->get();
+
+        return view('admin.service_contract.index', compact('services_contract_list','service_contract_status','frequency_of_pay','service_contract_status_code'));
     }
 }

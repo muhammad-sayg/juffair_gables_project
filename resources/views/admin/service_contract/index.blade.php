@@ -42,6 +42,42 @@
        <div class="col-12">
         <a href="{{ route('service_contract.create') }}" class="btn btn-primary float-right mb-4" style="padding: 7px 35px;" role="button">Add New Contract</a>
        </div>
+       <div class="col-12">
+            <div class="card" style="padding:15px 15px">
+                <form action="{{ route('service_contract.search') }}" method="POST">
+                    @csrf
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label for="">Frequency Pay</label>
+                            <select name="frequency_of_pay" class="form-control"  id="" style="height: 37px;">
+                            <option value="0" disabled>--- Select ---</option>
+                            <option value="all" @if(isset($frequency_of_pay) && $frequency_of_pay == "all") selected @endif>All</option>
+                            <option value="monthly" @if(isset($frequency_of_pay) && $frequency_of_pay == "monthly") selected @endif>Monthly</option>
+                            <option value="quarterly" @if(isset($frequency_of_pay) && $frequency_of_pay == "quarterly") selected @endif>Quarterly</option>
+                            <option value="yearly" @if(isset($frequency_of_pay) && $frequency_of_pay == "yearly") selected @endif>Yearly</option>
+                            <option value="bi-yearly" @if(isset($frequency_of_pay) && $frequency_of_pay == "bi-yearly") selected @endif>Bi-yearly</option>
+                            <option value="one-time-payment" @if(isset($frequency_of_pay) && $frequency_of_pay == "one-time-payment") selected @endif>One time Payment</option>
+                        </select>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <label for="">Service Contract Status</label>
+                          <select name="service_contract_status_code" class="form-control"  id="" style="height: 37px;">
+                            <option value="0" disabled>--- Select ---</option>
+                            <option value="all">All</option>
+                            @foreach ($service_contract_status as $item)
+                                  <option value="{{ $item->service_contract_status_code }}" @if(isset($service_contract_status_code) && $service_contract_status_code == $item->service_contract_status_code) selected @endif>{{ $item->service_contract_status_name }}</option>
+                            @endforeach
+                            
+                          </select>
+                      </div>
+                        <div class="form-group col-md-1" style="margin-top: 1.90rem !important;">
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
       <div class="col-12">
         <div class="card">
           <div class="card-header">

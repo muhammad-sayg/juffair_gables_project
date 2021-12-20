@@ -111,7 +111,7 @@ Route::group(['middleware' => ['auth:web']], function() {
         Route::delete('/service_contract/delete/{id}', [ServiceController::class, 'destroy'])->name('delete');
         Route::get('/service_contract/edit/{id}', [ServiceController::class, 'edit'])->name('edit');
         Route::post('/service_contract/update/{id}', [ServiceController::class, 'update'])->name('update');
-       
+        Route::post('/search', [ServiceController::class, 'search_service'])->name('search');
     });
 
     // Units routes
