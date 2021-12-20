@@ -8,7 +8,7 @@
 </tr>
 <tr>
     <td>Cost Per Period</td>
-    <td>{{ isset($service_contract->amount) ? $service_contract->amount: '' }} BD</td>
+    <td>{{ isset($service_contract->amount) ? (int)$service_contract->amount: '' }} BD</td>
 </tr>
 <tr>
     <td>Frequency of pay</td>
