@@ -45,7 +45,7 @@ use App\Http\Controllers\admin\ReservedFailityController;
 use App\Http\Controllers\admin\SecuritydepositController;
 use App\Http\Controllers\admin\UnitstatusreportController;
 use App\Http\Controllers\admin\MaintenanceRequestController;
-
+use App\Http\Controllers\admin\JobController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -413,6 +413,20 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::delete('/testimonials/delete/{id}', [TestimonialController::class, 'destroy'])->name('delete');
     Route::get('/testimonials/show/{id}', [TestimonialController::class, 'show'])->name('show');
     Route::get('/testimonials/update_review_status/{id}/{current_status}', [TestimonialController::class, 'update_review_status'])->name('update_review_status');
+    // Route::get('/testimonials',[TestimonialController::class,'display_review'])->name('display_review');
+
+   });
+
+   //Job Opportunities routes
+   Route::group(['prefix' => 'job', 'as' => 'job.'], function () {
+    Route::get('/job_list', [JobController::class, 'index'])->name('list');
+    Route::get('/job/create', [JobController::class, 'create'])->name('create');
+    Route::post('/job/store', [JobController::class, 'store'])->name('store');
+    Route::get('/job/edit/{id}', [JobController::class, 'edit'])->name('edit');
+    Route::post('/job/update/{id}', [JobController::class, 'update'])->name('update');
+    Route::delete('/job/delete/{id}', [JobController::class, 'destroy'])->name('delete');
+    Route::get('/job/show/{id}', [JobController::class, 'show'])->name('show');
+    //Route::get('/job/update_review_status/{id}/{current_status}', [JobController::class, 'update_review_status'])->name('update_review_status');
     // Route::get('/testimonials',[TestimonialController::class,'display_review'])->name('display_review');
 
    });

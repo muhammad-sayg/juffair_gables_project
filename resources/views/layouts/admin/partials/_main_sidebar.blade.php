@@ -193,7 +193,14 @@
             far fa-registered"></i><span>Reserved  Facilities</span></a>
         </li>
         @endif
-        
+
+        @if(Auth::user()->userType == 'general-manager' || Auth::user()->userType == 'Admin')
+        <li class="dropdown {!! (Request::is('job/*') ? "active" : "") !!}">
+          <a href="{{ route('job.list') }}" class="nav-link"><i class="
+          fas fa-window-restore"></i><span>Job Opportunities</span></a>
+        </li>
+        @endif
+
         @if(Auth::user()->userType == 'general-manager' || Auth::user()->userType == 'Admin')
         <li class="dropdown {!! (Request::is('maintenancecost/*') ? "active" : "") !!}">
           <a href="{{ route('maintenancecosts.list') }}" class="nav-link"><i class="fas fas fa-toolbox"></i><span>Maintenance Costs</span></a>

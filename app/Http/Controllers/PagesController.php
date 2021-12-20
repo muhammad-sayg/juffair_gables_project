@@ -87,6 +87,7 @@ class PagesController extends Controller
     }
     public function save_job_info(Request  $request)
     {
+        
         $request->validate([
             'first_name' => 'required',
             'last_name' =>  'required' ,
@@ -112,6 +113,7 @@ class PagesController extends Controller
         {
           
             $file_name = time().'_'.trim($request->file('cv')->getClientOriginalName());
+        
             //print_r(public_path('admin/assets/img/servicecontract/').$file_name); exit;
             $request->file('cv')->move(public_path('admin/assets/img/documents/'), $file_name);
             $filename= $file_name;  
