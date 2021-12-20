@@ -324,7 +324,7 @@
                            </div>
                            <div class="form-group">
                               <label>Attach CV</label> 
-                              <input type="file" name="cv" accept="application/pdf" class="form-control" @error('cv') is-invalid @enderror">
+                              <input type="file" name="cv" accept="application/pdf" class="form-control @error('cv') is-invalid @enderror">
                               @error('cv')
                               <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
