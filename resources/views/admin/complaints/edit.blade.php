@@ -27,7 +27,7 @@
           
         </ul> --}}
         <div class="section-body">
-            <form method="POST" action="{{ isset($complaint) ? route('complains.update', $complaint->id) : '' }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ isset($complaint) ? route('complains.update', $complaint->id) : '' }}" enctype="multipart/form-data" autocomplete="off">
                 @csrf
                     <div class="row">
                         <div class="col-12">

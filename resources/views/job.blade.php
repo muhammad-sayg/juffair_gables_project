@@ -321,6 +321,7 @@
                               <strong>{{ $message }}</strong>
                               </span>
                               @enderror
+                              <input type="hidden" name="country_code" value="" >
                            </div>
                            <div class="form-group">
                               <label>Attach CV</label> 
@@ -473,6 +474,19 @@
          utilsScript: "build/js/utils.js",
          });
          
+      </script>
+      <script>
+         $(document).ready(function(){
+            let country_code = $(".iti__selected-dial-code").html()
+
+            $("input[name=country_code]").val(country_code)
+         })
+
+         $(".iti__selected-dial-code").on('DOMSubtreeModified',function(){
+            let country_code = $(".iti__selected-dial-code").html()
+
+            $("input[name=country_code]").val(country_code)
+         })
       </script>
    </body>
 </html>

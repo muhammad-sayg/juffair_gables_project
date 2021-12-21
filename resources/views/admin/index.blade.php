@@ -155,7 +155,7 @@ Juffair Gable
               <div class="info-box7-block">
                 <h6 class="m-b-20 text-right">Maintenance Cost Per Year</h6>
                 <h4 class="text-right"><i
-                    class="fas fa-toolbox pull-left bg-green c-icon"></i><span>{{ (int)$total_maintenance_cost_per_year }} BD</span>
+                    class="fas fa-wrench pull-left bg-green c-icon"></i><span>{{ (int)$total_maintenance_cost_per_year }} BD</span>
                 </h4>
                 <a href="{{ route('maintenancecosts.list') }}" class="small-box-footer text-center d-block pt-2">More info <i class="fas fa-arrow-circle-right"></i></a>
                 

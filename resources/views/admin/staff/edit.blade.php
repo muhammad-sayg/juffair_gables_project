@@ -60,7 +60,7 @@ Juffair Gable
          <div class="card">
             <form 
                action="{{ route('staff.update', $staffData['id']) }}" 
-               method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
+               method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data" autocomplete="off">
                @csrf
                <div class="card-header">
                   <h4>Edit Staff</h4>

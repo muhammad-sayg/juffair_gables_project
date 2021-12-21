@@ -12,7 +12,7 @@
     <section class="section">
       
         <div class="section-body">
-            <form method="POST" action="{{ route('maintenancecosts.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('maintenancecosts.store') }}" enctype="multipart/form-data" autocomplete="off">
                 @csrf
                     <div class="row">
                         <div class="col-12">
@@ -37,7 +37,7 @@
                                 <div class="form-group col-md-4" id="locationDropdown">
                                     <label>Select Location</label>
                                     <select class="form-control" onchange="get_locations(this)" name="location_id" id="">
-                                        <option value="">--- Select ---</option>
+                                        <option value="" disabled selected>--- Select ---</option>
                                         @foreach (\App\Models\Location::all() as $location)
                                             <option value="{{ $location->id }}">{{ $location->location_name }}</option>
                                         @endforeach

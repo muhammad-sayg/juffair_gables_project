@@ -38,7 +38,7 @@ Juffair Gable
           <div class="card">
             <form 
             action="{{ isset($unit) ? route('units.update', $unit->id) : '' }}" 
-             method="POST"  enctype="multipart/form-data">
+             method="POST"  enctype="multipart/form-data" autocomplete="off">
               @csrf
               <div class="card-header">
                 <h4>Edit Apartment</h4>

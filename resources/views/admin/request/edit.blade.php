@@ -31,7 +31,7 @@
               <h4>Request Detail</h4>
             </div>
             <div class="card-body">
-            <form method="POSt" action="{{ isset($maintenancerequest) ? route('request.update', $maintenancerequest->id) : '' }}" enctype="multipart/form-data">
+            <form method="POSt" action="{{ isset($maintenancerequest) ? route('request.update', $maintenancerequest->id) : '' }}" enctype="multipart/form-data" autocomplete="off">
               @csrf
                 <div class="row">
                     <div class="form-group col-md-4" id="locationDropdown">

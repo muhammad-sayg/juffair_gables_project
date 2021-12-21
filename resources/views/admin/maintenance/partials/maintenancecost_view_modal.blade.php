@@ -12,7 +12,7 @@
 </tr>
 <tr>
     <td>Total Amount</td>
-    <td>{{ isset($maintenancecost->maintenance_cost_total_amount) ? $maintenancecost->maintenance_cost_total_amount: '' }}</td>
+    <td>{{ isset($maintenancecost->maintenance_cost_total_amount) ? (int)$maintenancecost->maintenance_cost_total_amount: '' }} BD</td>
 </tr>
 
     

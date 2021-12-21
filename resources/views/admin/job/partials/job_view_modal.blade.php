@@ -12,7 +12,7 @@
 </tr>
 <tr>
     <td>DOB</td>
-    <td>{{ isset($alljobs->date_of_birth) ? $alljobs->date_of_birth: '' }}</td>
+    <td>{{ isset($alljobs->date_of_birth) ? \Carbon\Carbon::parse($alljobs->date_of_birth)->format('Y-m-d') : '' }}</td>
 </tr>
 <tr>
     <td>Email</td>
@@ -25,6 +25,6 @@
 <tr>
     <td>CV</td>
     <!-- <td>{{ isset($alljobs->cv) ? $alljobs->cv: '' }}</td> -->
-    <td><a href="{{ url('public/admin/assets/img/documents') }}/{{ isset($alljobs->cv)? $alljobs->cv : '' }}" target="blank">View</a></td>
+    <td><a style="text-decoration: underline" href="{{ url('public/admin/assets/img/documents') }}/{{ isset($alljobs->cv)? $alljobs->cv : '' }}" target="blank">Click here to view cv</a></td>
 
 </tr>

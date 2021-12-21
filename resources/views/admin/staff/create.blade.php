@@ -34,7 +34,7 @@ Juffair Gable
          <div class="card">
             <form 
                action="{{route('staff.store') }}" 
-               method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
+               method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data" autocomplete="off">
                @csrf
                <div class="card-header">
                   <h4>Add Staff</h4>

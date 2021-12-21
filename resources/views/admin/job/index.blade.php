@@ -37,7 +37,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-           <h4>Job Opportunity List</h4>
+           <h4>Received Cv's </h4>
             
             
             <div class="card-header-form">
@@ -49,12 +49,11 @@
             
             <div class="card-body">
               <div class="table-responsive">
-                <table id="tableExport1" class="table table-striped">
+                <table id="tableExport1" class="table table-responsive display nowrap"  width="100%">
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
+                      <th>Name</th>
                       <th>Address</th>
                       <th>DOB</th>
                       <th>Email</th>
@@ -67,13 +66,13 @@
                   @foreach( $alljobs as $key => $job)
                     <tr style="cursor:pointer;">
                         <td onclick="getJobDetails({{ $job->id }})">{{ $key+1 }}</td>
-                        <td onclick="getJobDetails({{ $job->id }})">{{ $job->first_name}} </td>
-                        <td onclick="getJobDetails({{ $job->id }})">{{ $job->last_name}} </td>
+                        <td onclick="getJobDetails({{ $job->id }})">{{ $job->first_name}} {{ $job->last_name}}</td>
+                        
                         <td onclick="getJobDetails({{ $job->id }})">{{ $job->address}} </td>
-                        <td onclick="getJobDetails({{ $job->id }})">{{ $job->date_of_birth}} </td>
+                        <td onclick="getJobDetails({{ $job->id }})">{{ \Carbon\Carbon::parse($job->date_of_birth)->format('Y-m-d')}} </td>
                         <td onclick="getJobDetails({{ $job->id }})">{{ $job->email_address}} </td>
                         <td onclick="getJobDetails({{ $job->id }})">{{ $job->phone}} </td>
-                        <td onclick="getJobDetails({{ $job->id }})"> <a href="{{ url('public/admin/assets/img/documents') }}/{{ isset($alljobs->cv)? $alljobs->cv : '' }}" target="blank">View</a></td>
+                        <td> <a style="text-decoration:underline" href="{{ url('public/admin/assets/img/documents') }}/{{ isset($job->cv)? $job->cv : '' }}" target="blank">Click here to view cv</a></td>
                         <td>
                           <div class="dropdown">
                             <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Action</a>
@@ -162,10 +161,10 @@
             text: 'Excel',
             className: 'btn btn-default',
             exportOptions: {
-                columns: [0,1]
+                columns: [0,1,2,3,4,5]
             },
             filename: function(){
-                return 'facilities_list';
+                return 'received_job_applications';
             },
         },
         {
@@ -173,38 +172,38 @@
             text: 'Csv',
             className: 'btn btn-secondary',
             exportOptions: {
-                columns: [0,1]
+                columns: [0,1,2,3,4,5]
             },
             filename: function(){
-                return 'facilities_list';
+                return 'received_job_applications';
             },
         },
         {
             extend: 'pdf',
             text: 'Pdf',
             title : function() {
-                    return "All Facilities";
+                    return "Received Cv's";
             },
             className: 'btn btn-default',
             exportOptions: {
-                columns: [0,1]
+                columns: [0,1,2,3,4,5]
             },
             filename: function(){
-                return 'facilities_list';
+                return 'received_job_applications';
             },
         },
         {
             extend: 'print',
             text: 'Print',
             title : function() {
-                    return "All Facilities";
+                    return "Received Cv's";
             },
             className: 'btn btn-default',
             exportOptions: {
-                columns: [0,1]
+                columns: [0,1,2,3,4,5]
             },
             filename: function(){
-                return 'facilities_list';
+                return 'received_job_applications';
             },
         },
     ],

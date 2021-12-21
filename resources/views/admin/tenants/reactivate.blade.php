@@ -37,7 +37,7 @@
     <div class="section-body">
     <div class="row">
         <div class="col-12" >
-            <form method="POST" action="{{ route('tenants.update',$tenant->id) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('tenants.update',$tenant->id) }}" enctype="multipart/form-data" autocomplete="off">
                 <div class="card">
                     <div class="card-header">
                         <h4>Reactivate Tenant Form</h4>

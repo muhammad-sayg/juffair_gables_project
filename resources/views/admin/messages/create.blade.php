@@ -37,7 +37,7 @@
 @section('content')
 <section class="section">
     <div class="row">
-        <div class="col-lg-8 offset-lg-2">
+        <div class="col-lg-10 offset-lg-1 mt-3">
             <div class="card">
                 <div class="boxs mail_listing">
                   <div class="inbox-center table-responsive">
@@ -53,7 +53,7 @@
                       </thead>
                     </table>
                   </div>
-                  <form class="composeForm" action="{{ route('email.send') }}" method="POST" style="padding:25px;">
+                  <form class="composeForm" action="{{ route('email.send') }}" method="POST" style="padding:25px;" autocomplete="off">
                   <div class="row">
                     <div class="col-lg-12">
                         @csrf

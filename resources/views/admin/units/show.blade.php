@@ -141,7 +141,9 @@ Juffair Gable
                             </div>
                           </div>
                         </div>
-                      
+                        <div class="text-center">
+                          <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+                        </div>
                       </div>
                       <div class="col-12 col-md-12 col-lg-8">
                         <div class="card">
@@ -177,12 +179,20 @@ Juffair Gable
                                     <p class="text-muted">{{isset($tenant->unit) ? $tenant->unit->unit_number : '' }}</p>
                                   </div>
                                   <div class="col-md-3 col-6">
-                                    <strong>Security Deposit</strong>
+                                    <strong>Total Rent</strong>
                                     <br>
-                                    <p class="text-muted">{{isset($tenant) ? $tenant->security_deposit : '' }} BD</p>
+                                    <p class="text-muted">{{isset($tenant) ? (int)$tenant->tenant_rent : '' }} BD</p>
                                   </div>
-                                  
+
                                 </div>
+
+                                <div class="section-title">Facilities</div>
+                                  <ul>
+                                    @foreach($tenant->tenant_facilities_list as $facilities)
+                                      <li>{{ $facilities }}</li>
+                                      </li>
+                                    @endforeach
+                                  </ul>
                                  
                                 <div class="section-title">Contract Details</div>
                                 <ul>

@@ -33,7 +33,7 @@
                 <div class="author-box-name">
                   <a href="#">{{isset($tenant) ? $tenant->tenant_first_name. ' '.$tenant->tenant_last_name : ''}}</a>
                 </div>
-                <div class="author-box-job">Unit:{{isset($tenant->unit) ? $tenant->unit->unit_number : '' }}(floor {{isset($tenant->unit->floor)? $tenant->unit->floor->number : ''}})</div>
+                <div class="author-box-job">Apartment:{{isset($tenant->unit) ? $tenant->unit->unit_number : '' }}(floor {{isset($tenant->unit->floor)? $tenant->unit->floor->number : ''}})</div>
               </div>
             </div>
           </div>
@@ -113,7 +113,7 @@
                       <p class="text-muted">{{isset($tenant->tenant_rent) ? (int)$tenant->tenant_rent.' BD' : '' }}</p>
                     </div>
                   </div>
-                   
+                  
                   <div class="section-title">Facilities</div>
                   <ul>
                     @foreach($tenant->tenant_facilities_list as $facilities)
@@ -121,6 +121,7 @@
                       </li>
                     @endforeach
                   </ul>
+                  
                   <div class="section-title">Contract Details</div>
                   <ul>
                     <li>Lease Period Start Date: from {{ isset($tenant->lease_period_start_datetime) ? \Carbon\Carbon::parse($tenant->lease_period_start_datetime)->toFormattedDateString() : '' }} to {{ isset($tenant->lease_period_end_datetime) ? \Carbon\Carbon::parse($tenant->lease_period_end_datetime)->toFormattedDateString() : '' }}</li>

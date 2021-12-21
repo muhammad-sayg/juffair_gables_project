@@ -31,7 +31,7 @@
               <h4>Add Task</h4>
             </div>
             <div class="card-body">
-            <form method="POSt" action="{{ route('tasks.store') }}" enctype="multipart/form-data">
+            <form method="POSt" action="{{ route('tasks.store') }}" enctype="multipart/form-data" autocomplete="off">
               @csrf
                 <div class="row">
                     <div class="form-group col-md-4" id="locationDropdown">
@@ -93,7 +93,9 @@
                
                 
                 <button class="btn btn-primary mr-1" type="submit">Save</button>
-                </div>
+                <a href="{{ url()->previous() }}" class="btn btn-primary mr-1">Cancel</a>
+
+            </div>
             </form>
           </div>
 </section>    

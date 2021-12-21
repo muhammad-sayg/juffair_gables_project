@@ -11,7 +11,7 @@
 @section('content')
 
    <div class="section-body">
-      <form method="POST" action="{{route('reservation.update',$reservation->id) }}" enctype="multipart/form-data">
+      <form method="POST" action="{{route('reservation.update',$reservation->id) }}" enctype="multipart/form-data" autocomplete="off">
          @csrf
          <div class="row">
             <div class="col-12">

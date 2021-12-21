@@ -38,7 +38,7 @@ Juffair Gable
           <div class="card">
             <form 
             action="{{route('units.store') }}" 
-             method="POST"  enctype="multipart/form-data" autocomplete="off">
+             method="POST"  enctype="multipart/form-data" autocomplete="off" autocomplete="off">
               @csrf
               <div class="card-header">
                 <h4>Add Apartment</h4>

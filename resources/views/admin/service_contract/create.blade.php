@@ -29,7 +29,7 @@
               <h4>Service Contract Form</h4>
             </div>
             <div class="card-body">
-            <form method="POSt" action="{{ route('service_contract.store') }}" enctype="multipart/form-data">
+            <form method="POSt" action="{{ route('service_contract.store') }}" enctype="multipart/form-data" autocomplete="off">
               @csrf
                 <div class="row">
                     <div class="form-group col-md-4">

@@ -74,7 +74,7 @@
                           @endif
                         </td>
                         <td onclick="getMaintenancecostDetails({{ $maintenancecost->id }})">{{ \Carbon\Carbon::parse($maintenancecost->maintenance_date)->toFormattedDateString() }}</td>
-                        <td onclick="getMaintenancecostDetails({{ $maintenancecost->id }})">{{ $maintenancecost->maintenance_cost_total_amount}} BD</td>
+                        <td onclick="getMaintenancecostDetails({{ $maintenancecost->id }})">{{ (int)$maintenancecost->maintenance_cost_total_amount}} BD</td>
                         <td>
                           <div class="dropdown">
                             <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Action</a>

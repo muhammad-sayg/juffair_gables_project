@@ -106,7 +106,7 @@
         <form class="table-responsive">
           <table id="mainTable" class="table table-striped">
             <tbody>
-              @include('admin.testimonial.partials.testimonial_view_modal')
+              
             </tbody>
           </table>
       </div>

@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Juffair Gable - Dashboard</title>
+  <title>Juffair Gable - Reset Password</title>
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{ asset('public/admin/assets')}}/css/app.min.css">
   <link rel="stylesheet" href="{{ asset('public/admin/assets')}}/bundles/bootstrap-social/bootstrap-social.css">
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="{{ asset('public/admin/assets')}}/css/components.css">
   <!-- Custom style CSS -->
   <link rel="stylesheet" href="{{ asset('public/admin/assets')}}/css/custom.css">
-  <link rel='shortcut icon' type='image/x-icon' href='{{ asset('public/admin/assets')}}/img/favicon.ico' />
+  <link rel='shortcut icon' type='image/jpeg' href='{{ asset("public/admin/assets") }}/img/logo.jpg' />
   <style>
 .login-bg{
   border: 0px solid black;

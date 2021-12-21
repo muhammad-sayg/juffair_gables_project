@@ -38,6 +38,23 @@
         </span>
     </td>
 </tr>
+<tr>
+    <td>Status</td>
+    <td>
+        @php
+            $class = '';
+            switch ($service_contract->service_contract_status_code) {
+            case 1:
+                $class = 'badge-success';
+                break;
+            default:
+                $class = 'badge-danger';
+                break;
+            }
+        @endphp
+        <span class="badge {{ $class }}">{{ isset($service_contract->service_contract_status_code) ? $service_contract->service_contract_status->service_contract_status_name : ''}}</span>
+    </td>
+</tr>
 
 
     

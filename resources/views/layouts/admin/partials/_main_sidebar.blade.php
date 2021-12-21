@@ -44,11 +44,11 @@
           <li class="dropdown {!! (Request::is('rent/*') ? "active" : "") !!}">
             <a href="{{ route('rent.list') }}" class="nav-link"><i class="fas fa-money-check"></i><span>Update Rent Collection</span></a>
           </li>
-          
+{{--           
           <li class="dropdown {!! (Request::is('reports*') ? "active" : "") !!}">
             <a href="{{ route('reports.list') }}" class="nav-link"><i class="
               fas fa-sticky-note"></i><span>Reports</span></a>
-          </li>
+          </li> --}}
         @endif
 
         @if(Auth::user()->userType == 'employee')
@@ -197,13 +197,17 @@
         @if(Auth::user()->userType == 'general-manager' || Auth::user()->userType == 'Admin')
         <li class="dropdown {!! (Request::is('job/*') ? "active" : "") !!}">
           <a href="{{ route('job.list') }}" class="nav-link"><i class="
-          fas fa-window-restore"></i><span>Job Opportunities</span></a>
+          fas fa-window-restore"></i><span>Received Cv's</span></a>
         </li>
         @endif
 
         @if(Auth::user()->userType == 'general-manager' || Auth::user()->userType == 'Admin')
+        <li class="dropdown {!! (Request::is('service_contract*') ? "active" : "") !!}">
+          <a href="{{ route('service_contract.list') }}" class="nav-link"><i class="
+            fas fa-file-contract"></i><span>Service Contracts</span></a>
+        </li>
         <li class="dropdown {!! (Request::is('maintenancecost/*') ? "active" : "") !!}">
-          <a href="{{ route('maintenancecosts.list') }}" class="nav-link"><i class="fas fas fa-toolbox"></i><span>Maintenance Costs</span></a>
+          <a href="{{ route('maintenancecosts.list') }}" class="nav-link"><i class="fas fa-wrench"></i><span>Maintenance Costs</span></a>
         </li>
         @endif
 

@@ -24,6 +24,11 @@
    {
       background-color: #63e863  !important;
    }
+
+   .dataTables_empty
+   {
+     color:black !important;
+   }
 </style>
 @stop
 @section('content')
@@ -223,7 +228,7 @@
             },
             className: 'btn btn-default',
             exportOptions: {
-                columns: [0,1,2,3,4,5,6]
+                columns: [0,1,2,3,4,5,6,7]
             },
             filename: function(){
                 return 'service_contract_list';
@@ -237,7 +242,7 @@
             },
             className: 'btn btn-secondary',
             exportOptions: {
-                columns: [0,1,2,3,4,5,6]
+                columns: [0,1,2,3,4,5,6,7]
             },
             filename: function(){
                 return 'service_contract_list';
@@ -251,7 +256,7 @@
             },
             className: 'btn btn-default',
             exportOptions: {
-                columns: [0,1,2,3,4,5,6]
+                columns: [0,1,2,3,4,5,6,7]
             },
             filename: function(){
                 return 'service_contract_list';

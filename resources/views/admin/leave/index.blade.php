@@ -186,6 +186,7 @@ box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1), 0 0.9375rem 1.40625re
           </div>
           <div class="card-body" style="min-height:100px;max-height: 586px;overflow-y:auto;scrollbar-color: #6777ef #C2D2E4;scrollbar-width: thin;">
             <div class="row">
+              @if($employeeleave->where('leave_status_code', 2)->count() > 0)
               @foreach ($employeeleave->where('leave_status_code', 2) as $leave)
               <div class="col-12">
 
@@ -219,10 +220,13 @@ box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1), 0 0.9375rem 1.40625re
                 </div>
                 <hr>
               </div>
-              <div class="col-4">
-                
-              </div>
               @endforeach
+              @else
+                <div class="col-12">
+                  <p class="text-center" style="font-weight: 530">No Leave Request</p>
+                </div>
+              @endif
+
             </div>
                 
           </div>

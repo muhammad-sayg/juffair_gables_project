@@ -36,7 +36,7 @@
 @stop
 @section('content')
 <section class="section">
-    <div class="col-12 col-lg-8 offset-lg-2">
+    <div class="col-12 col-lg-10 offset-lg-1 mt-3">
         <div class="card" style="padding:25px;">
           <div class="boxs mail_listing">
             <div class="inbox-body no-pad">

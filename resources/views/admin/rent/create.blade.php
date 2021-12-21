@@ -32,7 +32,7 @@
           </div>
             
             <div class="card-body">
-              <form action="{{ route('rent.store') }}" autocomplete="off" method="POST" enctype="multipart/form-data">
+              <form action="{{ route('rent.store') }}" autocomplete="off" method="POST" enctype="multipart/form-data" autocomplete="off">
                 @csrf
                 <div class="row">
                     <div class="col-lg-4">

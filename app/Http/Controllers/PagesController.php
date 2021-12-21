@@ -125,7 +125,7 @@ class PagesController extends Controller
         $jobopprotunities->address = $request['address'];
         $jobopprotunities->date_of_birth = $request['date_of_birth'];
         $jobopprotunities->email_address = $request['email_address'];
-        $jobopprotunities->phone = $request['phone'];
+        $jobopprotunities->phone = $request['country_code'] . $request['phone'];
         $jobopprotunities->cv = $filename;
         $jobopprotunities->save();
        return redirect()->back()->with('message', 'Application submitted successfully!We will contact you soon!');
