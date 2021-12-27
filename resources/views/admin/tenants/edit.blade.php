@@ -55,7 +55,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Contact No.</label>
-                                <input type="text" name="tenant_mobile_phone" value="{{ isset($tenant->tenant_mobile_phone)? $tenant->tenant_mobile_phone : '' }}" id= class="form-control">
+                                <input type="text" name="tenant_mobile_phone" value="{{ isset($tenant->tenant_mobile_phone)? $tenant->tenant_mobile_phone : '' }}" class="form-control">
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Tenant Email</label>
@@ -225,13 +225,13 @@
     
         
         $("#contactNo").inputFilter(function(value) {
-        return /^-?\d*$/.test(value); });
-    
+        return /^[+-]?\d*$/.test(value); });
+
         $("#cprNumber").inputFilter(function(value) {
         return /^-?\d*$/.test(value); });
-    
+
         $("#emergencyNumber").inputFilter(function(value) {
-        return /^-?\d*$/.test(value); });
+        return /^[+-]?\d*$/.test(value); });
     </script>
     <script>
         function getFloors(id) {

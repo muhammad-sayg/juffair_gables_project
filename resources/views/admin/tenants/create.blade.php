@@ -58,8 +58,8 @@
                         <input type="text" maxLength="20" name="tenant_last_name" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Contact No (Without Country Code)</label>
-                        <input type="text" maxLength="8" name="tenant_mobile_phone" id="contactNo" class="form-control">
+                        <label>Contact No</label>
+                        <input type="text" name="tenant_mobile_phone" id="contactNo" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Tenant Email</label>
@@ -105,7 +105,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label>Emergency Contact No.</label>
-                        <input type="text" maxLength="12" name="emergancy_contact_number" id="emergencyNumber" class="form-control">
+                        <input type="text" name="emergancy_contact_number" id="emergencyNumber" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Emergency Email</label>
@@ -206,13 +206,13 @@
 
     
     $("#contactNo").inputFilter(function(value) {
-    return /^-?\d*$/.test(value); });
+    return /^[+-]?\d*$/.test(value); });
 
     $("#cprNumber").inputFilter(function(value) {
     return /^-?\d*$/.test(value); });
 
     $("#emergencyNumber").inputFilter(function(value) {
-    return /^-?\d*$/.test(value); });
+    return /^[+-]?\d*$/.test(value); });
 
     
 </script>

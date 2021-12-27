@@ -3,7 +3,7 @@
    <head>
       <meta charset="utf-8">
       <meta http-equiv="x-ua-compatible" content="ie=edge">
-      <title> Juffair Gable</title>
+      <title>Juffair Gables</title>
       <meta name="description" content="">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -1295,7 +1295,7 @@
                               <table class="table table-dark">
                                  <thead>
                                     <tr>
-                                       <th scope="col">FLOOR/UNITS</th>
+                                       <th scope="col">FLOOR/Apartments</th>
                                        <th scope="col">BEDS/BATHS</th>
                                        <th scope="col">TOTAL AREA</th>
                                        <th scope="col">FLOOR PLANS</th>
@@ -1303,32 +1303,32 @@
                                  </thead>
                                  <tbody>
                                     <tr>
-                                       <th scope="row">Unit 01</th>
+                                       <th scope="row">Apartment 01</th>
                                        <td>3 Bed/4 Bath</td>
                                        <td>120.76 SQ.M.</td>
                                        <td><a href="public/assets/img/gallery/FLA1 01.pdf" target="_blank">view</a></td>
                                     </tr>
                                     <tr>
-                                       <th scope="row">Unit 02</th>
+                                       <th scope="row">Apartment 02</th>
                                        <td>1 Bed/2 Bath</td>
                                        <td>80.00 SQ.M.</td>
                                        <td><a href="public/assets/img/gallery/FLA1 02.pdf" target="_blank">view</a></td>
                                     </tr>
                                     <tr>
-                                       <th scope="row">Unit 03</th>
+                                       <th scope="row">Apartment 03</th>
                                        <td>2 Beds/3 Baths</td>
                                        <td>115.38 SQ.M.</td>
                                        <td><a href="public/assets/img/gallery/FLA1 03.pdf" target="_blank">view</a></td>
                                     </tr>
                                     <tr>
-                                       <th scope="row">Unit 04</th>
-                                       <td>2 Beds/3 Baths</td>
+                                       <th scope="row">Apartment 04</th>
+                                       <td>2 Beds/4 Baths</td>
                                        <td>117.00 SQ.M.</td>
                                        <td><a href="public/assets/img/gallery/FLA1 04.pdf" target="_blank">view</a></td>
                                     </tr>
                                     <tr>
-                                       <th scope="row">Unit 05</th>
-                                       <td>2 Bed/4 Bath</td>
+                                       <th scope="row">Apartment 05</th>
+                                       <td>2 Bed/3 Bath</td>
                                        <td>93.00 SQ.M.</td>
                                        <td><a href="public/assets/img/gallery/FLA1 05.pdf" target="_blank">view</a></td>
                                     </tr>

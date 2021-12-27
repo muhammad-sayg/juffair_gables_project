@@ -118,7 +118,7 @@ Juffair Gable
                         <input type="text" value="{{ isset($staffData['annual_leaves']) ? $staffData['annual_leaves'] : '' }}" name="annual_leaves" class="form-control" id="annual_leaves"></input>
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Total Salary (BD)</label>
+                        <label>Salary Per Month (BD)</label>
                         <input type="text" value="{{ isset($staffData['employee_sallery']) ? $staffData['employee_sallery'] : '' }}" name="sallery" class="form-control" id="sallery"></input>
                      </div>
                      <div class="form-group col-md-4">

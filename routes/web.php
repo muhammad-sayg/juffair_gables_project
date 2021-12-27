@@ -237,7 +237,7 @@ Route::group(['middleware' => ['auth:web']], function() {
         Route::get('/units/{id}', [TenantController::class, 'fetch_units'])->name('fetch_units');
         Route::get('/tenant_list', [TenantController::class, 'index'])->name('list');
         Route::get('/tenant/create', [TenantController::class, 'create'])->name('create');
-        Route::post('/tena nt/store', [TenantController::class, 'store'])->name('store');
+        Route::post('/tenant/store', [TenantController::class, 'store'])->name('store');
         Route::get('/tenant/show/{id}', [TenantController::class, 'show'])->name('show');
         Route::get('/tenant/edit/{id}', [TenantController::class, 'edit'])->name('edit');
         Route::post('/tenant/update/{id}', [TenantController::class, 'update'])->name('update');

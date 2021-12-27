@@ -36,10 +36,66 @@
                            <select class="form-control" onchange="get_locations(this)" name="location_id" id="">
                                <option value="" disabled selected>--- Select ---</option>
                                @foreach (\App\Models\Location::all() as $location)
-                                   <option value="{{ $location->id }}">{{ $location->location_name }}</option>
+                                   <option value="{{ $location->id }}" @if(isset($maintenance_costs) && $maintenance_costs->location_id == $location->id) selected @endif>{{ $location->location_name }}</option>
                                @endforeach
                            </select>
                        </div>
+                       @if(isset($maintenance_costs) && $maintenance_costs->location_id == 1)
+                        
+                            <div class="form-group residential-selects col-md-4">
+                                <label>Select Floor</label>
+                                <select class="form-control" onchange="getUnits(this)" name="floor_id" id="floorSelect">
+                                    <option value="" disabled selected>--- Select ---</option>
+                                    @foreach (\App\Models\FloorDetail::where('floor_type_code', 2)->get() as $floor)
+                                        <option value="{{ $floor->id }}" @if(isset($maintenance_costs) && $maintenance_costs->floor_id == $floor->id) selected @endif>{{ $floor->number }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group residential-selects col-md-4">
+                            <label>Select Apartment</label>
+                            <select class="form-control" name="unit_id" id="unitSelect">
+                                <option value="" disabled selected>--- Select ---</option>
+                                @foreach (\App\Models\Unit::all() as $unit)
+                                    <option value="{{ $unit->id }}" @if(isset($maintenance_costs) && $maintenance_costs->unit_id == $unit->id) selected @endif>{{ $unit->unit_number }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        
+                       @endif
+                       @if(isset($maintenance_costs) && $maintenance_costs->location_id == 2)
+                        
+                            <div class="form-group area-select col-md-4">
+                                <label>Select Common Area</label>
+                                <select class="form-control"  name="common_area_id">
+                                    <option value="" disabled selected>--- Select ---</option>
+                                    @foreach (\App\Models\CommonArea::all() as $common_area)
+                                        <option value="{{ $common_area->id }}" @if(isset($maintenance_costs) && $maintenance_costs->common_area_id == $common_area->id) selected @endif>{{ $common_area->area_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                       @endif
+                       @if(isset($maintenance_costs) && $maintenance_costs->location_id == 3)
+                            <div class="form-group parking-select col-md-4">
+                                <label>Select Floor</label>
+                                <select class="form-control"  name="floor_id">
+                                    <option value="" disabled selected>--- Select ---</option>
+                                    @foreach (\App\Models\FloorDetail::where('floor_type_code', 1)->get() as $floor)
+                                        <option value="{{ $floor->id }}" @if(isset($maintenance_costs) && $maintenance_costs->floor_id == $floor->id) selected @endif>{{ $floor->number }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                       @endif
+                       @if(isset($maintenance_costs) && $maintenance_costs->location_id == 4)
+                            <div class="form-group services-select col-md-4">
+                                <label>Select Service Area</label>
+                                <select class="form-control"  name="service_area_id">
+                                    <option value="" disabled selected>--- Select ---</option>
+                                    @foreach (\App\Models\ServiceArea::all() as $service_area)
+                                        <option value="{{ $service_area->id }}" @if(isset($maintenance_costs) && $maintenance_costs->service_area_id == $service_area->id) selected @endif>{{ $service_area->service_area_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                       @endif
                         <div class="form-group col-md-12">
                            <label>Description</label>
                           
@@ -67,22 +123,26 @@
        
        if(id == 2 || id == 3 || id == 4)
        {
+           $(".residential-selects").remove()
            $(".floor-dropdown").remove()
            $(".unit-dropdown").remove()
        }
 
        if(id == 1 || id == 3 || id == 4)
        {
+           $(".area-select").remove()
            $(".common_area_select").remove()
        }
 
        if(id == 1 || id == 2 || id == 4)
        {
+           $(".parking-select").remove()
            $(".parking_floor_select").remove()
        }
 
        if(id == 1 || id == 2 || id == 3)
        {
+           $(".services-select").remove()
            $(".service_area_select").remove()
        }
 

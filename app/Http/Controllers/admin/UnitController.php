@@ -371,7 +371,10 @@ class UnitController extends Controller
 
         if($floor_id)
         {
-            $query->where('floor_id', $floor_id);
+            if($floor_id != 'all')
+            {
+                $query->where('floor_id', $floor_id);
+            }
         }
 
         if($unit_id)

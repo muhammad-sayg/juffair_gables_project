@@ -75,7 +75,7 @@
                           $floor_number = \App\Models\FloorDetail::where('id', $item->floor_id)->first()->number;
                           $apartment_number = \App\Models\Unit::where('id', $item->unit_id)->first()->unit_number;
                         @endphp
-                        Floor {{ $floor_number }}, Apartment {{ $apartment_number }}
+                        Apartment {{ $apartment_number }}
                       @endif
 
                       @if($item->location_id == 2)

@@ -28,6 +28,14 @@ Juffair Gable
      width: 36px !important;
      height: 36px !important;
    }
+   .form-check .form-check-input
+   {
+       top:1px;
+   }
+   .form-check .form-check-label
+   {
+       padding-left:20px;
+   }
 </style>
 @stop
 @section('content')
@@ -554,8 +562,8 @@ Juffair Gable
             <div class="col-12">
               <div class="form-group">
                 <div class="form-check">
-                  <input class="form-check-input" name="now_cb" checked type="checkbox">
-                  <label class="form-check-label" style="margin-top:1px !important">
+                  <input class="form-check-input" id="customCheck1" name="now_cb" checked type="checkbox">
+                  <label class="form-check-label" for="customCheck1" >
                     Now
                   </label>
                 </div>

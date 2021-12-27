@@ -120,7 +120,7 @@ class LeavesController extends Controller
             'leave_document' => $filename,
             'staff_id' => Auth::user()->id,
         ]);
-        Toastr::success('Leave added successfully!');
+        Toastr::success('Your leave request has been sent.');
         return redirect()->route('leave.list');
     }
     
@@ -225,7 +225,7 @@ class LeavesController extends Controller
       
         $employeeleave->save();
 
-        Toastr::success('Leave updated successfully!');
+        Toastr::success('You leave request is updated.');
         return redirect()->route('leave.list');
     }
 

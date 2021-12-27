@@ -96,7 +96,7 @@ Juffair Gable
                         <input type="text" name="annual_leaves" class="form-control" id="annual_leaves"></input>
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Total Salary (BD)</label>
+                        <label>Salary Per Month (BD)</label>
                         <input type="text" name="sallery" class="form-control" id="sallery"></input>
                      </div>
 

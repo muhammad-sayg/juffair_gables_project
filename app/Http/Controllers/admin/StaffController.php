@@ -31,7 +31,7 @@ class StaffController extends Controller
         }
         else
         {
-            $staffs=User::with('StaffDetail')->whereIn('userType',['employee','officer','general-manager'])->get()->except(Auth::id())->toArray();
+            $staffs=User::with('StaffDetail')->whereIn('userType',['employee','officer'])->get()->except(Auth::id())->toArray();
 
         }
         
@@ -45,7 +45,14 @@ class StaffController extends Controller
      */
     public function create()
     {
-        $roles = Role::whereIn('slug', ['employee','officer','general-manager'])->orderBy('name','asc')->get();
+        if(Auth::user()->userType == 'Admin')
+        {
+            $roles = Role::whereIn('slug', ['employee','officer','general-manager'])->orderBy('name','asc')->get();
+        }
+        else
+        {
+            $roles = Role::whereIn('slug', ['employee','officer'])->orderBy('name','asc')->get();
+        }
 
         return view('admin.staff.create', compact('roles'));
     }
@@ -179,9 +186,11 @@ class StaffController extends Controller
     public function show($id)
     {
         $email = User::where('id', $id)->first()->email;
+        $user_type = User::where('id', $id)->first()->userType;
+        
         $employee = Employee::where('employee_email_address', $email)->first();
        
-        return view('admin.staff.show', compact('employee'));
+        return view('admin.staff.show', compact('employee','user_type'));
     }
 
     /**
@@ -195,7 +204,15 @@ class StaffController extends Controller
         $email = User::where('id',$id)->first()->email;
         $staffData = Employee::where('employee_email_address', $email)->first()->toArray();
         
-        $roles = Role::whereIn('slug', ['employee','officer'])->orderBy('name','asc')->get()->toArray();
+        
+        if(Auth::user()->userType == 'Admin')
+        {
+            $roles = Role::whereIn('slug', ['employee','officer','general-manager'])->orderBy('name','asc')->get()->toArray();
+        }
+        else
+        {
+            $roles = Role::whereIn('slug', ['employee','officer'])->orderBy('name','asc')->get()->toArray();
+        }
         $selectedRole = DB::table('user_roles')->where('user_id',$id)->first();
         return view('admin.staff.edit')->with(compact('roles','staffData','selectedRole'));
     }
@@ -209,7 +226,7 @@ class StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
-    
+       
         $request->validate([
             'name'=>'required|string ',
             'number'=>'required|size:8|unique:employees,employee_mobile_phone,' . $id,
@@ -225,9 +242,12 @@ class StaffController extends Controller
             'lease_period_start_datetime' => 'required',
             'lease_period_end_datetime' => 'required',
         ]);
-
+        
         $employee = Employee::find($id);
         $old_email = $employee->employee_email_address;
+        
+         $staff = User::where('email', $old_email)->first();
+
         $employee->employee_name = $request->name;
         $employee->employee_mobile_phone = $request->number;
         $employee->employee_email_address =  $request->email;
@@ -243,13 +263,13 @@ class StaffController extends Controller
         
 
         //save passport image
-        if($request->file('employee_passport_copy'))
+        if($request->file('staff_passport_copy'))
         {
             unlink(public_path('admin/assets/img/documents/'). $employee->employee_passport_copy);
 
-            $file_name = time().'_'.trim($request->file('employee_passport_copy')->getClientOriginalName());
+            $file_name = time().'_'.trim($request->file('staff_passport_copy')->getClientOriginalName());
             
-            $image = Image::make($request->file('employee_passport_copy')->getRealPath());
+            $image = Image::make($request->file('staff_passport_copy')->getRealPath());
             $image->resize(600,500);
             $image->save(public_path('admin/assets/img/documents/'). $file_name);
 
@@ -257,13 +277,13 @@ class StaffController extends Controller
         }
 
         //save cpr copy
-        if($request->file('employee_cpr_copy'))
+        if($request->file('staff_cpr_copy'))
         {
             unlink(public_path('admin/assets/img/documents/'). $employee->employee_cpr_copy);
 
-            $file_name = time().'_'.trim($request->file('employee_cpr_copy')->getClientOriginalName());
+            $file_name = time().'_'.trim($request->file('staff_cpr_copy')->getClientOriginalName());
             
-            $image = Image::make($request->file('employee_cpr_copy')->getRealPath());
+            $image = Image::make($request->file('staff_cpr_copy')->getRealPath());
             $image->resize(600,500);
             $image->save(public_path('admin/assets/img/documents/'). $file_name);
 
@@ -272,13 +292,13 @@ class StaffController extends Controller
        
 
         //save contract copy
-        if($request->file('employee_contract_copy'))
+        if($request->file('staff_contract_copy'))
         {
             unlink(public_path('admin/assets/img/documents/'). $employee->employee_contract_copy);
 
-            $file_name = time().'_'.trim($request->file('employee_contract_copy')->getClientOriginalName());
+            $file_name = time().'_'.trim($request->file('staff_contract_copy')->getClientOriginalName());
             
-            $image = Image::make($request->file('employee_contract_copy')->getRealPath());
+            $image = Image::make($request->file('staff_contract_copy')->getRealPath());
             $image->resize(600,500);
             $image->save(public_path('admin/assets/img/documents/'). $file_name);
 
@@ -295,23 +315,20 @@ class StaffController extends Controller
             $image->resize(300,300);
             $image->save(public_path('admin/assets/img/staff/'). $file_name);
             $employee->employee_image  = $file_name;
+            $staff->image = $file_name;
         }
         
         $employee->save();
         
         
-        $staff = User::where('email', $old_email)->first();
+       
         $staff->name = $request->name;
         $staff->number = $request->number;
         $staff->email = $request->email;
         $staff->userType = $request->staffType;
         $staff->address='';
         $staff->status=1;
-        if(isset($file_name))
-        $staff->image = $file_name;
-
         
-
         if($staff->save())
         {
             $role = Role::where('slug',$request->staffType)->pluck('id')->first();

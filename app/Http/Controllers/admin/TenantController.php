@@ -71,7 +71,7 @@ class TenantController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+       
         $request->validate([
             'tenant_first_name' => 'required',
             'tenant_last_name' => 'required',
@@ -100,7 +100,8 @@ class TenantController extends Controller
         ],[
             'unit_id.required' => 'Please select the apartment first.'
         ]);
-
+        
+       
         $tenant = new Tenant();
         $tenant->tenant_first_name = $request['tenant_first_name'];
         $tenant->tenant_last_name = $request['tenant_last_name'];
@@ -126,23 +127,30 @@ class TenantController extends Controller
         //save tenant image
         if($request->file('tenant_image'))
         {
-            $file_name = time().'_'.trim($request->file('tenant_image')->getClientOriginalName());
             
-            $image = Image::make($request->file('tenant_image')->getRealPath());
-            $image->resize(300,200);
-            $image->save(public_path('admin/assets/img/staff/'). $file_name);
-
+            $file_name = time().'_'.trim($request->file('tenant_image')->getClientOriginalName());
+            // $tenant_image = $request->file('tenant_image')->getRealPath();
+            
+            // $image = Image::make($tenant_image);
+            // dd($image);
+            // $image->resize(300,200);
+            // $image->save(public_path('admin/assets/img/staff/'). $file_name);
+            
+            $request->file('tenant_image')->move(public_path('admin/assets/img/staff/'), $file_name);
+           
             $tenant->tenant_image  = $file_name;
         }
-
+        
         //save passport image
         if($request->file('tenant_passport_copy'))
         {
             $file_name = time().'_'.trim($request->file('tenant_passport_copy')->getClientOriginalName());
             
-            $image = Image::make($request->file('tenant_passport_copy')->getRealPath());
-            $image->resize(300,200);
-            $image->save(public_path('admin/assets/img/documents/'). $file_name);
+            // $image = Image::make($request->file('tenant_passport_copy')->getRealPath());
+            // $image->resize(300,200);
+            // $image->save(public_path('admin/assets/img/documents/'). $file_name);
+            
+            $request->file('tenant_passport_copy')->move(public_path('admin/assets/img/documents/'), $file_name);
 
             $tenant->tenant_passport_copy  = $file_name;
         }
@@ -155,6 +163,8 @@ class TenantController extends Controller
             $image = Image::make($request->file('tenant_cpr_copy')->getRealPath());
             $image->resize(300,200);
             $image->save(public_path('admin/assets/img/documents/'). $file_name);
+            
+            $request->file('tenant_cpr_copy')->move(public_path('admin/assets/img/documents/'), $file_name);
 
             $tenant->tenant_cpr_copy  = $file_name;
         }
@@ -164,9 +174,11 @@ class TenantController extends Controller
         {
             $file_name = time().'_'.trim($request->file('tenant_contract_copy')->getClientOriginalName());
             
-            $image = Image::make($request->file('tenant_contract_copy')->getRealPath());
-            $image->resize(300,200);
-            $image->save(public_path('admin/assets/img/documents/'). $file_name);
+            // $image = Image::make($request->file('tenant_contract_copy')->getRealPath());
+            // $image->resize(300,200);
+            // $image->save(public_path('admin/assets/img/documents/'). $file_name);
+            
+            $request->file('tenant_contract_copy')->move(public_path('admin/assets/img/documents/'), $file_name);
 
             $tenant->tenant_contract_copy  = $file_name;
         }
@@ -306,9 +318,11 @@ class TenantController extends Controller
 
             $file_name = time().'_'.trim($request->file('tenant_image')->getClientOriginalName());
             
-            $image = Image::make($request->file('tenant_image')->getRealPath());
-            $image->resize(300,200);
-            $image->save(public_path('admin/assets/img/staff/'). $file_name);
+            // $image = Image::make($request->file('tenant_image')->getRealPath());
+            // $image->resize(300,200);
+            // $image->save(public_path('admin/assets/img/staff/'). $file_name);
+            
+            $request->file('tenant_image')->move(public_path('admin/assets/img/staff/'), $file_name);
 
             $tenant->tenant_image  = $file_name;
         }
@@ -320,9 +334,11 @@ class TenantController extends Controller
 
             $file_name = time().'_'.trim($request->file('tenant_passport_copy')->getClientOriginalName());
             
-            $image = Image::make($request->file('tenant_passport_copy')->getRealPath());
-            $image->resize(300,200);
-            $image->save(public_path('admin/assets/img/documents/'). $file_name);
+            // $image = Image::make($request->file('tenant_passport_copy')->getRealPath());
+            // $image->resize(300,200);
+            // $image->save(public_path('admin/assets/img/documents/'). $file_name);
+            
+            $request->file('tenant_passport_copy')->move(public_path('admin/assets/img/documents/'), $file_name);
 
             $tenant->tenant_passport_copy  = $file_name;
         }
@@ -334,9 +350,11 @@ class TenantController extends Controller
 
             $file_name = time().'_'.trim($request->file('tenant_cpr_copy')->getClientOriginalName());
             
-            $image = Image::make($request->file('tenant_cpr_copy')->getRealPath());
-            $image->resize(300,200);
-            $image->save(public_path('admin/assets/img/documents/'). $file_name);
+            // $image = Image::make($request->file('tenant_cpr_copy')->getRealPath());
+            // $image->resize(300,200);
+            // $image->save(public_path('admin/assets/img/documents/'). $file_name);
+            
+            $request->file('tenant_cpr_copy')->move(public_path('admin/assets/img/documents/'), $file_name);
 
             $tenant->tenant_cpr_copy  = $file_name;
         }
@@ -348,9 +366,11 @@ class TenantController extends Controller
 
             $file_name = time().'_'.trim($request->file('tenant_contract_copy')->getClientOriginalName());
             
-            $image = Image::make($request->file('tenant_contract_copy')->getRealPath());
-            $image->resize(300,200);
-            $image->save(public_path('admin/assets/img/documents/'). $file_name);
+            // $image = Image::make($request->file('tenant_contract_copy')->getRealPath());
+            // $image->resize(300,200);
+            // $image->save(public_path('admin/assets/img/documents/'). $file_name);
+            
+            $request->file('tenant_contract_copy')->move(public_path('admin/assets/img/documents/'), $file_name);
 
             $tenant->tenant_contract_copy  = $file_name;
         }

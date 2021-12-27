@@ -77,7 +77,14 @@ Juffair Gable
                                 <img src="{{asset('public/admin/assets/img/staff/no-image.png')}}" alt="" width="100" height="100">
                                 @endif
                             </td>
-                            <td data-href='{{ route('staff.show',$staff['id']) }}'>{{ ucwords(str_replace("-"," ",$staff['userType'])) }}</td>
+                            <td data-href='{{ route('staff.show',$staff['id']) }}'>
+                                @if($staff['userType'] == 'officer')
+                                  Accountant
+                                  @else
+                                  {{ ucwords(str_replace("-", " ",$staff['userType'])) }}
+                                  @endif
+                                
+                                </td>
                             
                                 {{-- <td>
                                     @if($staff['status'] ==1)
@@ -150,7 +157,13 @@ Juffair Gable
                                 <img src="{{asset('public/admin/assets/img/staff/no-image.png')}}" alt="" width="100" height="100">
                                 @endif
                             </td>
-                            <td data-href='{{ route('staff.show',$staff['id']) }}'>{{ ucwords(str_replace("-"," ",$staff['userType'])) }}</td>
+                            <td data-href='{{ route('staff.show',$staff['id']) }}'>
+                                @if($staff['userType'] == 'officer')
+                                  Accountant
+                                  @else
+                                  {{ ucwords(str_replace("-", " ",$staff['userType'])) }}
+                                  @endif
+                                </td>
                             
                                 {{-- <td>
                                     @if($staff['status'] ==1)

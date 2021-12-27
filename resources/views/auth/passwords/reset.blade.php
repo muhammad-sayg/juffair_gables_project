@@ -20,7 +20,7 @@
 .login-bg{
   border: 0px solid black;
   padding: 25px;
-  background: url(public/admin/assets/img/bahrain.jpg);
+  background: url(../../public/admin/assets/img/bahrain.jpg);
   background-repeat: no-repeat;
   background-size: 100%;
 }

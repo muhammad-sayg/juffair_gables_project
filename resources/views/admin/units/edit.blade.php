@@ -95,7 +95,7 @@ Juffair Gable
                     </div>
                     <div class="form-group col-md-3">
                       <label for="number">Apartment Area (m<sup>2</sup>)</label>
-                      <input type="text" value="{{ $unit->unit_area }}" maxlength="3" name="unit_area" placeholder="" class="form-control" id="unitArea">
+                      <input type="text" value="{{ $unit->unit_area }}"  name="unit_area" placeholder="" class="form-control" id="unitArea">
                     </div>
                     <div class="form-group col-md-3">
                       <label for="number">Apartment Status</label>
@@ -164,8 +164,7 @@ Juffair Gable
     $("#noOFBeds").inputFilter(function(value) {
     return /^-?\d*$/.test(value); });
 
-    $("#unitArea").inputFilter(function(value) {
-    return /^-?\d*$/.test(value); });
+   
 
     
 </script>

@@ -1,7 +1,7 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
       <div class="sidebar-brand">
-        <a href="index.html"> <img alt="image" style="height: 55px" src="{{ asset('/public/admin/assets')}}/img/juffair_gables_logo.png" class="header-logo" /> <span
+        <a href="{{ route('dashboard') }}"> <img alt="image" style="height: 55px" src="{{ asset('/public/admin/assets')}}/img/juffair_gables_logo.png" class="header-logo" /> <span
             class="logo-name"></span>
         </a>
       </div>
@@ -258,15 +258,15 @@
           </ul>
         </li> --}}
         @if(request()->user()->can('view-role-and-permission'))
-        <li style="display:none;" class="dropdown {!! (Request::is('role/list') ? "active" : "") !!} {!! (Request::is('role/create') ? "active" : "") !!} {!! (Request::is('role/edit/*') ? "active" : "") !!} {!! (Request::is('module/list') ? "active" : "") !!} {!! (Request::is('module/create') ? "active" : "") !!} {!! (Request::is('module/edit/*') ? "active" : "") !!} {!! (Request::is('permission/list') ? "active" : "") !!} {!! (Request::is('permission/create') ? "active" : "") !!} {!! (Request::is('permission/edit/*') ? "active" : "") !!} {!! (Request::is('role/assign-permission/*') ? "active" : "") !!}" >
-          <a href="#"  class="menu-toggle nav-link has-dropdown role-permission-dropdown"><i class="fas fa-user-shield"></i><span>Roles & Permission</span></a>
-          <ul class="dropdown-menu">
-              <li><a class="nav-link" href="{{ route('role.list') }}">Roles</a></li>
-              
-              <li><a class="nav-link" href="{{ route('module.list')}} ">Modules</a></li>
-              <li><a class="nav-link" href="{{ route('permission.list') }}">Permissions</a></li>
-          </ul>
-        </li>
+          <li style="display:none;" class="dropdown {!! (Request::is('role/list') ? "active" : "") !!} {!! (Request::is('role/create') ? "active" : "") !!} {!! (Request::is('role/edit/*') ? "active" : "") !!} {!! (Request::is('module/list') ? "active" : "") !!} {!! (Request::is('module/create') ? "active" : "") !!} {!! (Request::is('module/edit/*') ? "active" : "") !!} {!! (Request::is('permission/list') ? "active" : "") !!} {!! (Request::is('permission/create') ? "active" : "") !!} {!! (Request::is('permission/edit/*') ? "active" : "") !!} {!! (Request::is('role/assign-permission/*') ? "active" : "") !!}" >
+            <a href="#"  class="menu-toggle nav-link has-dropdown role-permission-dropdown"><i class="fas fa-user-shield"></i><span>Roles & Permission</span></a>
+            <ul class="dropdown-menu">
+                <li><a class="nav-link" href="{{ route('role.list') }}">Roles</a></li>
+                
+                <li><a class="nav-link" href="{{ route('module.list')}} ">Modules</a></li>
+                <li><a class="nav-link" href="{{ route('permission.list') }}">Permissions</a></li>
+            </ul>
+          </li>
         @endif
     </aside>
   </div>

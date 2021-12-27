@@ -171,8 +171,7 @@ Juffair Gable
     $("#noOFBeds").inputFilter(function(value) {
     return /^-?\d*$/.test(value); });
 
-    $("#unitArea").inputFilter(function(value) {
-    return /^-?\d*$/.test(value); });
+    
 
     $("#totalRent").inputFilter(function(value) {
     return /^-?\d*$/.test(value); });

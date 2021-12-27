@@ -53,6 +53,7 @@ Juffair Gable
                         </div> --}}
                         <div class="form-group col-md-3">
                             <label for="">Select Floor</label>
+                            <option value="all" @if(isset($floor_id) && $floor_id == "all") selected @endif>All</option>
                             <select class="form-control" name="floor_id" onchange="getUnits(this.value)" id="floorSelect">
                                 <option value="0" selected disabled>---Select---</option>
                                 @foreach ($floor_list as $floor)

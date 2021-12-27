@@ -101,7 +101,7 @@ Juffair Gable
                 <div class="author-box-name mt-1">
                   <a href="#">{{ $user->name }}</a>
                 </div>
-                <div class="author-box-job">{{ $user->userType }}</div>
+                <div class="author-box-job">{{ ucwords(str_replace("-", " ",$user->userType)) }}</div>
               </div>
             </div>
           </div>
@@ -116,10 +116,10 @@ Juffair Gable
               <div class="py-4">
                 <p class="clearfix">
                   <span class="float-left">
-                    Birthday
+                    Date of Birth
                   </span>
                   <span class="float-right text-muted">
-                    {{ isset($user_details) ? \Carbon\Carbon::parse($user_details->date_of_birth)->format('d-m-Y'): '' }}
+                    {{ isset($user_details) ? \Carbon\Carbon::parse($user_details->employee_date_of_birth)->format('d-m-Y'): '' }}
                   </span>
                 </p>
                 <p class="clearfix">

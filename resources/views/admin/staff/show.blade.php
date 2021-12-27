@@ -22,6 +22,13 @@
                 <div class="clearfix"></div>
                 <div class="author-box-name">
                   <a href="#">{{isset($employee) ? $employee->employee_name : ''}}</a>
+                  <div class="author-box-job">
+                      @if($user_type == 'officer')
+                      Accountant
+                      @else
+                      {{ ucwords(str_replace("-", " ",$user_type)) }}
+                      @endif
+                  </div>
                 </div>
                 
               </div>
@@ -98,7 +105,7 @@
                     <div class="col-md-3 col-6 b-r">
                       <strong>Salary Per Month</strong>
                       <br>
-                      <p class="text-muted">BD{{ isset($employee->employee_sallery )? round($employee->employee_sallery,0)  : '' }}</p>
+                      <p class="text-muted">{{ isset($employee->employee_sallery )? round($employee->employee_sallery,0)  : '' }} BD</p>
                     </div>
                   </div>
                   
