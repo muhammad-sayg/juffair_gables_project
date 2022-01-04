@@ -103,9 +103,21 @@
                       <p class="text-muted">{{ isset($tenant->emergancy_email )? $tenant->emergancy_email  : '' }}</p>
                     </div>
                     <div class="col-md-3 col-6">
-                      <strong>Rent Unit No.</strong>
+                      <strong>Apartment</strong>
                       <br>
                       <p class="text-muted">{{isset($tenant->unit) ? $tenant->unit->unit_number : '' }}</p>
+                    </div>
+                    @if($tenant->tenant_cpr_no)
+                    <div class="col-md-3 col-6">
+                      <strong>Cpr Number</strong>
+                      <br>
+                      <p class="text-muted">{{isset($tenant->tenant_cpr_no) ? $tenant->tenant_cpr_no : '' }}</p>
+                    </div>
+                    @endif
+                    <div class="col-md-3 col-6">
+                      <strong>Passport Number</strong>
+                      <br>
+                      <p class="text-muted">{{isset($tenant->tenant_passport_no) ? $tenant->tenant_passport_no : '' }}</p>
                     </div>
                     <div class="col-md-3 col-6">
                       <strong>Total Rent</strong>
@@ -136,7 +148,9 @@
                     <div class="section-title">Documents</div>
                     <ul>
                       <li><a href="{{ url('public/admin/assets/img/documents').'/'. $tenant->tenant_passport_copy }}" target="blank">Passport Copy</a></li>
+                      @if($tenant->tenant_cpr_copy)
                       <li><a href="{{ url('public/admin/assets/img/documents').'/'. $tenant->tenant_cpr_copy }}" target="blank">CPR Copy</a></li>
+                      @endif
                       <li><a href="{{ url('public/admin/assets/img/documents').'/'. $tenant->tenant_contract_copy }}" target="blank">Employee Contract</a></li>
                     </ul>
                 </div>

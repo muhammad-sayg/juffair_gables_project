@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="{{ asset('public/admin/assets/') }}/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.css') }}">
 <link rel="stylesheet" href="{{ asset('public/admin/assets/') }}/bundles/bootstrap-timepicker/css/bootstrap-timepicker.min.css">
+
 <style>
    tr:hover {
     background: #a3a3a3 !important;
@@ -33,7 +34,7 @@
     </ul> --}}
      <div class="row">
       <div class="col-12">
-        @if(\Auth::user()->userType != 'employee')
+        @if(\Auth::user()->userType != 'employee' AND \Auth::user()->userType != 'receptionist')
         {{-- <div class="card">
           <div class="card-header">
            <h4>Tasks Under Review</h4>
@@ -390,7 +391,7 @@
                   </thead>
                   <tbody>
                     @php
-                    if(Auth::user()->userType == 'employee')
+                    if(Auth::user()->userType == 'employee' OR Auth::user()->userType == 'receptionist')
                     {
                       $tasks = \App\Models\Task::where('assignee_id', Auth::user()->id)->where('task_status_code', 5)->orderBy('id','desc')->get();
 
@@ -523,15 +524,37 @@
             <div class="row">
               <div class="col-6">
                 <input type="hidden" name="task_id" id="assignTaskModalHiddenInput">
-                <div class="form-group">
-                  <label for="">Select Employee</label>
-                  <select name="employee_id" class="form-control" id="">
-                    <option value="">--- Select ---</option>
-                    @foreach ($employee_list as $employee)
-                        <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                    @endforeach
-                  </select>
+                <div class="section-title">Assign Task To</div>
+              <div class="d-flex mb-3">
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="customRadioInline1" value="1" checked name="taskRadioButton"
+                    class="custom-control-input">
+                  <label class="custom-control-label" for="customRadioInline1">Employee</label>
                 </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="customRadioInline2" value="2" name="taskRadioButton"
+                    class="custom-control-input">
+                  <label class="custom-control-label" for="customRadioInline2">Receptionist</label>
+                </div>
+              </div>
+              <div class="form-group employee-select">
+                <label for="">Select Employee</label>
+                <select name="employee_id" class="form-control" id="">
+                  <option value="">--- Select ---</option>
+                  @foreach ($employee_list as $employee)
+                      <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                  @endforeach
+                </select>
+              </div>
+              <div class="form-group receptionist-select" style="display:none;">
+                <label for="">Select Receptionist</label>
+                <select name="receptionist_id" class="form-control" id="">
+                  <option value="">--- Select ---</option>
+                  @foreach ($receptionist_list as $employee)
+                      <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                  @endforeach
+                </select>
+              </div>
               </div>
             </div>
             <div class="row">
@@ -647,6 +670,49 @@
 <script src="{{ asset('public/admin/assets/') }}/bundles/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
 <script src="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <script>
+  $('input[name="taskRadioButton"]').change(
+   
+   function(){
+       if($(this).is(':checked') && $(this).val() == '1') {
+           $(".employee-select").show()
+           $(".receptionist-select").hide()
+       }
+       else
+       {
+           $(".employee-select").hide()
+           $(".receptionist-select").show()
+       }
+ });
+
+  $(".assign_task").on("click", function(){
+    
+    let task_id = $(this).attr("data-task_id")
+    $("#assignTaskModalHiddenInput").val(task_id)
+    $("#assignTaskModal").modal("show")
+  })
+  
+   $(".resubmit-task").click(function(){
+    let task_id = $(this).attr("data-task_id")
+    $("#resubmitTaskHiddenInput").val(task_id)
+    $("#resubmitModal").modal("show")
+  })
+
+  $('input[type=checkbox]').change(function() {
+     
+     if (this.checked) {
+         $(".assign_schedule").hide() 
+     } else {
+       $(".assign_schedule").show()
+     }
+   });
+
+   
+  $(".datepicker1").daterangepicker({
+        locale: { format: "YYYY-MM-DD" },
+        singleDatePicker: true,
+        minDate : moment(new Date(),"YYYY-MM-DD").add('days', 1),
+  });
+
   $('#tableExport1').DataTable({
     dom: 'lBfrtip',
     "ordering": true,

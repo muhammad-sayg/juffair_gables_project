@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Juffair Gable - Login</title>
+  <title>Juffair Gables - Login</title>
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{ asset('public/admin/assets')}}/css/app.min.css">
   <link rel="stylesheet" href="{{ asset('public/admin/assets')}}/bundles/bootstrap-social/bootstrap-social.css">
@@ -53,12 +53,14 @@
                         @csrf
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input id="email" type="email" autocomplete="off" class="form-control @error('email') is-invalid @enderror" autocomplete="off" name="email" tabindex="1" required >
-                            @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                            <input id="email" type="email" autocomplete="off" class="form-control @if(!empty($errors)) @error('email') is-invalid @enderror @endif" autocomplete="off" name="email" tabindex="1" required >
+                            @isset($errors)
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            @endisset
                         </div>
 
                         <div class="form-group">
@@ -72,12 +74,14 @@
                             </div>
                             @endif
                           </div>
-                          <input id="password" autocomplete="off" type="password" class="form-control @error('password') is-invalid @enderror" name="password" tabindex="2" required>
+                          <input id="password" autocomplete="off" type="password" class="form-control @if(!empty($errors)) @error('password') is-invalid @enderror @endif" name="password" tabindex="2" required>
+                          @isset($errors)
                           @error('password')
                               <span class="invalid-feedback" role="alert">
                                   <strong>{{ $message }}</strong>
                               </span>
                           @enderror
+                          @endisset
                         </div>
 
                         <div class="form-group">

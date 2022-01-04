@@ -36,7 +36,7 @@
                             </select>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Rent Month</label>
+                            <label>Select Month</label>
                             <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
                               <input type="text" value="{{ isset($rent_month) ? $rent_month : '' }}" name="rent_month" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
                               <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">

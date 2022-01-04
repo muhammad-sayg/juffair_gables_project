@@ -1,7 +1,7 @@
 @extends('layouts.admin.app')
 {{-- Page title --}}
 @section('title')
-Juffair Gable
+Juffair Gables
 @stop
 {{-- page level styles --}}
 @section('header_styles')
@@ -55,6 +55,11 @@ Juffair Gable
   opacity: 1;
 }
 
+.author-box-name
+{
+    margin-top:6em !important;
+}
+
 .icon {
   color: white;
   font-size: 100px;
@@ -87,16 +92,20 @@ Juffair Gable
           <div class="card author-box">
             <div class="card-body">
               <div class="author-box-center">
-                <img alt="image" src="{{asset('public/admin/assets/img/staff/')}}/{{ $user->image }}"  id="OpenImgUpload" class="rounded-circle profile-image imgupload author-box-picture">
+                
                 <form action="{{ route('staff.change_profile_image', $user->id) }}" id="profileImageForm" method="POST" enctype="multipart/form-data">
                   @csrf
                   <input type="file" name="profile_image" id="imgupload" class="img-input" style="display:none"/>
                 </form>
+                <div style="display:flex;justify-content:center;">
+                    
                 <div class="overlay">
+                    <img alt="image" src="{{asset('public/admin/assets/img/staff/')}}/{{ $user->image }}"  id="OpenImgUpload" class="rounded-circle profile-image imgupload author-box-picture">
                   <a href="#" class="icon" title="Edit Profile Image">
                     <i class="fas fa-pen"></i>
                   </a>
                 </div> 
+                </center>
                 <div class="clearfix"></div>
                 <div class="author-box-name mt-1">
                   <a href="#">{{ $user->name }}</a>
@@ -174,8 +183,8 @@ Juffair Gable
                           </div>
                         </div>
                         <div class="form-group col-md-6 col-12">
-                          <label>Contact Number (Without Country Code)</label>
-                          <input type="tel" name="number" maxlength="8" id="contactNumber" class="form-control" value="{{isset($user_details->employee_mobile_phone) ? $user_details->employee_mobile_phone : '' }}">
+                          <label>Contact Number.</label>
+                          <input type="tel" name="number"  id="contactNumber" class="form-control" value="{{isset($user_details->employee_mobile_phone) ? $user_details->employee_mobile_phone : '' }}">
                         </div>
                       </div>
                       <div class="row">
@@ -191,8 +200,9 @@ Juffair Gable
                         </div>
                       </div>
                     </div>
-                    <div class="card-footer text-right">
+                    <div class="card-footer">
                       <button class="btn btn-primary">Save Changes</button>
+                      <a href="{{ url()->previous() }}" type="button" class="btn btn-primary ml-3" style="padding: 5px 36px;">Cancel</a>
                     </div>
                   </form>
                 </div>
@@ -228,8 +238,9 @@ Juffair Gable
                         </div>
                       </div>
                     </div>
-                    <div class="card-footer text-right">
+                    <div class="card-footer">
                       <button class="btn btn-primary">Change Password</button>
+                      <a href="{{ url()->previous() }}" type="button" class="btn btn-primary ml-3" style="padding: 5px 36px;">Cancel</a>
                     </div>
                   </form>
                 </div>
@@ -318,6 +329,6 @@ $(".img-input").change(function(){
   
      
     $("#contactNumber").inputFilter(function(value) {
-    return /^-?\d*$/.test(value); });
+    return /^[+-]?\d*$/.test(value); });
 </script>
 @stop

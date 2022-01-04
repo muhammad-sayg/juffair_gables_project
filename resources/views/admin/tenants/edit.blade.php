@@ -1,7 +1,7 @@
 @extends('layouts.admin.app')
 {{-- Page title --}}
 @section('title')
-    Juffair Gable
+    Juffair Gables
 @stop
 {{-- page level styles --}}
 @section('header_styles')
@@ -90,6 +90,10 @@
                                 <label>CPR</label>
                                 <input type="text" name="tenant_cpr_no" value="{{ isset($tenant->tenant_cpr_no)? $tenant->tenant_cpr_no : '' }}" id="cprNumber" class="form-control">
                             </div>
+                            <div class="form-group col-md-4">
+                                <label>Passport Number</label>
+                                <input type="text" maxlength="9" value="{{ isset($tenant->tenant_passport_no)? $tenant->tenant_passport_no : '' }}" name="tenant_passport_number" class="form-control" id="cprNumber">
+                             </div>
                             <div class="form-group col-md-4">
                                 <label>Lease Period Start Date</label>
                                 <input type="text" name="lease_period_start_datetime" value="{{ isset($tenant->lease_period_start_datetime)? $tenant->lease_period_start_datetime : '' }}" class="form-control datepicker">

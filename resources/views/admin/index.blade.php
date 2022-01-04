@@ -177,7 +177,7 @@ Juffair Gable
           <div class="card card-box">
             <div class="card-statistic-4">
               <div class="info-box7-block">
-                <h6 class="m-b-20 text-right">Leaves Request</h6>
+                <h6 class="m-b-20 text-right">Leave Requests</h6>
                 <h4 class="text-right">
                 <i class="far fa-user pull-left bg-green c-icon"></i><span>{{ $leaves_request }}</span>
                 </h4>
@@ -230,7 +230,7 @@ Juffair Gable
                           $floor_number = \App\Models\FloorDetail::where('id', $item->floor_id)->first()->number;
                           $apartment_number = \App\Models\Unit::where('id', $item->unit_id)->first()->unit_number;
                         @endphp
-                        Floor {{ $floor_number }}, Apartment {{ $apartment_number }}
+                        Apartment {{ $apartment_number }}
                       @endif
 
                       @if($item->location_id == 2)
@@ -310,7 +310,7 @@ Juffair Gable
       </div>
       @endif
       @endif
-      @if(\Auth::user()->userType == 'employee')
+      @if(\Auth::user()->userType == 'employee' OR \Auth::user()->userType == 'receptionist')
       @php
         $tasks = \App\Models\Task::whereIn('task_status_code', [1,2,3,4])->where('assignee_id', Auth::user()->id)->orderBy('id','desc')->get();
         if($average_time)
@@ -334,7 +334,7 @@ Juffair Gable
                 <h6 class="text-right  m-b-20">Average time to resolve an assigned tasks</h6>
                 <h4 class="text-right"><i class="fas fa-clock pull-left bg-cyan c-icon mt-4"></i><span>{{ isset($hours)? $hours.' '.'hours': '0' }}  {{ isset($minutes) ? $minutes.' '. 'minutes' : ''}} </span>
                 </h4>
-                <a href="{{ route('tasks.completed_task.list') }}"  class="small-box-footer text-center d-block pt-2">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('tasks.completed_task.list') }}"  class="small-box-footer text-center d-block mt-4 pt-2">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
           </div>
@@ -491,8 +491,8 @@ Juffair Gable
         </div>
       </div>
       @endif
-
-      @if(\Auth::user()->userType != 'employee')
+      
+      @if((\Auth::user()->userType != 'employee' AND \Auth::user()->userType != 'receptionist'))
       <div class="col-12 col-md-12 col-lg-12 pl-0 pr-0">
         @php
           $current_year = \Carbon\Carbon::now()->format('Y');
@@ -547,11 +547,33 @@ Juffair Gable
           <div class="row">
             <div class="col-6">
               <input type="hidden" name="maintenance_request_id" id="assignTaskModalHiddenInput">
-              <div class="form-group">
+              <div class="section-title">Assign Task To</div>
+              <div class="d-flex mb-3">
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="customRadioInline1" value="1" checked name="taskRadioButton"
+                    class="custom-control-input">
+                  <label class="custom-control-label" for="customRadioInline1">Employee</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="customRadioInline2" value="2" name="taskRadioButton"
+                    class="custom-control-input">
+                  <label class="custom-control-label" for="customRadioInline2">Receptionist</label>
+                </div>
+              </div>
+              <div class="form-group employee-select">
                 <label for="">Select Employee</label>
                 <select name="employee_id" class="form-control" id="">
                   <option value="">--- Select ---</option>
                   @foreach ($employee_list as $employee)
+                      <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                  @endforeach
+                </select>
+              </div>
+              <div class="form-group receptionist-select" style="display:none;">
+                <label for="">Select Receptionist</label>
+                <select name="receptionist_id" class="form-control" id="">
+                  <option value="">--- Select ---</option>
+                  @foreach ($receptionist_list as $employee)
                       <option value="{{ $employee->id }}">{{ $employee->name }}</option>
                   @endforeach
                 </select>
@@ -658,18 +680,30 @@ Juffair Gable
 <script src="{{asset('public/admin/assets/js/page/datatables.js')}}"></script>
 <script src="{{ asset('public/admin/assets/') }}/bundles/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
 <script src="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" ></script>
  <!-- JS Libraies -->
- <script src="{{  asset('public/admin/assets/bundles/chartjs/chart.min.js') }}"></script>
- <!-- Page Specific JS File -->
- <script src="{{  asset('public/admin/assets/js/page/chart-chartjs.js') }}"></script>
+ 
  <script src="{{  asset('public/admin/assets/js/scripts.js') }}"></script>
+ <script src="{{  asset('public/admin/assets/bundles/chartjs/chart.min.js') }}"></script>
 <script>
   $("tr.active-task-table td:not(:nth-last-child(2),:nth-last-child(1))").click(function() {
       window.location = $(this).data("href");
   });
 </script>
 <script>
+  $('input[name="taskRadioButton"]').change(
+   
+    function(){
+        if($(this).is(':checked') && $(this).val() == '1') {
+            $(".employee-select").show()
+            $(".receptionist-select").hide()
+        }
+        else
+        {
+            $(".employee-select").hide()
+            $(".receptionist-select").show()
+        }
+  });
   $(".task-status-button").click(function(){
     let task_id = $(this).attr('data-task_id')
     let task_status_code = $(this).attr('data-task_status_code')
@@ -755,7 +789,7 @@ function getRequestMentenanceDetails(id) {
   $(".datepicker1").daterangepicker({
         locale: { format: "YYYY-MM-DD" },
         singleDatePicker: true,
-        minDate : moment(new Date(),"YYYY-MM-DD").add('days', 1),
+        minDate : moment(new Date(),"YYYY-MM-DD").add(1, 'days'),
   });
 </script>
 <script>
@@ -927,4 +961,6 @@ function getRequestMentenanceDetails(id) {
     
     });
 </script>
+
+
 @stop

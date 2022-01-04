@@ -67,6 +67,9 @@
               </div>
             </div>
           </div>
+          <div class="text-center">
+            <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+          </div>
         
         </div>
         <div class="col-12 col-md-12 col-lg-8">
@@ -92,11 +95,13 @@
                       <br>
                       <p class="text-muted">{{ isset($employee->employee_email_address )? $employee->employee_email_address  : '' }}</p>
                     </div>
+                    @if($employee->employee_cpr_no)
                     <div class="col-md-3 col-6 b-r">
-                      <strong>CPR</strong>
+                      <strong>Cpr Number</strong>
                       <br>
                       <p class="text-muted">{{isset($employee) ? $employee->employee_cpr_no : ''}}</p>
                     </div>
+                    @endif
                     <div class="col-md-3 col-6 b-r">
                       <strong>Passport Number</strong>
                       <br>
@@ -127,7 +132,9 @@
                   
                   <ul>
                     <li><a href="{{ url('public/admin/assets/img/documents').'/'. $employee->employee_passport_copy }}" target="blank">Passport Copy</a></li>
+                    @if($employee->employee_cpr_copy)
                     <li><a href="{{ url('public/admin/assets/img/documents').'/'. $employee->employee_cpr_copy }}" target="blank">CPR Copy</a></li>
+                    @endif
                     <li><a href="{{ url('public/admin/assets/img/documents').'/'. $employee->employee_contract_copy }}" target="blank">Employee Contract</a></li>
                   </ul>
                 </div>

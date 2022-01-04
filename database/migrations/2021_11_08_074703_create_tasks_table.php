@@ -35,6 +35,8 @@ class CreateTasksTable extends Migration
 
             $table->integer('user_id')->nullable();
             $table->integer('maintenance_request_id')->nullable();
+            $table->integer('checked')->default(1);
+            $table->integer('assigned_task_check')->default(1);
             $table->timestamps();
         });
     }

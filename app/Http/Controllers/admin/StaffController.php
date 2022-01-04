@@ -26,12 +26,12 @@ class StaffController extends Controller
     {
         if(Auth::user()->userType == 'Admin')
         {
-            $staffs=User::with('StaffDetail')->whereIn('userType',['employee','officer','general-manager'])->get()->except(Auth::id())->toArray();
+            $staffs=User::with('StaffDetail')->whereIn('userType',['employee','officer','general-manager','receptionist'])->get()->except(Auth::id())->toArray();
 
         }
         else
         {
-            $staffs=User::with('StaffDetail')->whereIn('userType',['employee','officer'])->get()->except(Auth::id())->toArray();
+            $staffs=User::with('StaffDetail')->whereIn('userType',['employee','officer','receptionist'])->get()->except(Auth::id())->toArray();
 
         }
         
@@ -47,11 +47,11 @@ class StaffController extends Controller
     {
         if(Auth::user()->userType == 'Admin')
         {
-            $roles = Role::whereIn('slug', ['employee','officer','general-manager'])->orderBy('name','asc')->get();
+            $roles = Role::whereIn('slug', ['employee','officer','general-manager','receptionist'])->orderBy('name','asc')->get();
         }
         else
         {
-            $roles = Role::whereIn('slug', ['employee','officer'])->orderBy('name','asc')->get();
+            $roles = Role::whereIn('slug', ['employee','officer','receptionist'])->orderBy('name','asc')->get();
         }
 
         return view('admin.staff.create', compact('roles'));
@@ -68,7 +68,7 @@ class StaffController extends Controller
         
         $request->validate([
             'name'=>'required|string ',
-            'number'=>'required|size:8|unique:users,number',
+            'number'=>'required|unique:users,number',
             'email'=>'required|email|unique:users,email',
             'email'=>'required|email|unique:employees,employee_email_address',
             'password'=>'required',
@@ -79,12 +79,12 @@ class StaffController extends Controller
             'staff_permanent_address' => 'required',
             'annual_leaves' => 'required',
             'sallery' => 'required',
-            'staff_cpr_no' => 'required|unique:employees,employee_cpr_no',
+            // 'staff_cpr_no' => 'required|unique:employees,employee_cpr_no',
             'passport_number' => 'required|unique:employees,passport_number',
             'lease_period_start_datetime' => 'required',
             'lease_period_end_datetime' => 'required',
             'staff_passport_copy' => 'required',
-            'staff_cpr_copy' => 'required',
+            // 'staff_cpr_copy' => 'required',
             'staff_contract_copy' => 'required',
         ]);
         
@@ -101,9 +101,11 @@ class StaffController extends Controller
         if($request->file('staff_image'))
         {
             $file_name = time().'_'.trim($request->file('staff_image')->getClientOriginalName());
-            $image = Image::make($request->file('staff_image')->getRealPath());
-            $image->resize(300,300);
-            $image->save(public_path('admin/assets/img/staff/'). $file_name);
+            // $image = Image::make($request->file('staff_image')->getRealPath());
+            // $image->resize(300,300);
+            // $image->save(public_path('admin/assets/img/staff/'). $file_name);
+            
+            $request->file('staff_image')->move(public_path('admin/assets/img/staff/'), $file_name);
             $staff->image = $file_name;
         }
         
@@ -117,7 +119,7 @@ class StaffController extends Controller
             $employee->annual_leaves = $request['annual_leaves'];
             $employee->employee_present_address = $request['staff_present_address'];
             $employee->employee_permanent_address = $request['staff_permanent_address'];
-            $employee->employee_cpr_no = $request['staff_cpr_no'];
+            $employee->employee_cpr_no = null;
             $employee->passport_number = $request['passport_number'];
             $employee->employee_start_datetime = $request['lease_period_start_datetime'];
             $employee->employee_end_datetime = $request['lease_period_end_datetime'];
@@ -130,9 +132,11 @@ class StaffController extends Controller
             {
                 $file_name = time().'_'.trim($request->file('staff_passport_copy')->getClientOriginalName());
                 
-                $image = Image::make($request->file('staff_passport_copy')->getRealPath());
-                $image->resize(600,500);
-                $image->save(public_path('admin/assets/img/documents/'). $file_name);
+                // $image = Image::make($request->file('staff_passport_copy')->getRealPath());
+                // $image->resize(600,500);
+                // $image->save(public_path('admin/assets/img/documents/'). $file_name);
+                
+                $request->file('staff_passport_copy')->move(public_path('admin/assets/img/documents/'), $file_name);
 
                 $employee->employee_passport_copy  = $file_name;
             }
@@ -142,10 +146,11 @@ class StaffController extends Controller
             {
                 $file_name = time().'_'.trim($request->file('staff_cpr_copy')->getClientOriginalName());
                 
-                $image = Image::make($request->file('staff_cpr_copy')->getRealPath());
-                $image->resize(600,500);
-                $image->save(public_path('admin/assets/img/documents/'). $file_name);
+                // $image = Image::make($request->file('staff_cpr_copy')->getRealPath());
+                // $image->resize(600,500);
+                // $image->save(public_path('admin/assets/img/documents/'). $file_name);
 
+                $request->file('staff_cpr_copy')->move(public_path('admin/assets/img/documents/'), $file_name);
                 $employee->employee_cpr_copy  = $file_name;
             }
 
@@ -156,10 +161,11 @@ class StaffController extends Controller
             {
                 $file_name = time().'_'.trim($request->file('staff_contract_copy')->getClientOriginalName());
                 
-                $image = Image::make($request->file('staff_contract_copy')->getRealPath());
-                $image->resize(600,500);
-                $image->save(public_path('admin/assets/img/documents/'). $file_name);
-
+                // $image = Image::make($request->file('staff_contract_copy')->getRealPath());
+                // $image->resize(600,500);
+                // $image->save(public_path('admin/assets/img/documents/'). $file_name);
+                
+                $request->file('staff_contract_copy')->move(public_path('admin/assets/img/documents/'), $file_name);
                 $employee->employee_contract_copy  = $file_name;
             }
 
@@ -207,11 +213,11 @@ class StaffController extends Controller
         
         if(Auth::user()->userType == 'Admin')
         {
-            $roles = Role::whereIn('slug', ['employee','officer','general-manager'])->orderBy('name','asc')->get()->toArray();
+            $roles = Role::whereIn('slug', ['employee','officer','general-manager','receptionist'])->orderBy('name','asc')->get()->toArray();
         }
         else
         {
-            $roles = Role::whereIn('slug', ['employee','officer'])->orderBy('name','asc')->get()->toArray();
+            $roles = Role::whereIn('slug', ['employee','officer','receptionist'])->orderBy('name','asc')->get()->toArray();
         }
         $selectedRole = DB::table('user_roles')->where('user_id',$id)->first();
         return view('admin.staff.edit')->with(compact('roles','staffData','selectedRole'));
@@ -229,7 +235,7 @@ class StaffController extends Controller
        
         $request->validate([
             'name'=>'required|string ',
-            'number'=>'required|size:8|unique:employees,employee_mobile_phone,' . $id,
+            'number'=>'required|unique:employees,employee_mobile_phone,' . $id,
             'email'=>'required|email|unique:employees,employee_email_address,' . $id,
             'staffType'=>'required',
             'staff_date_of_birth' => 'required',
@@ -237,7 +243,7 @@ class StaffController extends Controller
             'staff_permanent_address' => 'required',
             'sallery' => 'required',
             'annual_leaves' => 'required',
-            'staff_cpr_no' => 'required|unique:employees,employee_cpr_no,' . $id,
+            // 'staff_cpr_no' => 'required|unique:employees,employee_cpr_no,' . $id,
             'passport_number' => 'required|unique:employees,passport_number,' . $id,
             'lease_period_start_datetime' => 'required',
             'lease_period_end_datetime' => 'required',
@@ -255,7 +261,7 @@ class StaffController extends Controller
         $employee->employee_sallery = $request['sallery'];
         $employee->employee_present_address = $request['staff_present_address'];
         $employee->employee_permanent_address = $request['staff_permanent_address'];
-        $employee->employee_cpr_no = $request['staff_cpr_no'];
+        // $employee->employee_cpr_no = $request['staff_cpr_no'];
         $employee->passport_number = $request['passport_number'];
         $employee->employee_start_datetime = $request['lease_period_start_datetime'];
         $employee->employee_end_datetime = $request['lease_period_end_datetime'];
@@ -269,9 +275,11 @@ class StaffController extends Controller
 
             $file_name = time().'_'.trim($request->file('staff_passport_copy')->getClientOriginalName());
             
-            $image = Image::make($request->file('staff_passport_copy')->getRealPath());
-            $image->resize(600,500);
-            $image->save(public_path('admin/assets/img/documents/'). $file_name);
+            // $image = Image::make($request->file('staff_passport_copy')->getRealPath());
+            // $image->resize(600,500);
+            // $image->save(public_path('admin/assets/img/documents/'). $file_name);
+            
+            $request->file('staff_passport_copy')->move(public_path('admin/assets/img/documents/'), $file_name);
 
             $employee->employee_passport_copy  = $file_name;
         }
@@ -283,9 +291,11 @@ class StaffController extends Controller
 
             $file_name = time().'_'.trim($request->file('staff_cpr_copy')->getClientOriginalName());
             
-            $image = Image::make($request->file('staff_cpr_copy')->getRealPath());
-            $image->resize(600,500);
-            $image->save(public_path('admin/assets/img/documents/'). $file_name);
+            // $image = Image::make($request->file('staff_cpr_copy')->getRealPath());
+            // $image->resize(600,500);
+            // $image->save(public_path('admin/assets/img/documents/'). $file_name);
+            
+            $request->file('staff_cpr_copy')->move(public_path('admin/assets/img/documents/'), $file_name);
 
             $employee->employee_cpr_copy  = $file_name;
         }
@@ -298,10 +308,12 @@ class StaffController extends Controller
 
             $file_name = time().'_'.trim($request->file('staff_contract_copy')->getClientOriginalName());
             
-            $image = Image::make($request->file('staff_contract_copy')->getRealPath());
-            $image->resize(600,500);
-            $image->save(public_path('admin/assets/img/documents/'). $file_name);
+            // $image = Image::make($request->file('staff_contract_copy')->getRealPath());
+            // $image->resize(600,500);
+            // $image->save(public_path('admin/assets/img/documents/'). $file_name);
 
+            $request->file('staff_contract_copy')->move(public_path('admin/assets/img/documents/'), $file_name);
+            
             $employee->employee_contract_copy  = $file_name;
         }
 
@@ -311,9 +323,12 @@ class StaffController extends Controller
             // unlink(public_path('admin/assets/img/staff/'). $staff->image);
             $file_name = time().'_'.trim($request->file('staff_image')->getClientOriginalName());
             
-            $image = Image::make($request->file('staff_image')->getRealPath());
-            $image->resize(300,300);
-            $image->save(public_path('admin/assets/img/staff/'). $file_name);
+            // $image = Image::make($request->file('staff_image')->getRealPath());
+            // $image->resize(300,300);
+            // $image->save(public_path('admin/assets/img/staff/'). $file_name);
+            
+            $request->file('staff_image')->move(public_path('admin/assets/img/staff/'), $file_name);
+            
             $employee->employee_image  = $file_name;
             $staff->image = $file_name;
         }

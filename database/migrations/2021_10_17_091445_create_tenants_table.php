@@ -31,7 +31,8 @@ class CreateTenantsTable extends Migration
 
             $table->decimal('tenant_rent', 15);
             $table->json('tenant_facilities_list')->nullable();
-            $table->string('tenant_cpr_no');
+            $table->string('tenant_cpr_no')->nullable();
+            $table->string('tenant_passport_no');
             $table->dateTime('lease_period_start_datetime');
             $table->dateTime('lease_period_end_datetime');
 
@@ -43,7 +44,7 @@ class CreateTenantsTable extends Migration
             $table->string('emergancy_email');
 
             $table->string('tenant_passport_copy');
-            $table->string('tenant_cpr_copy');
+            $table->string('tenant_cpr_copy')->nullable();
             $table->string('tenant_contract_copy');
 
             $table->string('password');

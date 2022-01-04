@@ -1,7 +1,7 @@
 @extends('layouts.admin.app')
 {{-- Page title --}}
 @section('title')
-Juffair Gable
+Juffair Gables
 @stop
 {{-- page level styles --}}
 @section('header_styles')
@@ -102,7 +102,7 @@ Juffair Gable
                     </div>
                     <div class="form-group col-md-3">
                       <label for="number">Apartment Area (m<sup>2</sup>)</label>
-                      <input type="text" maxlength="3" value="{{ old('unit_area') }}" name="unit_area" placeholder="" class="form-control" id="unitArea">
+                      <input type="text"  value="{{ old('unit_area') }}" name="unit_area" placeholder="" class="form-control" id="unitArea">
                     </div>
                 </div>
 

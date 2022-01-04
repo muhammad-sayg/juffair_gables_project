@@ -1,7 +1,7 @@
 @extends('layouts.admin.app')
 {{-- Page title --}}
 @section('title')
-Juffair Gable
+Juffair Gables
 @stop
 {{-- page level styles --}}
 @section('header_styles')

@@ -6,7 +6,7 @@
       <title>Juffair Gables</title>
       <meta name="description" content="">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="manifest" href="site.webmanifest">
+      
       <link rel='shortcut icon' type='image/jpeg' href='{{ asset("public/admin/assets") }}/img/logo.jpg' />
       <!-- CSS here -->
       <link rel="stylesheet" href="{{ asset('public/assets/css/bootstrap.min.css') }}">

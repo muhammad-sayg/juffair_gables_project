@@ -1,7 +1,7 @@
 @extends('layouts.admin.app')
 {{-- Page title --}}
 @section('title')
-Juffair Gable
+Juffair Gables
 @stop
 {{-- page level styles --}}
 @section('header_styles')
@@ -56,6 +56,7 @@ Juffair Gable
 
                   
                   <div class="form-group col-md-6">
+                     <label for="name">Select Floor</label>
                     <select class="form-control" name="floor_id"  id="floorSelect">
                       <option value="0" selected disabled>---Select---</option>
                       @foreach ($floor_list as $floor)

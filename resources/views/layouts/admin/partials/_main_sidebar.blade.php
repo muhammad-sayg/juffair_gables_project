@@ -34,7 +34,7 @@
           </li>
           
           <li class="dropdown {!! (Request::is('tenants*') ? "active" : "") !!}">
-            <a href="{{ route('tenants.list') }}" class="nav-link"><i class="fas fa-users"></i><span>Add New Tenant</span></a>
+            <a href="{{ route('tenants.list') }}" class="nav-link"><i class="fas fa-users"></i><span>Tenants</span></a>
           </li>
           <li class="dropdown {!! (Request::is('service_contract*') ? "active" : "") !!}">
             <a href="{{ route('service_contract.list') }}" class="nav-link"><i class="
@@ -51,12 +51,33 @@
           </li> --}}
         @endif
 
-        @if(Auth::user()->userType == 'employee')
+        @if(Auth::user()->userType == 'employee' OR Auth::user()->userType == 'receptionist')
+        
+        @if(Auth::user()->userType != 'receptionist')
         <li class="dropdown {!! (Request::is('units/rented_apartment*') ? "active" : "") !!}">
           <a href="{{ route('units.rented_apartment.list') }}" class="nav-link"><i class="fas fa-home"></i><span>Rented Apartment</span></a>
         </li>
-        <li class="dropdown {!! (Request::is('tasks/task/*') ? "active" : "") !!}"><a href="{{ route('tasks.list') }}" class="nav-link">@if(\Auth::user()->userType != 'employee')<i class="fas fa-book"></i><span>Tasks </span>@else <i class="fas fa-book"></i><span>Active Tasks</span> @endif</a></li>
+        @else
+        <li class="dropdown {!! (Request::is('tenants*') ? "active" : "") !!}">
+          <a href="{{ route('tenants.list') }}" class="nav-link"><i class="fas fa-users"></i><span>Tenants</span></a>
+        </li>
+        <li class="dropdown {!! (Request::is('units/full_apartment*') ? "active" : "") !!} {!! (Request::is('units/unit/search_filter') ? "active" : "") !!} ">
+          <a href="{{ route('units.full_apartment.list') }}" class="nav-link"><i class="fas fa-home"></i><span>Full Apartment List</span></a>
+        </li>
+        @endif
+        <li class="dropdown {!! (Request::is('tasks/task/*') ? "active" : "") !!}"><a href="{{ route('tasks.list') }}" class="nav-link">@if(\Auth::user()->userType != 'employee' AND \Auth::user()->userType != 'receptionist')<i class="fas fa-book"></i><span>Tasks </span>@else <i class="fas fa-book"></i><span>Active Tasks</span> @endif</a></li>
        
+        @if(Auth::user()->userType == 'receptionist')
+        <li class="dropdown {!! (Request::is('facilities/*') ? "active" : "") !!}">
+          <a href="{{ route('facilities.list') }}" class="nav-link"><i class="
+            fas fa-spa"></i><span>Facilities</span></a>
+        </li>
+
+        <li class="dropdown {!! (Request::is('reservation/*') ? "active" : "") !!}">
+          <a href="{{ route('reservation.list') }}" class="nav-link"><i class="
+            far fa-registered"></i><span>Reserved  Facilities</span></a>
+        </li>
+        @endif
         
         <li class="dropdown {!! (Request::is('leave/*') ? "active" : "") !!}">
           <a href="{{ route('leave.list') }}" class="nav-link"><i class="

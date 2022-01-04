@@ -7,7 +7,7 @@
       <meta name="description" content="">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="csrf-token" content="{{ csrf_token() }}">
-      <link rel="manifest" href="site.webmanifest">
+     
       <link rel='shortcut icon' type='image/jpeg' href='{{ asset("public/admin/assets") }}/img/logo.jpg' />
       <!-- CSS here -->
       <link rel="stylesheet" href="{{ asset('public/assets/css/bootstrap.min.css') }}">
@@ -1533,6 +1533,7 @@
                </div> <!-- /container -->
             </div>
          </div>
+         
          <!-- Blog Ara End -->
          <!-- Blog Ara End -->
          <div class="home-blog-area section-padding20" id="apartments">
@@ -1569,9 +1570,12 @@
                                 </div>
                              </div>
                              </div>
-                             @error('name')
-                               <div class="alert alert-danger">{{ $message }}</div>
-                             @enderror
+                             @isset($error)
+                                 @error('name')
+                                   <div class="alert alert-danger">{{ $message }}</div>
+                                 @enderror
+                             @endisset
+                             
                              <div class="pinfo">Email:</div>
                              <div class="form-group">
                              <div class="inputGroupContainer">
@@ -1581,9 +1585,11 @@
                                 </div>
                              </div>
                              </div>
-                             @error('email')
-                               <div class="alert alert-danger">{{ $message }}</div>
-                             @enderror                    
+                             @isset($error)
+                                 @error('email')
+                                   <div class="alert alert-danger">{{ $message }}</div>
+                                 @enderror
+                             @endisset
                              <div class="pinfo">Write your review:</div>
                              
 
@@ -1595,9 +1601,11 @@
                              </div>
                              </div>
                              </div>
-                             @error('review')
-                               <div class="alert alert-danger">{{ $message }}</div>
-                             @enderror
+                             @isset($error)
+                                 @error('review')
+                                   <div class="alert alert-danger">{{ $message }}</div>
+                                 @enderror
+                             @endisset
                              <button type="button" class="btn btn-primary btn-submit" style="width:100%">Submit</button>
 
                     </form>

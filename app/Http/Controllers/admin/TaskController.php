@@ -13,9 +13,11 @@ use App\Models\FloorDetail;
 use App\Models\ServiceArea;
 use Illuminate\Http\Request;
 use App\Models\MaintenanceRequest;
+
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
 
 class TaskController extends Controller
 {
@@ -28,11 +30,13 @@ class TaskController extends Controller
     {
         $tasks = Task::orderBy('id', 'desc')->get();
         $employee_list = User::where('userType', 'employee')->get();
+        $receptionist_list = User::where('userType', 'receptionist')->get();
+
 
         $task_status_list = TaskStatus::all();
         
 
-        return view('admin.task.index', compact('tasks','employee_list','task_status_list'));
+        return view('admin.task.index', compact('tasks','employee_list','receptionist_list','task_status_list'));
     }
 
     /**
@@ -216,6 +220,7 @@ class TaskController extends Controller
         
         if($task_status_code == 3)
         {
+            $task->checked = 0;
             $current_date_time = Carbon::now();
             $task->complete_date = Carbon::parse($current_date_time)->format('Y-m-d');
             $task->complete_time = Carbon::parse($current_date_time)->format('H:i');
@@ -267,7 +272,7 @@ class TaskController extends Controller
 
 
             
-            dd($maintenance_request);
+           
         }
         else
         {
@@ -444,12 +449,31 @@ class TaskController extends Controller
     {
         
         $request->validate([
-            'employee_id' => 'required',
             'deadline_date' => 'required',
             'deadline_time' => 'required',
-        ],[
-            'employee_id.required' => 'Please select the Employee before proceeding.'
         ]);
+
+        if($request['employee_id'] == null)
+        {
+            $request->validate([
+                'receptionist_id' => 'required',
+            ],[
+                'receptionist_id.required' => 'Please select the Employee Or Receptionist before proceeding.'
+            ]);
+
+            $employee_id = $request['receptionist_id'];
+        }
+
+        if($request['receptionist_id'] == null)
+        {
+            $request->validate([
+                'employee_id' => 'required',
+            ],[
+                'employee_id.required' => 'Please select the Employee Or Receptionist before proceeding.'
+            ]);
+
+            $employee_id = $request['employee_id'];
+        }
 
         if($request['now_cb'] == 'on')
         {
@@ -472,13 +496,14 @@ class TaskController extends Controller
        
         $id = $request->input('task_id');
         $task = Task::find($id);
-        
+
         $task->assign_date = $assign_date;
         $task->assign_time = $assign_time;
         $task->deadline_date = Carbon::parse($request['deadline_date'])->format('Y-m-d');
         $task->deadline_time = Carbon::parse($request['deadline_time'])->format("H:i");
         $task->assignor_id = Auth::user()->id;
-        $task->assignee_id = $request['employee_id'];
+        $task->assignee_id = $employee_id;
+        $task->assigned_task_check = 0;
         // $task->comments = $request['comment'];
         $task->task_status_code = 1;
 
@@ -494,16 +519,69 @@ class TaskController extends Controller
         }
     }
 
+    public function get_task_data(Request $request)
+    {
+       
+        $completed_task = Task::where('checked', 0)->count();
+        return response()->json([
+            'success' => 1,
+            'data' => ['completed_task' => $completed_task]
+        ]);
+    }
+
+    public function get_assign_task_data(Request $request)
+    {
+        $user_id = Auth::user()->id;
+        $assigned_task = Task::where('assigned_task_check', 0)->where('assignee_id', $user_id)->count();
+        return response()->json([
+            'success' => 1,
+            'data' => ['assigned_task' => $assigned_task]
+        ]);
+    }
+
+    public function check_task(Request $request)
+    {
+        task::where(['checked' => 0])->update(['checked' => 1]);
+        
+        return redirect()->route('tasks.list');
+    }
+
+    public function check_assigned_task(Request $request)
+    {
+        task::where(['assigned_task_check' => 0])->update(['assigned_task_check' => 1]);
+        
+        return redirect()->route('dashboard');
+    }
+
     public function assign_task_for_maintenance(Request $request)
     {
-        // dd($request->all());
+        
         $request->validate([
-            'employee_id' => 'required',
             'deadline_date' => 'required',
             'deadline_time' => 'required',
-        ],[
-            'employee_id.required' => 'Please select the Employee before proceeding.'
         ]);
+
+        if($request['employee_id'] == null)
+        {
+            $request->validate([
+                'receptionist_id' => 'required',
+            ],[
+                'receptionist_id.required' => 'Please select the Employee Or Receptionist before proceeding.'
+            ]);
+
+            $employee_id = $request['receptionist_id'];
+        }
+
+        if($request['receptionist_id'] == null)
+        {
+            $request->validate([
+                'employee_id' => 'required',
+            ],[
+                'employee_id.required' => 'Please select the Employee Or Receptionist before proceeding.'
+            ]);
+
+            $employee_id = $request['employee_id'];
+        }
 
         $maintenance_request = MaintenanceRequest::find($request->input('maintenance_request_id'));
         if($request['now_cb'] == 'on')
@@ -537,7 +615,7 @@ class TaskController extends Controller
         $task->deadline_date = Carbon::parse($request['deadline_date'])->format('Y-m-d');
         $task->deadline_time = Carbon::parse($request['deadline_time'])->format("H:i");
         $task->assignor_id = Auth::user()->id;
-        $task->assignee_id = $request['employee_id'];
+        $task->assignee_id = $employee_id;
         // $task->comments = $request['comment'];
         $task->task_status_code = 1;
         $task->maintenance_request_id = $request->input('maintenance_request_id');

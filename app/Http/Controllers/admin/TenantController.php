@@ -85,8 +85,7 @@ class TenantController extends Controller
             'tenant_present_address' => 'required',
             'tenant_permanent_address' => 'required',
             'home_country_address' => 'required',
-            'password' => 'required',
-            'tenant_cpr_no' => 'required|unique:tenants,tenant_cpr_no',
+            'tenant_passport_number' => 'required|unique:tenants,tenant_passport_no',
             'lease_period_start_datetime' => 'required',
             'lease_period_end_datetime' => 'required',
             // 'security_deposit' => 'required',
@@ -95,7 +94,6 @@ class TenantController extends Controller
             'tenant_type_code' => 'required',
             'tenant_image' => 'required',
             'tenant_passport_copy' => 'required',
-            'tenant_cpr_copy' => 'required',
             'tenant_contract_copy' => 'required',
         ],[
             'unit_id.required' => 'Please select the apartment first.'
@@ -112,8 +110,13 @@ class TenantController extends Controller
         $tenant->tenant_present_address = $request['tenant_present_address'];
         $tenant->tenant_permanent_address = $request['tenant_permanent_address'];
         $tenant->home_country_address = $request['home_country_address'];
-        $tenant->password = Hash::make($request['password']);
-        $tenant->tenant_cpr_no = $request['tenant_cpr_no'];
+        $tenant->password = Hash::make('123456789');
+        if(isset($request['tenant_cpr_no']) && !empty($request['tenant_cpr_no']))
+        {
+            $tenant->tenant_cpr_no = $request['tenant_cpr_no'];
+        }
+
+        $tenant->tenant_passport_no = $request['tenant_passport_number'];
         $tenant->lease_period_start_datetime = $request['lease_period_start_datetime'];
         $tenant->lease_period_end_datetime = $request['lease_period_end_datetime'];
         // $tenant->security_deposit = $request['security_deposit'];
@@ -276,7 +279,7 @@ class TenantController extends Controller
             'tenant_present_address' => 'required',
             'tenant_permanent_address' => 'required',
             'home_country_address' => 'required',
-            'tenant_cpr_no' => 'required|unique:tenants,tenant_cpr_no,'.$id,
+            'tenant_passport_number' => 'required|unique:tenants,tenant_passport_no,'.$id,
             'lease_period_start_datetime' => 'required',
             'lease_period_end_datetime' => 'required',
             // 'security_deposit' => 'required',
@@ -298,7 +301,12 @@ class TenantController extends Controller
         $tenant->tenant_present_address = $request['tenant_present_address'];
         $tenant->tenant_permanent_address = $request['tenant_permanent_address'];
         $tenant->home_country_address = $request['home_country_address'];
-        $tenant->tenant_cpr_no = $request['tenant_cpr_no'];
+        if(isset($request['tenant_cpr_no']) && !empty($request['tenant_cpr_no']))
+        {
+            $tenant->tenant_cpr_no = $request['tenant_cpr_no'];
+        }
+
+        $tenant->tenant_passport_no = $request['tenant_passport_number'];
         $tenant->lease_period_start_datetime = $request['lease_period_start_datetime'];
         $tenant->lease_period_end_datetime = $request['lease_period_end_datetime'];
         // $tenant->security_deposit = $request['security_deposit'];

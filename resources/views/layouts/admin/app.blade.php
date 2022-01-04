@@ -5,7 +5,7 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title>
     @section('title')
-    Juffair Gable
+    Juffair Gables
     @show
 </title>
   <!-- General CSS Files -->
@@ -180,22 +180,57 @@
 
     </div>
   </div>
-  <!-- General JS Scripts -->
+
+  <div class="modal fade" id="popup-modal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <center>
+                            <h4>
+                                Task has been completed, Check Please.
+                            </h4>
+                            <hr>
+                            <button onclick="check_task()" class="btn btn-primary">Ok, let me check</button>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <div class="modal fade" id="assign-task-popup-modal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <center>
+                            <h4>
+                                New Task Assigned To You, Check Please.
+                            </h4>
+                            <hr>
+                            <button onclick="check_assign_task()" class="btn btn-primary">Ok, let me check</button>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+   
   <script src="{{ asset('public/admin/assets/js') }}/app.min.js"></script>
-  <!-- JS Libraies -->
-  <script src="{{ asset('public/admin/assets/bundles') }}/apexcharts/apexcharts.min.js"></script>
-  <script src="{{ asset('public/admin/assets/bundles') }}/amcharts4/core.js"></script>
-  <script src="{{ asset('public/admin/assets/bundles') }}/amcharts4/charts.js"></script>
-  <script src="{{ asset('public/admin/assets/bundles') }}/amcharts4/animated.js"></script>
-  <script src="{{ asset('public/admin/assets/bundles') }}/jquery.sparkline.min.js"></script>
-  <!-- Page Specific JS File -->
-  <script src="{{ asset('public/admin/assets/js') }}/page/index.js"></script>
+ 
+  
   <!-- Template JS File -->
   <script src="{{ asset('public/admin/assets/js') }}/scripts.js"></script>
   <!-- Custom JS File -->
   <script src="{{ asset('public/admin/assets/js') }}/custom.js"></script>
   <script src="{{asset('public/admin/assets')}}/js/sweet_alert.js"></script>
   <script src="{{asset('public/admin/assets')}}/js/toastr.js"></script>
+  
   {!! Toastr::message() !!}
 
   @if ($errors->any())
@@ -228,6 +263,69 @@
         })
     }
   </script>
+
+<audio id="myAudio">
+  <source src="{{asset('public/admin/assets/sound/notification.mp3')}}" type="audio/mpeg">
+</audio>
+
+<script>
+  var audio = document.getElementById("myAudio");
+
+  function playAudio() {
+      audio.play();
+  }
+
+  function pauseAudio() {
+      audio.pause();
+  }
+</script>
+
+<script>
+ 
+  let user_type = "{{ Auth::user()->userType }}"
+ 
+  if(user_type == 'general-manager' || user_type == 'Admin')
+  {
+    setInterval(function () {
+          $.get({
+              url: '{{route('admin.get-task-data')}}',
+              dataType: 'json',
+              success: function (response) {
+                  let data = response.data;
+                  if (data.completed_task > 0) {
+                      playAudio();
+                      $('#popup-modal').appendTo("body").modal('show');
+                  }
+              },
+          });
+      }, 10000);
+
+      function check_task() {
+        location.href = '{{route('admin.check_task')}}';
+      }
+  }
+  if(user_type == 'employee' || user_type == 'receptionist')
+  {
+    setInterval(function () {
+          $.get({
+              url: '{{route('admin.get-assign-task-data')}}',
+              dataType: 'json',
+              success: function (response) {
+                  let data = response.data;
+                  if (data.assigned_task > 0) {
+                      playAudio();
+                      $('#assign-task-popup-modal').appendTo("body").modal('show');
+                  }
+              },
+          });
+      }, 10000);
+
+      function check_assign_task() {
+          location.href = '{{route('admin.assigned_task_check')}}';
+      }
+  }
+
+</script>
   
   <!-- page level js -->
   @yield('footer_scripts')
@@ -235,5 +333,4 @@
 </body>
 
 
-<!-- Mirrored from radixtouch.in/templates/admin/zivi/source/light/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 13 Oct 2020 12:28:57 GMT -->
 </html>

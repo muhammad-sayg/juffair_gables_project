@@ -42,10 +42,10 @@ box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1), 0 0.9375rem 1.40625re
 @stop
 @section('content')
 <section class="section">
-    @if(Auth::user()->userType == 'employee')
+    @if(Auth::user()->userType == 'employee' OR Auth::user()->userType == 'receptionist')
     <div class="row">
       <div class="col-12">
-        @if(Auth::user()->userType == 'employee' )
+        @if(Auth::user()->userType == 'employee' OR Auth::user()->userType == 'receptionist' )
               <a href="{{ route('leave.create') }}" type="button"  class="btn btn-primary float-right mb-4" style="padding:7px 35px;">Apply Leave Request</a>
         @endif
       </div>
@@ -80,7 +80,7 @@ box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1), 0 0.9375rem 1.40625re
                   </thead>
                   <tbody>
                     @php
-                      if(Auth::user()->userType == 'employee')
+                      if(Auth::user()->userType == 'employee' OR Auth::user()->userType == 'receptionist')
                       {
                         $employeeleave = $employeeleave->where('staff_id', Auth::user()->id);
                       }

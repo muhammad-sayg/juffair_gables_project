@@ -3,7 +3,7 @@
 @extends('layouts.admin.app')
 {{-- Page title --}}
 @section('title')
-Juffair Gable
+Juffair Gables
 @stop
 {{-- page level styles --}}
 @section('header_styles')
@@ -77,7 +77,7 @@ Juffair Gable
                         </div>
                      </div>
                      <div class="form-group col-md-4">
-                        <label for="number">Contact Number (Without Country Code)</label>
+                        <label for="number">Contact Number.</label>
                         <input type="text" class="form-control" maxlength="8"  name="number" id="number"
                         @if (!empty($staffData['employee_mobile_phone'])) value="{{$staffData['employee_mobile_phone']}}" @else value="{{ old('employee_mobile_phone')}}" @endif
                         placeholder="Staff number">
@@ -118,7 +118,7 @@ Juffair Gable
                         <input type="text" value="{{ isset($staffData['annual_leaves']) ? $staffData['annual_leaves'] : '' }}" name="annual_leaves" class="form-control" id="annual_leaves"></input>
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Salary Per Month (BD)</label>
+                        <label>Total Salary (BD)</label>
                         <input type="text" value="{{ isset($staffData['employee_sallery']) ? $staffData['employee_sallery'] : '' }}" name="sallery" class="form-control" id="sallery"></input>
                      </div>
                      <div class="form-group col-md-4">
@@ -138,11 +138,11 @@ Juffair Gable
                         <input type="text" value="{{ isset($staffData['passport_number']) ? $staffData['passport_number'] : '' }}" maxlength="9" name="passport_number" class="form-control" id="cprNumber">
                      </div>
                      <div class="form-group col-md-4">
-                        <label>LeasePeriodStartDate</label>
+                        <label>Contract Start Date</label>
                         <input type="text" value="{{ isset($staffData['employee_start_datetime']) ? $staffData['employee_start_datetime'] : '' }}" name="lease_period_start_datetime" class="form-control datepicker">
                      </div>
                      <div class="form-group col-md-4">
-                        <label>LeasePeriodEndDate</label>
+                        <label>Contract End Date</label>
                         <input type="text" value="{{ isset($staffData['employee_end_datetime']) ? $staffData['employee_end_datetime'] : '' }}" name="lease_period_end_datetime" class="form-control datepicker">
                      </div>
                      <div class="form-group col-md-4">
@@ -162,16 +162,21 @@ Juffair Gable
                      <div class="form-group col-md-5" style="margin-right: 10px">
                         <label>Assign Role to Staff</label> <br>
                         @foreach($roles as $key=>$role )
-                        <input type="radio"  {{$role['id']==$selectedRole->role_id ? 'checked' : ''}} name="staffType"  value="{{$role['slug']}}">{{$role['name']}} <br>
+                        <input type="radio"  {{$role['id']==$selectedRole->role_id ? 'checked' : ''}} name="staffType"  value="{{$role['slug']}}">
+                        @if($role['name'] == 'Officer')
+                        Accountant <br>
+                        @else
+                        {{$role['name']}} <br>
+                        @endif
                         @endforeach
                         <div class="invalid-feedback">
                            Please select role for the staff
                         </div>
                      </div>
                   </div>
-                  <div class="card-footer text-right">
-                     <button type="submit" class="btn btn-primary">Edit Staff</button>
-                  </div>
+                  <button type="submit" class="btn btn-primary">Save</button>
+                  <a href="{{ url()->previous() }}" type="button" class="btn btn-primary">Cancel</a>
+                  
             </form>
             </div>
          </div>
@@ -211,13 +216,13 @@ Juffair Gable
    
       
        $("#number").inputFilter(function(value) {
-       return /^-?\d*$/.test(value); });
+       return /^[+-]?\d*$/.test(value); });
    
        $("#cprNumber").inputFilter(function(value) {
        return /^-?\d*$/.test(value); });
    
        $("#sallery").inputFilter(function(value) {
-       return /^-?\d*$/.test(value); });
+       return /^[+-]?\d*$/.test(value); });
    
 </script>
 <script>

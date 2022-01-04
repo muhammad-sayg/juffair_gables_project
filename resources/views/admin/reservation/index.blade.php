@@ -60,10 +60,12 @@
                             <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle" aria-expanded="false">Action</a>
                             <div class="dropdown-menu" style="will-change: transform;">
                               <a href="#" onclick="getReservationDetails({{ $reservation->id }})" class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
+                              @if(\Auth::user()->userType != 'receptionist')
                               <a href="{{ route('reservation.edit', $reservation->id) }}" class="dropdown-item has-icon"><i class="far fa-edit"></i> Edit</a>
                               <div class="dropdown-divider"></div>
-                              <a href="#" onclick="form_alert('reservation-{{ $reservation->id }}','Want to delete this reservation')" class="dropdown-item has-icon text-danger"><i class="far fa-trash-alt"></i>
-                                Delete</a>
+                              {{-- <a href="#" onclick="form_alert('reservation-{{ $reservation->id }}','Want to delete this reservation')" class="dropdown-item has-icon text-danger"><i class="far fa-trash-alt"></i>
+                                Delete</a> --}}
+                                @endif
                             </div>
                           </div>
                           <form action="{{ route('reservation.delete', $reservation->id) }}"

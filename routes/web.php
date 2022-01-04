@@ -57,6 +57,7 @@ use App\Http\Controllers\admin\JobController;
 |
 */
 
+Route::group(['middleware' => ['cache']], function() {
 Auth::routes();
 
 Route::view('/', 'index');
@@ -70,7 +71,7 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/review/save', [TestimonialController::class, 'store'])->name('review.save');
 Route::post('/get_tenant_rent', [TenantController::class, 'get_tenant_rent'])->name('tenant.rent');
 Route::get('/testimonials',[TestimonialController::class,'display_review'])->name('display_review');
-
+});
 Route::group(['middleware' => ['auth:web']], function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('dashboard/task/closed/{id}', [TaskController::class, 'task_closed'])->name('dashboard.task.closed');
@@ -336,6 +337,11 @@ Route::group(['middleware' => ['auth:web']], function() {
 
     });
 
+    Route::get('/get-task-data', [TaskController::class, 'get_task_data'])->name('admin.get-task-data');
+    Route::get('/get-assign-task-data', [TaskController::class, 'get_assign_task_data'])->name('admin.get-assign-task-data');
+    Route::get('/check_task', [TaskController::class, 'check_task'])->name('admin.check_task');
+    Route::get('/check_assigned_task', [TaskController::class, 'check_assigned_task'])->name('admin.assigned_task_check');
+
     //Request Routes
     Route::group(['prefix' => 'request', 'as' => 'request.'], function () {
         Route::get('/request/list', [RequestController::class, 'index'])->name('list');
@@ -457,4 +463,4 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::get('/complaintreport_list', [ComplaintreportController::class, 'index'])->name('complaintreport');
     Route::get('/unitstatusreport_list', [UnitstatusreportController::class, 'index'])->name('unitstatusreport');
 });
-
+// });

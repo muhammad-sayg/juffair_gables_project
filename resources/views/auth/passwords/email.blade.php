@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Juffair Gable - Reset Password</title>
+  <title>Juffair Gables - Reset Password</title>
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{ asset('public/admin/assets')}}/css/app.min.css">
   <link rel="stylesheet" href="{{ asset('public/admin/assets')}}/bundles/bootstrap-social/bootstrap-social.css">
@@ -62,24 +62,27 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="email" type="email" class="form-control @if(!empty($errors)) @error('email') is-invalid @enderror @endif" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                @isset($errors)
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                @endisset
                             </div>
                         </div> --}}
 
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" autocomplete="off" name="email" value="{{ old('email') }}" tabindex="1" required autofocus>
+                            <input id="email" type="email" class="form-control @if(!empty($errors)) @error('email') is-invalid @enderror @endif" autocomplete="off" name="email" value="{{ old('email') }}" tabindex="1" required autofocus>
+                            @isset($errors)
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
+                            @endisset
                         </div>
 
                         {{-- <div class="form-group row mb-0">

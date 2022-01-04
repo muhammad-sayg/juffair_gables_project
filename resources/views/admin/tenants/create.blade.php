@@ -1,7 +1,7 @@
 @extends('layouts.admin.app')
 {{-- Page title --}}
 @section('title')
-    Juffair Gable
+    Juffair Gables
 @stop
 {{-- page level styles --}}
 @section('header_styles')
@@ -51,65 +51,69 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label>Tenant First Name</label>
-                        <input type="text" maxLength="20" name="tenant_first_name" class="form-control">
+                        <input type="text" value="{{old('tenant_first_name')}}" maxLength="20" name="tenant_first_name" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Tenant Last Name</label>
-                        <input type="text" maxLength="20" name="tenant_last_name" class="form-control">
+                        <input type="text" value="{{old('tenant_last_name')}}" maxLength="20" name="tenant_last_name" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Contact No</label>
-                        <input type="text" name="tenant_mobile_phone" id="contactNo" class="form-control">
+                        <input type="text" value="{{old('tenant_mobile_phone')}}" name="tenant_mobile_phone" id="contactNo" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Tenant Email</label>
-                        <input type="email" name="tenant_email_address" class="form-control">
+                        <input type="email" value="{{old('tenant_email_address')}}" name="tenant_email_address" class="form-control">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label>Date of birth</label>
-                        <input type="text" name="tenant_date_of_birth" class="form-control datepicker">
+                        <input type="text" value="{{old('tenant_date_of_birth')}}" name="tenant_date_of_birth" class="form-control datepicker">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Image</label>
                         <input type="file" name="tenant_image" accept="image/png,image/jpeg" class="form-control">
                     </div>
                     
-                    <div class="form-group col-md-4">
-                        <label>Password</label>
-                        <input type="text" name="password"  class="form-control">
-                    </div>
+                    <!--<div class="form-group col-md-4">-->
+                    <!--    <label>Password</label>-->
+                    <!--    <input type="text" value="{{old('password')}}" name="password"  class="form-control">-->
+                    <!--</div>-->
                     <div class="form-group col-md-4">
                         <label>Present Address</label>
-                        <textarea name="tenant_present_address" class="form-control"></textarea>
+                        <textarea name="tenant_present_address"  class="form-control">{{old('tenant_present_address')}}</textarea>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Permanent Address</label>
-                        <textarea name="tenant_permanent_address" class="form-control"></textarea>
+                        <textarea name="tenant_permanent_address"  class="form-control">{{old('tenant_permanent_address')}}</textarea>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Home Country Address</label>
-                        <textarea name="home_country_address" class="form-control"></textarea>
+                        <textarea name="home_country_address"  class="form-control">{{old('home_country_address')}}</textarea>
                     </div>
                     <div class="form-group col-md-4">
                         <label>CPR</label>
-                        <input type="text" maxlength="9" name="tenant_cpr_no" class="form-control" id="cprNumber">
+                        <input type="text" maxlength="9" value="{{old('tenant_cpr_no')}}" name="tenant_cpr_no" class="form-control" id="cprNumber">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Lease Period Start Date</label>
-                        <input type="date" name="lease_period_start_datetime" class="form-control">
+                        <label>Passport Number</label>
+                        <input type="text" maxlength="9" value="{{old('tenant_passport_number')}}" name="tenant_passport_number" class="form-control" id="cprNumber">
+                     </div>
+                    <div class="form-group col-md-4">
+                        <label>Contract Period Start Date</label>
+                        <input type="date" name="lease_period_start_datetime" value="{{old('lease_period_start_datetime')}}" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Lease Period End Date</label>
-                        <input type="date" name="lease_period_end_datetime" class="form-control">
+                        <label>Contract Period End Date</label>
+                        <input type="date" name="lease_period_end_datetime" value="{{old('lease_period_end_datetime')}}" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Emergency Contact No.</label>
-                        <input type="text" name="emergancy_contact_number" id="emergencyNumber" class="form-control">
+                        <input type="text" name="emergancy_contact_number" value="{{old('emergancy_contact_number')}}" id="emergencyNumber" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Emergency Email</label>
-                        <input type="email" name="emergancy_email" class="form-control">
+                        <input type="email" name="emergancy_email" value="{{old('emergancy_email')}}" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Tenant Type</label>
@@ -165,11 +169,11 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label style="display: block;">Aditional Facilities</label>
-                        <input type="text" name="all_facilities" class="form-control inputtags" id="tags-input">
+                        <input type="text" value="{{old('all_facilities')}}" name="all_facilities" class="form-control inputtags" id="tags-input">
                       </div>
                     <div class="form-group col-md-4" >
                         <label>Total Rent</label>
-                        <input type="text" name="total_rent" class="form-control" style="height: 38px;">
+                        <input type="text" value="{{old('total_rent')}}" name="total_rent" class="form-control" style="height: 38px;">
                     </div>
                 </div>
                 <button class="btn btn-primary mr-1" type="submit">Save</button>

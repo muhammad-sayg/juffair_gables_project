@@ -1,7 +1,7 @@
 @extends('layouts.admin.app')
 {{-- Page title --}}
 @section('title')
-Juffair Gable
+Juffair Gables
 @stop
 {{-- page level styles --}}
 @section('header_styles')
@@ -53,9 +53,9 @@ Juffair Gable
                         </div> --}}
                         <div class="form-group col-md-3">
                             <label for="">Select Floor</label>
-                            <option value="all" @if(isset($floor_id) && $floor_id == "all") selected @endif>All</option>
                             <select class="form-control" name="floor_id" onchange="getUnits(this.value)" id="floorSelect">
                                 <option value="0" selected disabled>---Select---</option>
+                                <option value="all" @if(isset($floor_id) && $floor_id == "all") selected @endif>All</option>
                                 @foreach ($floor_list as $floor)
                                     <option value="{{ $floor->id }}" @if(isset($floor_id) && $floor_id == $floor->id) selected @endif>{{ $floor->number }}</option>
                                 @endforeach

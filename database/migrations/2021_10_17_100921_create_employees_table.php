@@ -30,14 +30,14 @@ class CreateEmployeesTable extends Migration
             $table->integer('employee_country_id')->nullable();
             $table->string('employee_postal_code')->nullable();
             
-            $table->string('employee_cpr_no');
+            $table->string('employee_cpr_no')->nullable();
             $table->dateTime('employee_start_datetime');
             $table->dateTime('employee_end_datetime')->nullable();
             $table->decimal('employee_sallery', 15, 3);
 
             $table->string('employee_image');
             $table->string('employee_passport_copy');
-            $table->string('employee_cpr_copy');
+            $table->string('employee_cpr_copy')->nullable();
             $table->string('employee_contract_copy');
 
             $table->timestamps();

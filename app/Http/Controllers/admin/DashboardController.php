@@ -17,6 +17,8 @@ class DashboardController extends Controller
     public function index()
     {
         $employee_list = User::where('userType', 'employee')->get();
+        $receptionist_list = User::where('userType', 'receptionist')->get();
+       
         $total_minutes = 0;
         $average_time = 0;
         if(Auth::user()->userType == 'employee'){
@@ -75,6 +77,6 @@ class DashboardController extends Controller
         $total_maintenance_cost_per_year = MaintenanceCost::where('maintenance_date', 'like' , $current_year.'-%')->sum('maintenance_cost_total_amount');
 
 
-        return view('admin.index', compact('average_time','employee_list','montly_base_total_rent','total_rent_per_year','total_maintenance_cost_per_year'));
+        return view('admin.index', compact('average_time','employee_list','receptionist_list','montly_base_total_rent','total_rent_per_year','total_maintenance_cost_per_year'));
     }
 }

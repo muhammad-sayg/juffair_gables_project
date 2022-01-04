@@ -3,7 +3,7 @@
 @extends('layouts.admin.app')
 {{-- Page title --}}
 @section('title')
-Juffair Gable
+Juffair Gables
 @stop
 {{-- page level styles --}}
 @section('header_styles')
@@ -51,8 +51,8 @@ Juffair Gable
                         </div>
                      </div>
                      <div class="form-group col-md-4">
-                        <label for="number">Contact Number (Without Country Code)</label>
-                        <input type="tel" maxlength="8" class="form-control" autocomplete="off" name="number" id="number" required="" 
+                        <label for="number">Contact Number.</label>
+                        <input type="tel"  class="form-control" autocomplete="off" name="number" id="number" required="" 
                            value="{{ old('number')}}" 
                            placeholder="Staff contact number">
                         <div class="invalid-feedback">
@@ -96,7 +96,7 @@ Juffair Gable
                         <input type="text" name="annual_leaves" class="form-control" id="annual_leaves"></input>
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Salary Per Month (BD)</label>
+                        <label>Total Salary (BD)</label>
                         <input type="text" name="sallery" class="form-control" id="sallery"></input>
                      </div>
 
@@ -117,11 +117,11 @@ Juffair Gable
                         <input type="text" maxlength="9" name="passport_number" class="form-control" id="cprNumber">
                      </div>
                      <div class="form-group col-md-4">
-                        <label>LeasePeriodStartDate</label>
+                        <label>Contract Start Date</label>
                         <input type="date" name="lease_period_start_datetime" class="form-control">
                      </div>
                      <div class="form-group col-md-4">
-                        <label>LeasePeriodEndDate</label>
+                        <label>Contract End Date</label>
                         <input type="date" name="lease_period_end_datetime" class="form-control">
                      </div>
                      <div class="form-group col-md-4">
@@ -139,7 +139,13 @@ Juffair Gable
                      <div class="form-group col-md-12" style="margin-right: 10px">
                         <label>Assign Role to Staff</label> <br>
                         @foreach($roles as $key=>$role )
-                        <input type="radio" name="staffType" value="{{$role['slug']}}"> {{$role['name']}} <br>
+                        <input type="radio" name="staffType" value="{{$role['slug']}}">
+                       
+                        @if($role['name'] == 'Officer')
+                        Accountant <br>
+                        @else
+                        {{$role['name']}} <br>
+                        @endif
                         @endforeach
                         <div class="invalid-feedback">
                            Please select role for the staff
@@ -147,6 +153,7 @@ Juffair Gable
                      </div>
                   </div>
                   <button type="submit" class="btn btn-primary">Save</button>
+                  <a href="{{ url()->previous() }}" type="button" class="btn btn-primary">Cancel</a>
             </form>
             </div>
          </div>
@@ -185,13 +192,13 @@ Juffair Gable
    
       
        $("#number").inputFilter(function(value) {
-       return /^-?\d*$/.test(value); });
+       return /^[+-]?\d*$/.test(value); });
    
        $("#cprNumber").inputFilter(function(value) {
        return /^-?\d*$/.test(value); });
    
        $("#sallery").inputFilter(function(value) {
-       return /^-?\d*$/.test(value); });
+       return /^[+-]?\d*$/.test(value); });
    
 </script>
 @stop

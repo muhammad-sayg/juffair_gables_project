@@ -60,7 +60,7 @@
                   </thead>
                   <tbody>
                     @php
-                      if(Auth::user()->userType == 'employee')
+                      if(Auth::user()->userType == 'employee' OR Auth::user()->userType == 'receptionist')
                       {
                         $maintenancerequest = \App\Models\MaintenanceRequest::where('user_id', Auth::user()->id)->get();
                       }
