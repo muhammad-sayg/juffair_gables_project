@@ -309,4 +309,8 @@ class RentController extends Controller
     {
         return view('admin.rent.invoice');
     }
+    public function reciept(Request $request)
+    {
+        return view('admin.rent.reciept');
+    }
 }
