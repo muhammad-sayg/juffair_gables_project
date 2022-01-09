@@ -10,13 +10,15 @@ use App\Models\Unit;
 use App\Models\User;
 use App\Models\Floor;
 use App\Models\Tenant;
+use App\Models\Invoice;
 use App\Models\Building;
+use App\Models\UserRole;
 use App\Models\FloorType;
 use App\Models\TenantType;
 use App\Models\FloorDetail;
 use App\Models\TenantStatus;
-use App\Models\UserRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\File;
@@ -211,6 +213,16 @@ class TenantController extends Controller
             $unit->unit_status_code = 1;
 
             $unit->save();
+
+            // create invoice for tenants
+            $invoice = new Invoice();
+            $invoice->tenant_id = $tenant->id;
+            $invoice->invoice_issue_date = Carbon::now();
+            $invoice->invoice_due_date = Carbon::now()->addDays(5);
+            $invoice->invoice_amount = $tenant->tenant_rent;
+            $invoice->invoice_status_code = 1; //pending
+
+            $invoice->save();
         }
 
         Toastr::success('Tenant inserted successfully!');

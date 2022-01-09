@@ -31,6 +31,7 @@ class CreateMaintenanceRequestStatusTable extends Migration
         DB::table('maintenance_request_status')->insert(array('maintenance_request_status_id' => '3',
                                     'maintenance_request_status_name' => 'Assigned',
                                     'maintenance_request_status_code' => '3'));
+                                    
         DB::table('maintenance_request_status')->insert(array('maintenance_request_status_id' => '4',
                                     'maintenance_request_status_name' => 'Completed',
                                     'maintenance_request_status_code' => '4'));

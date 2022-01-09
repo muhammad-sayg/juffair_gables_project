@@ -5,9 +5,13 @@
 @section('header_styles')
 <link rel="stylesheet" href="{{ asset('public/admin/assets/css') }}/components.css">
 <style>
-    .navbar-bg
+    .main-navbar
     {
-        background:#fff;
+        background-color: #fff !important;
+        box-shadow: 0 0 10px 1px rgb(68 102 242 / 5%);
+    }
+    .navbar .nav-link .feather {
+        color: #555556 !important;
     }
     .table-striped tbody tr:nth-of-type(odd) {
         background-color: unset !important;
@@ -24,15 +28,15 @@
                 <div>
                     <img src="{{ asset('public/assets/img/logo.png') }}" width="160px" height="90px" alt="">
                 </div>
-                <div style="display: flex" style="margin-top: 60px;">
+                <div style="display: flex">
 
-                    <table class="table table-striped table-hover table-md" style="width:50%;margin-top:50px">
+                    <table class="table table-striped table-hover table-md" style="width:50%;margin-top:20px">
                         <tr>
-                            <th colspan="2"><h1>Invoice</h1></th>
+                            <th colspan="2"><h1>INVOICE</h1></th>
                             <th></th>
                         </tr>
                         <tr>
-                            <td></td>
+                            <td style="width: 20%"></td>
                             <td>Layla ahmad Khalil AlMaralkhi</td>
                         </tr>
                         <tr>
@@ -93,10 +97,10 @@
                 <div class="col-lg-8">
                   <div class="section-title">Due Date: 3 Dec 2022</div>
                   <p class="section-lead">Bank Transfer Details:</p>
-                  <p class="section-lead" style="margin-bottom: 0px">Account Name: Al Ahli House Real Estate</p>
-                  <p class="section-lead" style="margin-bottom: 0px">Bank: Bank of Bahrain and Kuwait</p>
-                  <p class="section-lead" style="margin-bottom: 0px">Account Number: 100000430664</p>
-                  <p class="section-lead" style="margin-bottom: 0px">IBAN: BH75 BBKU 0010 0000 4306 64</p>
+                  <p class="section-lead" style="margin-bottom: 0px">Account Name: SH NAWAF EBRAHIM HAMAD ALKHALIFA</p>
+                  <p class="section-lead" style="margin-bottom: 0px">Bank: AHLI UNITED BANK</p>
+                  <p class="section-lead" style="margin-bottom: 0px">Account Number: 0016-249409-001</p>
+                  <p class="section-lead" style="margin-bottom: 0px">IBAN: BH53 AUBBO 0016 2494 09001</p>
                 </div>
               </div>
             </div>

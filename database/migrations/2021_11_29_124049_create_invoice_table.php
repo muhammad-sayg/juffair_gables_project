@@ -14,19 +14,15 @@ class CreateInvoiceTable extends Migration
     public function up()
     {
         Schema::create('invoice', function (Blueprint $table) {
-            $table->id();
-            $table->string('renter_name');
-            $table->string('apartment_no');
-            $table->string('invoice_no');
-            $table->decimal('rent', 15, 3);
-            $table->decimal('ewa_bill', 15, 3);
-            $table->decimal('utility_bill', 15, 3);
-            $table->dateTime('date_of_issue');
-            $table->dateTime('paid_date');
-            $table->string('payment_method');
-            $table->string('note');
-            $table->integer('rent_paid_status_code');
-            $table->decimal('grand_total', 15, 3);
+            $table->id()->startingValue(0001);
+            $table->integer('tenant_id');
+            $table->dateTime('invoice_issue_date');
+            $table->dateTime('invoice_due_date');
+            $table->decimal('invoice_amount',15);
+            // $table->decimal('paid_amount',15)->nullable();
+            // $table->decimal('due_amount',15)->nullable();
+            // $table->dateTime('rent_paid_date');
+            $table->integer('invoice_status_code');
             $table->timestamps();
         });
     }
