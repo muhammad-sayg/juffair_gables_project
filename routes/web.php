@@ -260,6 +260,7 @@ Route::group(['middleware' => ['auth:web']], function() {
      });
 
     // Rent Collection routes
+    Route::get('/invoice', [RentController::class, 'invoice']);
         Route::group(['prefix' => 'rent', 'as' => 'rent.'], function () {
         Route::get('/rent_list', [RentController::class, 'index'])->name('list');
         Route::get('/rent/create', [RentController::class, 'create'])->name('create');
@@ -270,7 +271,7 @@ Route::group(['middleware' => ['auth:web']], function() {
         Route::post('/rent/update/{id}', [RentController::class, 'update'])->name('update');
         Route::delete('/rent/delete/{id}', [RentController::class, 'destroy'])->name('delete');
         Route::post('/search', [RentController::class, 'search_rent'])->name('search');
-    
+        
     });
 
     //Invoice routes

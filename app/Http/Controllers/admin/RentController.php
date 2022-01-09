@@ -304,4 +304,9 @@ class RentController extends Controller
 
         return view('admin.rent.index', compact('rent_details','rent_paid_status','tenant_list','tenant_id','rent_month','rent_paid_status_code'));
     }
+
+    public function invoice(Request $request)
+    {
+        return view('admin.rent.invoice');
+    }
 }
