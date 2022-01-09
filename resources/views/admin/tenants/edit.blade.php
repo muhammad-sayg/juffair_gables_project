@@ -87,7 +87,7 @@
                                 <textarea name="home_country_address"  class="form-control">{{ isset($tenant->home_country_address)? $tenant->home_country_address : '' }}</textarea>
                             </div>
                             <div class="form-group col-md-4">
-                                <label>CPR</label>
+                                <label>CPR Number</label>
                                 <input type="text" name="tenant_cpr_no" value="{{ isset($tenant->tenant_cpr_no)? $tenant->tenant_cpr_no : '' }}" id="cprNumber" class="form-control">
                             </div>
                             <div class="form-group col-md-4">

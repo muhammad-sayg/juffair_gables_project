@@ -109,7 +109,7 @@
                     </div>
                     @if($tenant->tenant_cpr_no)
                     <div class="col-md-3 col-6">
-                      <strong>Cpr Number</strong>
+                      <strong>CPR Number</strong>
                       <br>
                       <p class="text-muted">{{isset($tenant->tenant_cpr_no) ? $tenant->tenant_cpr_no : '' }}</p>
                     </div>
@@ -151,7 +151,7 @@
                       @if($tenant->tenant_cpr_copy)
                       <li><a href="{{ url('public/admin/assets/img/documents').'/'. $tenant->tenant_cpr_copy }}" target="blank">CPR Copy</a></li>
                       @endif
-                      <li><a href="{{ url('public/admin/assets/img/documents').'/'. $tenant->tenant_contract_copy }}" target="blank">Employee Contract</a></li>
+                      <li><a href="{{ url('public/admin/assets/img/documents').'/'. $tenant->tenant_contract_copy }}" target="blank">Contract Copy</a></li>
                     </ul>
                 </div>
                 </div>

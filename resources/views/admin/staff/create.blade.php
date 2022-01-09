@@ -109,7 +109,7 @@ Juffair Gables
                         <textarea name="staff_permanent_address" class="form-control"></textarea>
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Cpr Number</label>
+                        <label>CPR Number</label>
                         <input type="text" maxlength="9" name="staff_cpr_no" class="form-control" id="cprNumber">
                      </div>
                      <div class="form-group col-md-4">

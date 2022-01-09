@@ -92,7 +92,7 @@
                         <textarea name="home_country_address"  class="form-control">{{old('home_country_address')}}</textarea>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>CPR</label>
+                        <label>CPR Number</label>
                         <input type="text" maxlength="9" value="{{old('tenant_cpr_no')}}" name="tenant_cpr_no" class="form-control" id="cprNumber">
                     </div>
                     <div class="form-group col-md-4">

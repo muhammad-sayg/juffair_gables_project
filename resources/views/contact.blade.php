@@ -402,8 +402,7 @@
                            </div>
                            <div class="row">
                               <div class="col-lg-3 col-4 text-left"style="font-size:1.2rem;">Address:</div>
-                              <div class="col-lg-8 col-8 pl-0  text-left" style="font-size:1.2rem;">Juffair Gables,Building 1092,Road 4022,
-                                 Block 340,Juffair,Kingdom Of Bahrain.
+                              <div class="col-lg-8 col-8 pl-0  text-left" style="font-size:1.2rem;">Building 1092, Road 4022, Block 340, Juffair gables building, kingdom Of Bahrain.
                               </div>
                            </div>
                            <div class="row mt-3">

@@ -263,6 +263,7 @@ Route::group(['middleware' => ['auth:web']], function() {
         Route::group(['prefix' => 'rent', 'as' => 'rent.'], function () {
         Route::get('/rent_list', [RentController::class, 'index'])->name('list');
         Route::get('/rent/create', [RentController::class, 'create'])->name('create');
+        Route::get('/receipt/{id}', [RentController::class, 'generate_receipt'])->name('receipt');
         Route::post('/rent/store', [RentController::class, 'store'])->name('store');
         Route::get('/rent/show/{id}', [RentController::class, 'show'])->name('show');
         Route::get('/rent/edit/{id}', [RentController::class, 'edit'])->name('edit');

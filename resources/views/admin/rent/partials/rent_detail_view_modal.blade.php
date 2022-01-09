@@ -2,6 +2,10 @@
     $item = $rent;
 @endphp
 <tr>
+    <td>Receipt No #</td>
+    <td>{{ isset($item->receipt_no) ? $item->receipt_no : ''}}</td>
+</tr>
+<tr>
     <td>Tenant Name</td>
     <td>{{ isset($item->tenant) ? $item->tenant->tenant_first_name.' '.$item->tenant->tenant_last_name : ''}}</td>
 </tr>
@@ -23,8 +27,8 @@
     <td>{{ isset($item->received_date) ? \Carbon\Carbon::parse($item->received_date)->toFormattedDateString() : '' }}</td>
 </tr>
 <tr>
-    <td>Uploaded Document</td>
-    <td><a href="{{ url('public/admin/assets/img/rent/receipt') }}/{{ isset($item->rent_receipt)? $item->rent_receipt : '' }}" target="blank">view</a></td>
+    <td>Receipt</td>
+    <td><a href="{{ route('rent.receipt',$item->id) }}" target="blank">view</a></td>
 </tr>
 @endif
 <tr>

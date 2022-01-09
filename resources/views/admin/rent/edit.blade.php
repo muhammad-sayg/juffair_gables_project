@@ -55,17 +55,17 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                           <label for="">Received Amount (BD)</label>
-                          <input type="text" class="form-control" name="received_amount">
+                          <input type="text" class="form-control" value="{{ isset($rent->received_amount) ? round($rent->received_amount,0) : '' }}" name="received_amount">
                           <span class="text-danger" style="display: none">Received amount cannot be less then rent amount.</span>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    {{-- <div class="col-lg-4">
                         <div class="form-group">
                           <label for="">Upload Document</label>
                           <input type="file" class="form-control" name="receipt">
                         </div>
-                    </div>
-                    <div class="col-lg-4">
+                    </div> --}}
+                    {{-- <div class="col-lg-4">
                       <div class="form-group">
                         <label for="" style="display: block;" class="mt-2">Status</label>
                         <div class="custom-control custom-radio custom-control-inline">
@@ -79,7 +79,7 @@
                           <label class="custom-control-label" for="customRadioInline2">Unpaid</label>
                         </div>
                       </div>
-                    </div>
+                    </div> --}}
                   </div>
                   <div class="row">
                     <div class="col-lg-12">

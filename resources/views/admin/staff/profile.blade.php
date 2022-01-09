@@ -40,8 +40,6 @@ Juffair Gables
     position: absolute;
     top: 20px;
     bottom: 0;
-    left: 122px;
-    right: 0;
     opacity: 1;
     transition: .3s ease;
     border-radius: 50%;
@@ -95,7 +93,7 @@ Juffair Gables
                 
                 <form action="{{ route('staff.change_profile_image', $user->id) }}" id="profileImageForm" method="POST" enctype="multipart/form-data">
                   @csrf
-                  <input type="file" name="profile_image" id="imgupload" class="img-input" style="display:none"/>
+                  <input type="file" name="profile_image" id="imgupload" class="img-input" accept=".png, .jpg, .jpeg" style="display:none"/>
                 </form>
                 <div style="display:flex;justify-content:center;">
                     
@@ -104,13 +102,20 @@ Juffair Gables
                   <a href="#" class="icon" title="Edit Profile Image">
                     <i class="fas fa-pen"></i>
                   </a>
-                </div> 
-                </center>
+                
+                </div>
+                </div>
                 <div class="clearfix"></div>
                 <div class="author-box-name mt-1">
                   <a href="#">{{ $user->name }}</a>
                 </div>
-                <div class="author-box-job">{{ ucwords(str_replace("-", " ",$user->userType)) }}</div>
+                <div class="author-box-job">
+                    @if($user->userType == 'officer')
+                        Accountant
+                    @else
+                    {{ ucwords(str_replace("-", " ",$user->userType)) }}
+                    @endif
+                </div>
               </div>
             </div>
           </div>

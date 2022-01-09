@@ -76,7 +76,7 @@ Juffair Gable
         $total_units = \App\Models\Unit::all()->count();
         $total_tenant = \App\Models\Tenant::all()->count();
         
-        $total_employees = \App\Models\User::whereIn('userType', ['employee','officer'])->count();
+        $total_employees = \App\Models\User::whereIn('userType', ['employee','officer','receptionist'])->where('is_passed',null)->count();
         $total_complains = \App\Models\Complain::where('assigneed_id', Auth::user()->id)->whereIn('complain_status_code' , [1,2])->count();
         $leaves_request = \App\Models\EmployeeLeaves::where('leave_status_code', 2)->count();
         

@@ -17,6 +17,7 @@ class GlobalCache
     public function handle(Request $request, Closure $next)
     {
         $response =  $next($request);
+       
 
         $response->header('Cache-Control','max-age=86400');
 

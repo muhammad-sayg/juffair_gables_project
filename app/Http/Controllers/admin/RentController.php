@@ -40,6 +40,12 @@ class RentController extends Controller
     
         return view('admin.rent.index', compact('rent_details','rent_paid_status','tenant_list'));
     }
+
+    public function generate_receipt($id)
+    {
+        $rent_details = Rent::find($id);
+        return view('admin.rent.receipt',compact('rent_details'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -65,7 +71,7 @@ class RentController extends Controller
         $request->validate([
             'tenant_id' => 'required',
             'rent_amount' => 'required',
-            'rent_status' => 'required'
+            // 'rent_status' => 'required'
         ],[
             'tenant_id.required' => 'Please select the tenant first.'
         ]);
@@ -89,47 +95,29 @@ class RentController extends Controller
 
         $rent = new Rent();
 
-        if($request['rent_status'] == 'paid')
-        {
-            $request->validate([
-                'received_amount' => 'required',
-                'receipt' => 'required',
-            ],[
-                'receipt.required' => 'Please upload the document.'
-            ]);
-            $rent_paid_status_code = 1; // paid
-            $rent->received_date = Carbon::now();
-        }
-        else
-        {
-            $rent_paid_status_code = 2; // unpaid
+        // if($request['rent_status'] == 'paid')
+        // {
+        //     $request->validate([
+        //         'received_amount' => 'required',
+        //     ]);
 
-        }
-
+        // }
+        // else
+        // {
+        //     $rent_paid_status_code = 2; // unpaid
+            
+        // }
+        
+        $rent_paid_status_code = 1; // paid
+        $rent->received_date = Carbon::now();
         $rent->tenant_id = $request['tenant_id'];
         $rent->rent_amount = $request['rent_amount'];
 
         if($request['received_amount'])
         {
-            $request->validate([
-                'receipt' => 'required',
-            ],[
-                'receipt.required' => 'Please upload the rent paid receipt or any other document.',
-            ]);
-
-            if($request->file('receipt'))
-            {
-                
-                $file_name = time().'_'.trim($request->file('receipt')->getClientOriginalName());
-                //print_r(public_path('admin/assets/img/servicecontract/').$file_name); exit;
-                $request->file('receipt')->move(public_path('admin/assets/img/rent/receipt'), $file_name);
-                $filename= $file_name;  
-            }
-           
+            
             $rent->received_amount = $request['received_amount'];
             $rent->received_date = Carbon::now();
-            $rent->rent_receipt = $filename;
-
             $rent_paid_status_code = 1; //paid
         }
         
@@ -147,6 +135,14 @@ class RentController extends Controller
         }
         
         if($rent->save()){
+
+            if($rent->rent_paid_status_code == 1)
+            {
+               
+                $receipt_number = $rent->id . rand(1000, 9999);
+                $rent->receipt_no = $receipt_number;
+                $rent->save();
+            }
             Toastr::success('Rent detail added successfully.');
             return redirect()->route('rent.list');
         }
@@ -196,7 +192,7 @@ class RentController extends Controller
         $request->validate([
             'tenant_id' => 'required',
             'rent_amount' => 'required',
-            'rent_status' => 'required'
+            // 'rent_status' => 'required'
         ],[
             'tenant_id.required' => 'Please select the tenant first.'
         ]);
@@ -220,47 +216,28 @@ class RentController extends Controller
 
         $rent = Rent::find($id);
 
-        if($request['rent_status'] == 'paid')
-        {
-            $request->validate([
-                'received_amount' => 'required',
-                'receipt' => 'required',
-            ],[
-                'receipt.required' => 'Please upload the document.'
-            ]);
-            $rent_paid_status_code = 1; // paid
-            $rent->received_date = Carbon::now();
-        }
-        else
-        {
-            $rent_paid_status_code = 2; // unpaid
+        // if($request['rent_status'] == 'paid')
+        // {
+        //     $request->validate([
+        //         'received_amount' => 'required',
+        //     ]);
+        //     $rent_paid_status_code = 1; // paid
+        //     $rent->received_date = Carbon::now();
+        // }
+        // else
+        // {
+        //     $rent_paid_status_code = 2; // unpaid
 
-        }
+        // }
 
         $rent->tenant_id = $request['tenant_id'];
         $rent->rent_amount = $request['rent_amount'];
 
         if($request['received_amount'])
         {
-            $request->validate([
-                'receipt' => 'required',
-            ],[
-                'receipt.required' => 'Please upload the rent paid receipt or any other document.',
-            ]);
-
-            if($request->file('receipt'))
-            {
-                
-                $file_name = time().'_'.trim($request->file('receipt')->getClientOriginalName());
-                //print_r(public_path('admin/assets/img/servicecontract/').$file_name); exit;
-                $request->file('receipt')->move(public_path('admin/assets/img/rent/receipt'), $file_name);
-                $filename= $file_name;  
-            }
-           
+            
             $rent->received_amount = $request['received_amount'];
             $rent->received_date = Carbon::now();
-            $rent->rent_receipt = $filename;
-
             $rent_paid_status_code = 1; //paid
         }
         
@@ -297,68 +274,6 @@ class RentController extends Controller
         return back();
     }
    
-    public function search_filter(Request $request)
-    {
-        $rent_month = $request->input('rent_month',null);
-        $rent_year = $request->input('rent_year',null);
-        $query = Rent::query();
-
-        if($tenant_id)
-        {
-            $query->where('tenant_id', $tenant_id);
-        }
-
-        if($apartment_type){
-            
-            if($apartment_type != "all")
-            {
-                $query->where('apartment_type', $apartment_type);
-            }
-
-        }
-
-        if($unit_status_code){
-            
-            if($unit_status_code != "all")
-            {
-                $query->where('unit_status_code', $unit_status_code);
-            }
-
-        }
-        if($color_code)
-        {
-            if($color_code != "all")
-            {
-                $query->where('color_code', $color_code);
-            }
-            
-        }
-       
-        $units = $query->get();
-        
-        $floor_types = FloorType::where('floor_type_code', '!=', 1)->get();
-
-        $unit_status = UnitStatus::all();
-        $color_codes_list = Unit::pluck('color_code');
-        // dd($color_codes_list);
-        $instance = new ColorInterpreter();
-
-        $color_names_list = [];
-
-        if($color_codes_list->isNotEmpty())
-        {
-            foreach($color_codes_list as $color_code)
-            {
-
-                $result = $instance->name($color_code);
-                array_push($color_names_list,$result['name']);    
-            }
-
-            $color_codes_list = $color_codes_list->combine($color_names_list);
-        }
-        return view('admin.units.index',compact('units','floor_types','unit_status','color_codes_list'));
-    }
-
     public function search_rent(Request $request)
     {
         $query = Rent::query();

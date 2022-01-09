@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="{{ asset('public/admin/assets/') }}/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.css') }}">
 <link rel="stylesheet" href="{{ asset('public/admin/assets/') }}/bundles/bootstrap-timepicker/css/bootstrap-timepicker.min.css">
-
 <style>
    tr:hover {
     background: #a3a3a3 !important;
@@ -232,7 +231,14 @@
                               break;
                           }
                         @endphp
-                        <span class="badge {{ $class }}">{{ isset($item->task_status) ? $item->task_status->task_status_name : ''}}</span>
+                        <span class="badge {{ $class }}">
+                            @if($item->task_status_code == 6)
+                               Cancelled
+                            @else
+                            {{ 
+                            isset($item->task_status) ? $item->task_status->task_status_name : ''}}
+                            @endif
+                            </span>
                       </td>
                       <td>
                         <div class="dropdown">

@@ -87,15 +87,19 @@
                                 <textarea name="home_country_address"  class="form-control">{{ isset($tenant->home_country_address)? $tenant->home_country_address : '' }}</textarea>
                             </div>
                             <div class="form-group col-md-4">
-                                <label>CPR</label>
+                                <label>CPR Number</label>
                                 <input type="text" name="tenant_cpr_no" value="{{ isset($tenant->tenant_cpr_no)? $tenant->tenant_cpr_no : '' }}" id="cprNumber" class="form-control">
                             </div>
+                             <div class="form-group col-md-4">
+                                <label>Passport Number</label>
+                                <input type="text" maxlength="9" value="{{ isset($tenant->tenant_passport_no)? $tenant->tenant_passport_no : '' }}" name="tenant_passport_number" class="form-control" >
+                             </div>
                             <div class="form-group col-md-4">
-                                <label>Lease Period Start Date</label>
+                                <label>Contract Start Date</label>
                                 <input type="text" name="lease_period_start_datetime" value="{{ isset($tenant->lease_period_start_datetime)? $tenant->lease_period_start_datetime : '' }}" class="form-control datepicker">
                             </div>
                             <div class="form-group col-md-4">
-                                <label>Lease Period End Date</label>
+                                <label>Contract End Date</label>
                                 <input type="text" name="lease_period_end_datetime" value="{{ isset($tenant->lease_period_end_datetime)? $tenant->lease_period_end_datetime : '' }}" class="form-control datepicker">
                             </div>
                             <div class="form-group col-md-4">

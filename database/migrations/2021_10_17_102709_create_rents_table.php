@@ -24,7 +24,7 @@ class CreateRentsTable extends Migration
 
             $table->string('rent_start_month')->nullable();
             $table->string('rent_end_month')->nullable();
-            $table->string('rent_receipt')->nullable();
+            $table->string('receipt_no')->nullable();
 
             $table->integer('rent_paid_status_code');
 
