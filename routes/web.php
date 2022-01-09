@@ -271,6 +271,7 @@ Route::group(['middleware' => ['auth:web']], function() {
 
     // Rent Collection routes
     Route::get('/invoice', [RentController::class, 'invoice']);
+    Route::get('/reciept', [RentController::class, 'reciept']);
         Route::group(['prefix' => 'rent', 'as' => 'rent.'], function () {
         Route::get('/rent_list', [RentController::class, 'index'])->name('list');
         Route::get('/rent/create', [RentController::class, 'create'])->name('create');
