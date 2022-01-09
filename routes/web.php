@@ -46,6 +46,7 @@ use App\Http\Controllers\admin\SecuritydepositController;
 use App\Http\Controllers\admin\UnitstatusreportController;
 use App\Http\Controllers\admin\MaintenanceRequestController;
 use App\Http\Controllers\admin\JobController;
+use App\Http\Controllers\admin\ContactsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -189,7 +190,16 @@ Route::group(['middleware' => ['auth:web']], function() {
         Route::post('/update/{id}', [FacilitiesController::class, 'update'])->name('update');
     });
 
-   
+    // Contacts routes
+    Route::group(['prefix' => 'contacts', 'as' => 'contacts.'], function () {
+        Route::get('/list', [ContactsController::class, 'index'])->name('list');
+        Route::get('/create', [ContactsController::class, 'create'])->name('create');
+        Route::get('/show/{id}', [ContactsController::class, 'show'])->name('show');
+        Route::post('/store', [ContactsController::class, 'store'])->name('store');
+        Route::delete('/delete/{id}', [ContactsController::class, 'destroy'])->name('delete');
+        Route::get('/edit/{id}', [ContactsController::class, 'edit'])->name('edit');
+        Route::post('/update/{id}', [ContactsController::class, 'update'])->name('update');
+    });
 
     // Modules routes
     Route::group(['prefix' => 'module', 'as' => 'module.'], function () {

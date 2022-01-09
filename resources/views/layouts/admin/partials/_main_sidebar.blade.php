@@ -223,6 +223,13 @@
         @endif
 
         @if(Auth::user()->userType == 'general-manager' || Auth::user()->userType == 'Admin')
+        <li class="dropdown {!! (Request::is('contacts/*') ? "active" : "") !!}">
+          <a href="{{ route('contacts.list') }}" class="nav-link"><i class="
+          fas fa-address-book"></i><span>Contacts</span></a>
+        </li>
+        @endif
+
+        @if(Auth::user()->userType == 'general-manager' || Auth::user()->userType == 'Admin')
         <li class="dropdown {!! (Request::is('service_contract*') ? "active" : "") !!}">
           <a href="{{ route('service_contract.list') }}" class="nav-link"><i class="
             fas fa-file-contract"></i><span>Service Contracts</span></a>
