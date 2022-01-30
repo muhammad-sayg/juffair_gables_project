@@ -96,6 +96,9 @@
                             <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
                                 {{ __('Send Password Reset Link') }}
                             </button>
+                            <center>
+                                <a class="text-center mt-3" style="position:relative;top:15px;text-decoration:underline;" href="{{ url('/') }}">Visit Website</a>
+                            </center>
                         </div>
                     </form>
                     

@@ -49,8 +49,11 @@ class ServiceController extends Controller
             'cost_per_period' =>  'required' ,
             'frequency_of_pay' => 'required',
             'auto_renew' => 'required',
-            'image' => 'required',
-        ]);
+            'image' => 'required|max:2048',
+        ],[
+            'image.required' => "Please upload invoice or receipt.",
+            'image.max' => "Invoice/Receipt size should not be greater then 2 Mb.",
+            ]);
 
         if($request['frequency_of_pay'] != 'one-time-payment')
         {

@@ -415,7 +415,7 @@
                               <div class="col-lg-3 col-4 text-left"style="font-size:1.2rem;">Email Us:</div>
                               <div class="col-lg-8 col-8 pl-0">
                                  <div class="text-left"style="font-size:1.2rem;">
-                                    <a style="text-decoration:underline;color:hsl(25.3, 80.5%, 65.9%);" href="mailto:mrshaheen@juffairgables.com?cc=other@domain.com&bcc=hidden@domain.com&subject=Enquiry%20regarding%20product%20#0022&body=I%20would%20like%20more%20information%20on%20product%20#0022">click here to email us</a>
+                                    <a style="text-decoration:underline;color:hsl(25.3, 80.5%, 65.9%);" href="mailto:juffairgables@gmail.com?subject=Enquiry%20regarding%20product%20#0022&body=I%20would%20like%20more%20information%20on%20product%20#0022">click here to email us</a>
                                  </div>
                               </div>
                            </div>

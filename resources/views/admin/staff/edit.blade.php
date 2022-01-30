@@ -10,10 +10,21 @@ Juffair Gables
 <link rel="stylesheet" href="{{asset('public/admin/assets/bundles/datatables/datatables.min.css')}}">
 <link rel="stylesheet" href="{{asset('public/admin/assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.css') }}">
+<link rel="stylesheet" href="{{  asset('public/assets/css/intlTelInput.css') }}">
 <style>
    textarea
    {
    height: 64px !important;
+   }
+    .iti--allow-dropdown
+   {
+       width:100%;
+   }
+   .fa-info-circle
+   {
+       position: relative;
+        top: 1px;
+        margin-left: 8px;
    }
 </style>
 @stop
@@ -68,7 +79,7 @@ Juffair Gables
                <div class="card-body">
                   <div class="row">
                      <div class="form-group col-md-4">
-                        <label for="name">Name</label>
+                        <label for="name">Name <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control"  name="name" id="name"
                         @if (!empty($staffData['employee_name'])) value="{{$staffData['employee_name']}}" @else value="{{ old('employee_name')}}" @endif
                         placeholder="Staff name">
@@ -77,17 +88,18 @@ Juffair Gables
                         </div>
                      </div>
                      <div class="form-group col-md-4">
-                        <label for="number">Contact Number.</label>
-                        <input type="text" class="form-control" maxlength="8"  name="number" id="number"
+                        <label for="number">Contact Number <sup class="text-danger">*</sup></label>
+                        <input type="tel" class="form-control" maxlength="8"  name="number" id="number"
                         @if (!empty($staffData['employee_mobile_phone'])) value="{{$staffData['employee_mobile_phone']}}" @else value="{{ old('employee_mobile_phone')}}" @endif
                         placeholder="Staff number">
+                        <input type="hidden" name="country_code" value="" >
                         <div class="invalid-feedback">
                            Staff number is required?
                         </div>
                      </div>
                      <div class="form-group col-md-3">
-                        <label for="email">Email </label>
-                        <input type="email" class="form-control"  name="email" id="email"
+                        <label for="email">Email <sup class="text-danger">*</sup></label>
+                        <input type="email" required class="form-control"  name="email" id="email"
                         @if (!empty($staffData['employee_email_address'])) value="{{$staffData['employee_email_address']}}" @else value="{{ old('employee_email_address')}}" @endif
                         placeholder="Staff email">
                         <div class="invalid-feedback">
@@ -95,12 +107,13 @@ Juffair Gables
                         </div>
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Date of birth</label>
+                        <label>Date of birth <sup class="text-danger">*</sup></label>
                         <input type="text" value="{{ isset($staffData['employee_date_of_birth']) ? $staffData['employee_date_of_birth'] : '' }}" name="staff_date_of_birth" class="form-control datepicker">
                      </div>
                      <div class="col-md-6 col-12">
                         <div class="form-group">
-                           <label for="staff_image">Staff Image</label>
+                           <label for="staff_image">Staff Image <sup class="text-danger">*</sup><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right"
+                      title="Image size should be 2 MB and Image should be in jpg and png format."></i></label>
                            <div class="input-group">
                               <div class="custom-file">
                                  <input type="file" class="custom-file-input" name="staff_image" id="staff_image">
@@ -114,19 +127,19 @@ Juffair Gables
                      </div>
                      
                      <div class="form-group col-md-4">
-                        <label>Annual Leaves</label>
+                        <label>Annual Leaves <sup class="text-danger">*</sup></label>
                         <input type="text" value="{{ isset($staffData['annual_leaves']) ? $staffData['annual_leaves'] : '' }}" name="annual_leaves" class="form-control" id="annual_leaves"></input>
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Total Salary (BD)</label>
+                        <label>Total Salary (BD) <sup class="text-danger">*</sup></label>
                         <input type="text" value="{{ isset($staffData['employee_sallery']) ? $staffData['employee_sallery'] : '' }}" name="sallery" class="form-control" id="sallery"></input>
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Present Address</label>
+                        <label>Present Address <sup class="text-danger">*</sup></label>
                         <textarea name="staff_present_address" class="form-control">{{ isset($staffData['employee_present_address']) ? $staffData['employee_present_address'] : '' }}</textarea>
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Permanent Address</label>
+                        <label>Permanent Address <sup class="text-danger">*</sup></label>
                         <textarea name="staff_permanent_address" class="form-control">{{ isset($staffData['employee_permanent_address']) ? $staffData['employee_permanent_address'] : '' }}</textarea>
                      </div>
                      <div class="form-group col-md-4">
@@ -134,33 +147,36 @@ Juffair Gables
                         <input type="text" value="{{ isset($staffData['employee_cpr_no']) ? $staffData['employee_cpr_no'] : '' }}" maxlength="9" name="staff_cpr_no" class="form-control" id="cprNumber">
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Passport Number</label>
+                        <label>Passport Number <sup class="text-danger">*</sup></label>
                         <input type="text" value="{{ isset($staffData['passport_number']) ? $staffData['passport_number'] : '' }}" maxlength="9" name="passport_number" class="form-control" id="cprNumber">
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Contract Start Date</label>
+                        <label>Contract Start Date <sup class="text-danger">*</sup></label>
                         <input type="text" value="{{ isset($staffData['employee_start_datetime']) ? $staffData['employee_start_datetime'] : '' }}" name="lease_period_start_datetime" class="form-control datepicker">
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Contract End Date</label>
+                        <label>Contract End Date <sup class="text-danger">*</sup></label>
                         <input type="text" value="{{ isset($staffData['employee_end_datetime']) ? $staffData['employee_end_datetime'] : '' }}" name="lease_period_end_datetime" class="form-control datepicker">
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Staff Passport Copy</label>
+                        <label>Staff Passport Copy <sup class="text-danger">*</sup><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right"
+                      title="Image size should be 2 MB and Image should be in jpg and png format."></i></label>
                         <input type="file" accept="image/png, image/jpeg" name="staff_passport_copy" class="form-control">
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Staff CPR Copy</label>
+                        <label>Staff CPR Copy <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right"
+                      title="Image size should be 2 MB and Image should be in jpg and png format."></i></label>
                         <input type="file" accept="image/png, image/jpeg" name="staff_cpr_copy" class="form-control">
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Staff Contract Copy</label>
+                        <label>Staff Contract Copy <sup class="text-danger">*</sup><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right"
+                      title="Image size should be 2 MB and Image should be in jpg and png format."></i></label>
                         <input type="file" accept="image/png, image/jpeg" name="staff_contract_copy" class="form-control">
                      </div>
                   </div>
                   <div class="form-group row">
                      <div class="form-group col-md-5" style="margin-right: 10px">
-                        <label>Assign Role to Staff</label> <br>
+                        <label>Assign Role to Staff <sup class="text-danger">*</sup></label> <br>
                         @foreach($roles as $key=>$role )
                         <input type="radio"  {{$role['id']==$selectedRole->role_id ? 'checked' : ''}} name="staffType"  value="{{$role['slug']}}">
                         @if($role['name'] == 'Officer')
@@ -196,6 +212,8 @@ Juffair Gables
 <script src="{{asset('public/admin/assets/bundles/datatables/export-tables/buttons.print.min.js')}}"></script>
 <script src="{{asset('public/admin/assets/js/page/datatables.js')}}"></script>
 <script src="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{  asset('public/assets/js/intlTelInput.js') }}"></script>
+<script src="{{ asset('public/assets/js/intlTelInput.js')}}"></script>
 <script>
    (function($) {
            $.fn.inputFilter = function(inputFilter) {
@@ -232,5 +250,46 @@ Juffair Gables
      $(this).next('label').text(file);
    });
 </script>
+<script>
+         var input = document.querySelector("#number");
+         window.intlTelInput(input, {
+         //   allowDropdown: false,
+         //   autoHideDialCode: true,
+         autoPlaceholder: "On",
+         //   dropdownContainer: document.body,
+         //   excludeCountries: ["us"],
+         //   formatOnDisplay: true,
+         geoIpLookup: function(callback) {
+           $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+             var countryCode = (resp && resp.country) ? resp.country : "";
+             callback(countryCode);
+           });
+         },
+         //   hiddenInput: "full_number",
+         //   initialCountry: "auto",
+         //   localizedCountries: { 'de': 'Deutschland' },
+         //   nationalMode: false,
+         //   onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+         placeholderNumberType: "MOBILE",
+         //   preferredCountries: ['cn', 'jp'],
+         separateDialCode: true,
+         
+         utilsScript: "build/js/utils.js",
+         });
+         
+      </script>
+      <script>
+         $(document).ready(function(){
+            let country_code = $(".iti__selected-dial-code").html()
+
+            $("input[name=country_code]").val(country_code)
+         })
+
+         $(".iti__selected-dial-code").on('DOMSubtreeModified',function(){
+            let country_code = $(".iti__selected-dial-code").html()
+
+            $("input[name=country_code]").val(country_code)
+         })
+         </script>
 @stop
 

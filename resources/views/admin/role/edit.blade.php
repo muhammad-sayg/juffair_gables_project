@@ -28,7 +28,7 @@ Juffair Gable
     <div class="col-12">
         <div class="card">
             <form  action="{{ isset($role)? route('role.update', $role->id) : '' }}" id="formId"
-               method="POST"  class="needs-validation" novalidate="">
+               method="POST"  >
                 @csrf
                 <div class="card-header">
                   <h4>Edit Role</h4>

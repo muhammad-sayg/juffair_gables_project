@@ -130,6 +130,7 @@ class RoomController extends Controller
      */
     public function destroy($id)
     {
+        dd($id);
         $room=Rooms::find($id);
         $room->delete();
         Toastr::success('Room deleted successfully!');

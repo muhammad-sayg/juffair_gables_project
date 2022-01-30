@@ -37,14 +37,10 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label>Select Month</label>
-                            <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                              <input type="text" autocomplete="off" value="{{ isset($rent_month) ? $rent_month : '' }}" name="rent_month" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
-                              <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                              </div>
-                            </div>
+                            <input type="text" name="rent_month" class="form-control datepicker">
+                            
                         </div>
-                        {{-- <div class="form-group col-md-3">
+                        <div class="form-group col-md-3">
                           <label for="">Rent Status</label>
                           <select name="rent_paid_status_code" class="form-control"  id="" style="height: 37px;">
                             <option value="0">--- Select ---</option>
@@ -52,7 +48,7 @@
                                   <option value="{{ $item->rent_paid_status_code }}" @if(isset($rent_paid_status_code) && $rent_paid_status_code == $item->rent_paid_status_code) selected @endif>{{ $item->rent_paid_status_name }}</option>
                             @endforeach
                           </select>
-                      </div> --}}
+                      </div>
                         <div class="form-group col-md-1" style="margin-top: 1.90rem !important;">
                             <button type="submit" class="btn btn-primary">Filter</button>
                         </div>
@@ -75,11 +71,13 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Receipt No#</th>
+                        <th>Receipt Number</th>
+                        <th>Invoice Number</th>
                         <th>Tenant Name</th>
                         <th>Apartment No</th>
-                        <th>Amount</th>
+                        <th>Total Amount</th>
                         <th>Received Amount</th>
+                        <th>Due Amount</th>
                         <th>Received Date</th>
                         <th>Rent Month</th>
                         <th>Rent Status</th>
@@ -89,40 +87,23 @@
                     <tbody>
                       @foreach($rent_details as $key => $item)
                       <tr>
-                          <td onclick="getRentDetails({{ $item->id }})">{{ $key+1 }}</td>
+                          <td>{{ $key+1 }}</td>
                           <td onclick="getRentDetails({{ $item->id }})">{{ $item->receipt_no }}</td>
+                          <td onclick="getRentDetails({{ $item->id }})">
+                            @php
+                              $invoice = \App\Models\Invoice::where('invoice_number', $item->invoice_no)->first();
+                            @endphp
+
+                            {{ $invoice->invoice_number }}
+                          </td>
                           <td onclick="getRentDetails({{ $item->id }})">{{ isset($item->tenant) ? $item->tenant->tenant_first_name.' '.$item->tenant->tenant_last_name : ''}}</td>
                           <td onclick="getRentDetails({{ $item->id }})">{{ isset($item->tenant->unit) ? $item->tenant->unit->unit_number : '' }}</td>
                           <td onclick="getRentDetails({{ $item->id }})">{{ round($item->rent_amount,0) }} BD</td>
                           <td onclick="getRentDetails({{ $item->id }})">{{ isset($item->received_amount) ? round($item->received_amount,0). ' BD' : '' }}</td>
+                          <td onclick="getRentDetails({{ $item->id }})">{{ round($item->due_amount,0) }} BD</td>
                           <td onclick="getRentDetails({{ $item->id }})">{{ isset($item->received_date) ? \Carbon\Carbon::parse($item->received_date)->toFormattedDateString() : '' }}</td>
                           <td onclick="getRentDetails({{ $item->id }})">
-                            @php
-                              if($item->rent_month != null)
-                              {
-                                $dateMonthArray = explode('-', $item->rent_month);
-                                $month = $dateMonthArray[0];
-                                $year = $dateMonthArray[1];
-                                $date = \Carbon\Carbon::createFromDate($year, $month, 1);
-                              }
-                              else 
-                              {
-                                $dateMonthArray = explode('-', $item->rent_start_month);
-                                $month = $dateMonthArray[0];
-                                $year = $dateMonthArray[1];
-                                $date1 = \Carbon\Carbon::createFromDate($year, $month, 1);
-
-                                $dateMonthArray = explode('-', $item->rent_end_month);
-                                $month = $dateMonthArray[0];
-                                $year = $dateMonthArray[1];
-                                $date2 = \Carbon\Carbon::createFromDate($year, $month, 1);
-                              }
-                            @endphp
-                            @if($item->rent_month != null)
-                            {{ $date->format('M Y') }}
-                            @else
-                            {{ $date1->format('M Y') }} -  {{ $date2->format('M Y') }}
-                            @endif
+                            {{ \Carbon\Carbon::parse($invoice->invoice_issue_date)->formatLocalized('%d %b %Y') }}
                           </td>
                           <td onclick="getRentDetails({{ $item->id }})">
                             @php
@@ -144,11 +125,11 @@
                               <div class="dropdown-menu">
                                 <a href="#" onclick="getRentDetails({{ $item->id }})" class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
                                 {{-- @if($item->rent_paid_status_code == 2) --}}
-                                <a href="{{ route('rent.edit', $item->id) }}" class="dropdown-item has-icon"><i class="far fa-edit"></i> Edit</a>
+                                {{-- <a href="{{ route('rent.edit', $item->id) }}" class="dropdown-item has-icon"><i class="far fa-edit"></i> Edit</a> --}}
                                 {{-- @endif --}}
-                                @if($item->rent_paid_status_code == 1)
+                                <div class="dropdown-divider"></div>
                                 <a href="{{ route('rent.receipt', $item->id) }}" class="dropdown-item has-icon"><i class="fas fa-receipt"></i>Receipt</a>
-                                @endif
+                                <a href="{{ route('invoices.view_invoice', $invoice->id) }}" class="dropdown-item has-icon"><i class="fas fa-file-invoice"></i>Invoice</a>
                                 <!-- <a href="#" onclick="form_alert('service_contract-{{ $item->id }}','Want to delete this Service Contract')" class="dropdown-item has-icon text-danger"><i class="far fa-trash-alt"></i>
                                   Delete</a> -->
                               </div>
@@ -165,7 +146,7 @@
     </div>
     
 </section>
-{{-- Service Contract modal --}}
+{{-- Rent modal --}}
 <div class="modal" id="rentDetailModal" tabindex="-1" role="dialog" aria-labelledby="formModal"  aria-modal="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

@@ -16,8 +16,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $employee_list = User::where('userType', 'employee')->get();
-        $receptionist_list = User::where('userType', 'receptionist')->get();
+        $employee_list = User::where('userType', 'employee')->where('is_passed',null)->get();
+        $receptionist_list = User::where('userType', 'receptionist')->where('is_passed',null)->get();
        
         $total_minutes = 0;
         $average_time = 0;

@@ -36,27 +36,27 @@
                 @csrf
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label>Company Name</label>
+                        <label>Company Name <sup class="text-danger">*</sup></label>
                         <input type="text" maxLength="20" name="company_name" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Contact Person</label>
+                        <label>Contact Person <sup class="text-danger">*</sup></label>
                         <input type="text" maxLength="20" name="contact_person" class="form-control">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label>Job Title</label>
+                        <label>Job Title <sup class="text-danger">*</sup></label>
                         <input type="text" maxLength="20" name="job_title" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Contact Number</label> 
+                        <label>Contact Number <sup class="text-danger">*</sup></label> 
                         <input type="text" maxLength="20" name="number" id="contactNo" class="form-control">
                     </div>
                 </div>
                 <div class="row">
                      <div class="form-group col-md-4">
-                        <label>Scope of Work</label>
+                        <label>Scope of Work <sup class="text-danger">*</sup></label>
                         <textarea name="scope_of_work" class="form-control"></textarea>
                     </div>
                 </div>

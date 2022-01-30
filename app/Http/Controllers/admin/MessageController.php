@@ -28,13 +28,13 @@ class MessageController extends Controller
 
         if($message->delete())
         {
-            Toastr::success('Message deleted successfully!.');
-            return redirect()->route('request.list');
+            Toastr::success('Message deleted successfully.');
+            return back();
         }
         else
         {
             Toastr::success('Something went wrong.');
-            return redirect()->route('request.list');
+            return back();
         }
     }
 }

@@ -26,7 +26,7 @@ class StaffController extends Controller
     {
         if(Auth::user()->userType == 'Admin')
         {
-            $staffs=User::with('StaffDetail')->whereIn('userType',['employee','officer','general-manager','receptionist'])->get()->except(Auth::id())->toArray();
+            $staffs = User::with('StaffDetail')->whereIn('userType',['employee','officer','general-manager','receptionist'])->get()->except(Auth::id())->toArray();
 
         }
         else
@@ -72,7 +72,7 @@ class StaffController extends Controller
             'email'=>'required|email|unique:users,email',
             'email'=>'required|email|unique:employees,employee_email_address',
             'password'=>'required',
-            'staff_image'=>'required|image|mimes:jpeg,png,jpg',
+            'staff_image'=>'required|image|mimes:jpeg,png,jpg|max:2048',
             'staffType'=>'required',
             'staff_date_of_birth' => 'required',
             'staff_present_address' => 'required',
@@ -83,14 +83,18 @@ class StaffController extends Controller
             'passport_number' => 'required|unique:employees,passport_number',
             'lease_period_start_datetime' => 'required',
             'lease_period_end_datetime' => 'required',
-            'staff_passport_copy' => 'required',
+            'staff_passport_copy' => 'required|max:2048',
             // 'staff_cpr_copy' => 'required',
-            'staff_contract_copy' => 'required',
+            'staff_contract_copy' => 'required|max:2048',
+        ],
+        [
+            'staff_passport_copy.max' => "Passporp Copy size should not be greater then 2 Mb.",
+            'staff_contract_copy.max' => "Contract Copy size should not be greater then 2 Mb."
         ]);
         
         $staff = new User();
         $staff->name = $request->name;
-        $staff->number = $request->number;
+        $staff->number = $request['country_code'].$request->number;
         $staff->email = $request->email;
         $staff->password = Hash::make($request->password);
         $staff->userType = $request->staffType;
@@ -113,7 +117,7 @@ class StaffController extends Controller
         {
             $employee = new Employee();
             $employee->employee_name = $request->name;
-            $employee->employee_mobile_phone = $request->number;
+            $employee->employee_mobile_phone = $request['country_code'].$request->number;
             $employee->employee_email_address =  $request->email;;
             $employee->employee_sallery = $request['sallery'];
             $employee->annual_leaves = $request['annual_leaves'];
@@ -232,7 +236,7 @@ class StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
+        
         $request->validate([
             'name'=>'required|string ',
             'number'=>'required|unique:employees,employee_mobile_phone,' . $id,
@@ -255,7 +259,7 @@ class StaffController extends Controller
          $staff = User::where('email', $old_email)->first();
 
         $employee->employee_name = $request->name;
-        $employee->employee_mobile_phone = $request->number;
+        $employee->employee_mobile_phone = $request['country_code'].$request->number;
         $employee->employee_email_address =  $request->email;
         $employee->annual_leaves = $request['annual_leaves'];
         $employee->employee_sallery = $request['sallery'];
@@ -338,7 +342,7 @@ class StaffController extends Controller
         
        
         $staff->name = $request->name;
-        $staff->number = $request->number;
+        $staff->number = $request['country_code'].$request->number;
         $staff->email = $request->email;
         $staff->userType = $request->staffType;
         $staff->address='';
@@ -421,6 +425,7 @@ class StaffController extends Controller
 
     public function edit_profile(Request $request,$id)
     {
+        
         $request->validate([
             'number'=>'required|size:8|unique:users,number,' . $id,
             'present_address' => 'required',
@@ -431,12 +436,12 @@ class StaffController extends Controller
 
         $staff = User::find($id);
 
-        $staff->number = $request->input('number');
+        $staff->number = $request->input('country_code').$request->input('number');
 
         if($staff->save())
         {
             $employee = Employee::where('employee_email_address', $staff->email)->first();
-            $employee->employee_mobile_phone = $request->input('number');
+            $employee->employee_mobile_phone = $request->input('country_code').$request->input('number');
             $employee->employee_present_address = $request->input('present_address');
             $employee->employee_permanent_address = $request->input('permanent_address');
             $employee->save();

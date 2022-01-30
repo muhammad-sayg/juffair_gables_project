@@ -19,6 +19,9 @@
                     <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
                         @csrf
                         <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
+                        <center>
+                                <a class="text-center mt-3" style="position:relative;top:15px;text-decoration:underline;" href="{{ url('/') }}">Visit Website</a>
+                            </center>
                     </form>
                 </div>
             </div>

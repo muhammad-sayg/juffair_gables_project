@@ -49,7 +49,7 @@
             
             <div class="card-body">
               <div class="table-responsive">
-                <table id="tableExport1" class="table table-responsive display nowrap"  width="100%">
+                <table id="tableExport1" class="table  display nowrap"  width="100%">
                   <thead>
                     <tr>
                       <th>#</th>

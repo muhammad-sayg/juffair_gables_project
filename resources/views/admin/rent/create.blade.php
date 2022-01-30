@@ -6,9 +6,14 @@
 {{-- <link rel="stylesheet" href="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.css') }}"> --}}
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="{{asset('public/admin/assets/bundles/select2/dist/css/select2.min.css') }}">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <style>
+  .select2-selection
+  {
+    height: 36px !important;
+  }
 </style>
 @stop
 @section('content')
@@ -37,8 +42,8 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="form-group">
-                          <label for="">Select Tenant</label>
-                          <select name="tenant_id" class="form-control"  id="" style="height: 37px;">
+                          <label for="">Select Tenant <sup class="text-danger">*</sup></label>
+                          <select name="tenant_id" class="form-control select2"  id="" style="height: 37px;">
                             <option value="">--- Select ---</option>
                             @foreach ($tenant_list as $tenant)
                                 <option value="{{ $tenant->id }}">{{ $tenant->tenant_first_name }} {{ $tenant->tenant_last_name }}</option>
@@ -47,49 +52,37 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
+                      <div class="form-group">
+                        <label for="">Select Invoice <sup class="text-danger">*</sup></label>
+                        <select name="invoice_id" class="form-control select2"  id="invoiceSelect" style="height: 37px;">
+                          
+                        </select>
+                      </div>
+                  </div>
+                    <div class="col-lg-4">
                         <div class="form-group">
-                          <label for="">Rent Amount (BD)</label>
+                          <label for="">Rent Amount (BD) <sup class="text-danger">*</sup></label>
                           <input type="text" class="form-control" readonly  name="rent_amount">
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                          <label for="">Received Amount (BD)</label>
+                          <label for="">Received Amount (BD) <sup class="text-danger">*</sup></label>
                           <input type="text" class="form-control" name="received_amount">
-                          <span class="text-danger" style="display: none">Received amount cannot be less then rent amount.</span>
+                          <span class="text-danger" style="display: none">Received amount cannot be greater then rent amount.</span>
                         </div>
                     </div>
-                    {{-- <div class="col-lg-4">
-                        <div class="form-group">
-                          <label for="">Upload Document</label>
-                          <input type="file" class="form-control" name="receipt">
-                        </div>
-                    </div> --}}
-                    {{-- <div class="col-lg-4">
-                      <div class="form-group">
-                        <label for="" style="display: block;" class="mt-2">Status</label>
-                        <div class="custom-control custom-radio custom-control-inline">
-                          <input type="radio" id="customRadioInline1" value="paid" name="rent_status"
-                            class="custom-control-input">
-                          <label class="custom-control-label" for="customRadioInline1">Paid</label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                          <input type="radio" id="customRadioInline2" checked value="unpaid" name="rent_status"
-                            class="custom-control-input">
-                          <label class="custom-control-label" for="customRadioInline2">Unpaid</label>
-                        </div>
-                      </div>
-                    </div> --}}
+                    
                   </div>
-                  <div class="row">
+                  {{-- <div class="row">
                     <div class="col-lg-12">
                       <div class="custom-control custom-checkbox mb-3">
                         <input type="checkbox" name="monthly_checkbox"  class="monthly_checkbox custom-control-input" id="customCheck1" checked>
                         <label class="custom-control-label" for="customCheck1">Monthly base</label>
                       </div>
                     </div>
-                  </div>
-                  <div class="monthly-base-rent-input">
+                  </div> --}}
+                  {{-- <div class="monthly-base-rent-input">
                     <div class="row">
                       <div class="col-lg-4">
                           <div class="form-group">
@@ -103,8 +96,8 @@
                           </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="period-base-rent-inputs" style="display: none;">
+                  </div> --}}
+                  {{-- <div class="period-base-rent-inputs" style="display: none;">
                     <div class="row">
                       <div class="col-lg-12">
                         <div class="row">
@@ -133,7 +126,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> --}}
                   <div class="row">
                     <div class="col-lg-12">
                       <div class="m-b-20 mt-5">
@@ -154,74 +147,10 @@
 @section('footer_scripts')
 {{-- <script src="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{asset('public/admin/assets/bundles/select2/dist/js/select2.full.min.js') }}"></script>
 
 <script src="https://foodlabriffa.ebahrain.biz/assets/bower_components/datepicker/js/bootstrap-datepicker.min.js"></script>
-<script>
-  function getRentDetails(id) {
-    $.get({
-        url: '{{route('rent.show', '')}}' + "/"+ id,
-        dataType: 'json',
-        success: function (data) {
-            console.log(data)
-            $("#rentModal tbody").html(data.html_response)
-            $("#rentModal").modal("show")
-        }
-    });
-  }
-</script>
-<script>
-  function getFloors(id) {
-      $.get({
-          url: '{{route('floor_type.fetch_floors', '')}}' + "/"+ id,
-          dataType: 'json',
-          success: function (data) {
-              console.log(data.options)
-              $('#floorSelect').empty().append(data.options)
-          }
-      });
-  }
-</script>
 
-<script>
-  $('.monthly_checkbox').click(function() {
-    if(!$(this).is(':checked')) {
-        $(".period-base-rent-inputs").show()
-        $(".monthly-base-rent-input").hide()
-    }
-    else
-    {
-        $(".period-base-rent-inputs").hide()
-        $(".monthly-base-rent-input").show()
-    }
-  });
-</script>
-
-<script type="text/javascript">
-  $(function () {
-      $('#datetimepicker1').datepicker({
-        format:'mm-yyyy',
-        viewMode: "months", 
-        minViewMode: "months", 
-        autoclose:true
-
-      });
-      
-      $('#datetimepicker2').datepicker({
-        format:'mm-yyyy',
-        viewMode: "months", 
-        minViewMode: "months", 
-        autoclose:true
-
-      });
-
-      $('#datetimepicker3').datepicker({
-        format:'mm-yyyy',
-        viewMode: "months", 
-        minViewMode: "months", 
-        autoclose:true
-      });
-  });
-</script>
 <script>
   $.ajaxSetup({
         headers: {
@@ -233,7 +162,29 @@
     let id = this.value
     
     jQuery.ajax({
-        url: "{{ route('tenant.rent') }}",
+        url: "{{ route('tenant.invoices') }}",
+        method: 'POST',
+        data:{id:id},
+        success: function(data){
+            if(data.success)
+            {
+              $('#invoiceSelect').empty().append(data.options)
+            }
+
+        },
+            error: function(jqXHR,exception)
+        {
+            alert(jqXHR.status + "\n" + jqXHR.responseText)
+        }
+
+    })
+  })
+
+  $("select[name='invoice_id']").change(function(){
+    let id = this.value
+
+    jQuery.ajax({
+        url: "{{ route('tenant.invoice.rent') }}",
         method: 'POST',
         data:{id:id},
         success: function(data){
@@ -255,15 +206,15 @@
     let received_amount = $(this).val()
     let rent_amount = $("input[name='rent_amount']").val()
     console.log(received_amount,rent_amount)
-    if(received_amount == rent_amount)
-    {
-      $(".text-danger").hide()
-      $(':input[type="submit"]').prop('disabled', false)
-    }
-    else
+    if(parseInt(received_amount) > parseInt(rent_amount))
     {
       $(".text-danger").show()
       $(':input[type="submit"]').prop('disabled', true)
+    }
+    else
+    {
+      $(".text-danger").hide()
+      $(':input[type="submit"]').prop('disabled', false)
     }
   });
 </script>

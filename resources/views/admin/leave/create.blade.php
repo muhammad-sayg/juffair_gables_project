@@ -22,15 +22,15 @@
                              <div class="card-body">
                                 <div class="row">
                                 <div class="form-group col-md-4">
-                                    <label>Leave Start Date</label>
+                                    <label>Leave Start Date <sup class="text-danger">*</sup></label>
                                     <input type="text" name="leave_start_date" class="form-control" id="datepicker1">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Leave End Date</label>
+                                    <label>Leave End Date <sup class="text-danger">*</sup></label>
                                     <input type="text" name="leave_end_date" class="form-control " id="datepicker2">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Leave Type</label>
+                                    <label>Leave Type <sup class="text-danger">*</sup></label>
                                     <select class="form-control" onchange="checkLeaveType(this);" name="leave_type_code">
                                         @foreach ($leave_types as $leaveType)
                                         <option value="{{ $leaveType->leave_type_code }}" >{{ $leaveType->leave_type_name }}</option>
@@ -40,13 +40,13 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-4 attachdocument">
-                                    <label>Attach Medical Certificate</label>
+                                    <label>Attach Medical Certificate <sup class="text-danger">*</sup></label>
                                     <input type="file" name="leave_document" class="form-control">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-8">
-                                    <label>Reason</label>
+                                    <label>Reason <sup class="text-danger">*</sup></label>
                                     <textarea name="leave_reason" class="form-control"></textarea>
                                 </div>
                         </div>

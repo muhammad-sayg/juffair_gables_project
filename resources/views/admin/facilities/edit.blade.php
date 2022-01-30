@@ -36,7 +36,7 @@
                         @csrf
                         <div class="row">
                             <div class="form-group col-md-4">
-                                <label>Facility  Name</label>
+                                <label>Facility  Name <sup class="text-danger">*</sup></label>
                                 <input type="text" name="name" value="{{ isset($allfacilities->name)? $allfacilities->name : '' }}" class="form-control">
                             </div>
                         </div>

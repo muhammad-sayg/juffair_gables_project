@@ -23,19 +23,19 @@
                              <div class="card-body">
                                 <div class="row">
                                 <div class="form-group col-md-4">
-                                    <label>Maintenance Title</label>
+                                    <label>Maintenance Title <sup class="text-danger">*</sup></label>
                                     <input type="text" maxlength="50" name="maintenance_title" class="form-control">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Date</label>
+                                    <label>Date <sup class="text-danger">*</sup></label>
                                     <input type="date" name="maintenance_date" class="form-control">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Maintenance Cost</label>
+                                    <label>Maintenance Cost (BD)<sup class="text-danger">*</sup></label>
                                     <input type="text" name="maintenance_cost_total_amount" class="form-control">
                                 </div>
                                 <div class="form-group col-md-4" id="locationDropdown">
-                                    <label>Select Location</label>
+                                    <label>Select Location <sup class="text-danger">*</sup></label>
                                     <select class="form-control" onchange="get_locations(this)" name="location_id" id="">
                                         <option value="" disabled selected>--- Select ---</option>
                                         @foreach (\App\Models\Location::all() as $location)
@@ -44,7 +44,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label>Description</label>
+                                    <label>Description <sup class="text-danger">*</sup></label>
                                     <textarea name="maintenance_description" class="form-control"></textarea>
                                     
                                 </div>

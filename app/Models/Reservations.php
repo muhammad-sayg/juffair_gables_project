@@ -15,7 +15,8 @@ class Reservations extends Model
         'end_time',
         'tenant_name',
         'reservation_id',
-        'amount'
+        'amount',
+        'contact_number'
     ];
 
     public function facility(){

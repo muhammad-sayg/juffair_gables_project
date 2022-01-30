@@ -18,6 +18,7 @@ class CreateRentsTable extends Migration
             $table->integer('tenant_id');
             $table->decimal('rent_amount', 15);
             $table->decimal('received_amount', 15)->nullable();
+            $table->decimal('due_amount', 15)->nullable();
             
             $table->dateTime('received_date')->nullable();
             $table->string('rent_month')->nullable();
@@ -25,6 +26,7 @@ class CreateRentsTable extends Migration
             $table->string('rent_start_month')->nullable();
             $table->string('rent_end_month')->nullable();
             $table->string('receipt_no')->nullable();
+            $table->string('invoice_no');
 
             $table->integer('rent_paid_status_code');
 

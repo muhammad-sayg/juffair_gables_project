@@ -1,5 +1,3 @@
-
-
 @extends('layouts.admin.app')
 {{-- Page title --}}
 @section('title')
@@ -9,10 +7,15 @@ Juffair Gables
 @section('header_styles')
 <link rel="stylesheet" href="{{asset('public/admin/assets/bundles/datatables/datatables.min.css')}}">
 <link rel="stylesheet" href="{{asset('public/admin/assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{  asset('public/assets/css/intlTelInput.css') }}">
 <style>
    textarea
    {
    height: 64px !important;
+   }
+    .iti--allow-dropdown
+   {
+       width:100%;
    }
 </style>
 @stop
@@ -34,7 +37,7 @@ Juffair Gables
          <div class="card">
             <form 
                action="{{route('staff.store') }}" 
-               method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data" autocomplete="off">
+               method="POST"  enctype="multipart/form-data" autocomplete="off">
                @csrf
                <div class="card-header">
                   <h4>Add Staff</h4>
@@ -42,7 +45,7 @@ Juffair Gables
                <div class="card-body">
                   <div class="form-group row">
                      <div class="form-group col-md-4">
-                        <label for="name">Name</label>
+                        <label for="name">Name <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" autocomplete="off" required="" name="name" id="name"
                            value="{{ old('name')}}" 
                            placeholder="Staff name">
@@ -51,16 +54,17 @@ Juffair Gables
                         </div>
                      </div>
                      <div class="form-group col-md-4">
-                        <label for="number">Contact Number.</label>
-                        <input type="tel"  class="form-control" autocomplete="off" name="number" id="number" required="" 
+                        <label for="number">Contact Number <sup class="text-danger">*</sup></label>
+                        <input type="tel" maxLength="11"  class="form-control" autocomplete="off" name="number" id="number" required="" 
                            value="{{ old('number')}}" 
                            placeholder="Staff contact number">
+                           <input type="hidden" name="country_code" value="" >
                         <div class="invalid-feedback">
                            Staff number is required?
                         </div>
                      </div>
                      <div class="form-group col-md-4">
-                        <label for="email">Email </label>
+                        <label for="email">Email <sup class="text-danger">*</sup></label>
                         <input type="email" class="form-control" autocomplete="off" required="" name="email" id="email" placeholder="Enter Staff email"
                            value="{{ old('email')}}">
                         <div class="invalid-feedback">
@@ -68,11 +72,11 @@ Juffair Gables
                         </div>
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Date of birth</label>
-                        <input type="date" name="staff_date_of_birth" class="form-control">
+                        <label>Date of birth <sup class="text-danger">*</sup></label>
+                        <input type="date" value="{{ old('staff_date_of_birth') }}" name="staff_date_of_birth" class="form-control">
                      </div>
                      <div class="form-group col-md-4">
-                        <label for="password">Password</label>
+                        <label for="password">Password <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" autocomplete="off" required="" name="password" id="password" placeholder="Enter password">
                         <div class="invalid-feedback">
                            Please add password
@@ -80,7 +84,8 @@ Juffair Gables
                      </div>
                      <div class="col-md-4 col-12">
                         <div class="form-group">
-                           <label for="staff_image">Staff Image</label>
+                           <label for="staff_image">Staff Image <sup class="text-danger">*</sup><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right"
+                      title="Image size should be 2 MB and Image should be in jpg and png format."></i></label>
                            <div class="input-group">
                               <div class="custom-file">
                                  <input type="file"
@@ -92,52 +97,55 @@ Juffair Gables
                      </div>
                      
                      <div class="form-group col-md-4">
-                        <label>Annual Leaves</label>
-                        <input type="text" name="annual_leaves" class="form-control" id="annual_leaves"></input>
+                        <label>Annual Leaves <sup class="text-danger">*</sup></label>
+                        <input type="text" value="{{old('annual_leaves')}}" name="annual_leaves" class="form-control" id="annual_leaves"></input>
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Total Salary (BD)</label>
-                        <input type="text" name="sallery" class="form-control" id="sallery"></input>
+                        <label>Total Salary (BD) <sup class="text-danger">*</sup></label>
+                        <input type="text" value="{{old('sallery')}}" name="sallery" class="form-control" id="sallery"></input>
                      </div>
 
                      <div class="form-group col-md-4">
-                        <label>Present Address</label>
-                        <textarea name="staff_present_address" class="form-control"></textarea>
+                        <label>Present Address <sup class="text-danger">*</sup></label>
+                        <textarea name="staff_present_address" class="form-control">{{ old('staff_present_address') }}</textarea>
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Permanent Address</label>
-                        <textarea name="staff_permanent_address" class="form-control"></textarea>
+                        <label>Permanent Address <sup class="text-danger">*</sup></label>
+                        <textarea name="staff_permanent_address" class="form-control">{{ old('staff_permanent_address') }}</textarea>
                      </div>
                      <div class="form-group col-md-4">
-                        <label>CPR Number</label>
-                        <input type="text" maxlength="9" name="staff_cpr_no" class="form-control" id="cprNumber">
+                        <label>CPR Number </label>
+                        <input type="text" maxlength="9" name="staff_cpr_no" class="form-control" value="{{ old('staff_cpr_no') }}" id="cprNumber">
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Passport Number</label>
-                        <input type="text" maxlength="9" name="passport_number" class="form-control" id="cprNumber">
+                        <label>Passport Number <sup class="text-danger">*</sup></label>
+                        <input type="text" maxlength="9" name="passport_number" class="form-control" value="{{ old('passport_number') }}" id="cprNumber">
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Contract Start Date</label>
-                        <input type="date" name="lease_period_start_datetime" class="form-control">
+                        <label>Contract Start Date <sup class="text-danger">*</sup></label>
+                        <input type="date" value="{{ old('lease_period_start_datetime') }}" name="lease_period_start_datetime" class="form-control">
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Contract End Date</label>
-                        <input type="date" name="lease_period_end_datetime" class="form-control">
+                        <label>Contract End Date <sup class="text-danger">*</sup></label>
+                        <input type="date" value="{{ old('lease_period_end_datetime') }}" name="lease_period_end_datetime" class="form-control">
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Passport Copy</label>
-                        <input type="file" accept="image/png, image/jpeg" name="staff_passport_copy" class="form-control">
+                        <label>Passport Copy <sup class="text-danger">*</sup><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right"
+                      title="Image size should be 2 MB and Image should be in jpg and png format."></i></label>
+                        <input type="file" accept="image/png, image/jpeg,image/jpg" name="staff_passport_copy" class="form-control">
                      </div>
                      <div class="form-group col-md-4">
-                        <label>CPR Copy</label>
-                        <input type="file" accept="image/png, image/jpeg" name="staff_cpr_copy" class="form-control">
+                        <label>CPR Copy <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right"
+                      title="Image size should be 2 MB and Image should be in jpg and png format."></i></label>
+                        <input type="file" accept="image/png, image/jpeg,image/jpg" name="staff_cpr_copy" class="form-control">
                      </div>
                      <div class="form-group col-md-4">
-                        <label>Contract Copy</label>
-                        <input type="file" accept="image/png, image/jpeg" name="staff_contract_copy" class="form-control">
+                        <label>Contract Copy <sup class="text-danger">*</sup><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right"
+                      title="Image size should be 2 MB and Image should be in jpg and png format."></i></label>
+                        <input type="file" accept="image/png, image/jpeg,image/jpg" name="staff_contract_copy" class="form-control">
                      </div>
                      <div class="form-group col-md-12" style="margin-right: 10px">
-                        <label>Assign Role to Staff</label> <br>
+                        <label>Assign Role to Staff <sup class="text-danger">*</sup></label> <br>
                         @foreach($roles as $key=>$role )
                         <input type="radio" name="staffType" value="{{$role['slug']}}">
                        
@@ -172,6 +180,8 @@ Juffair Gables
 <script src="{{asset('public/admin/assets/bundles/datatables/export-tables/vfs_fonts.js')}}"></script>
 <script src="{{asset('public/admin/assets/bundles/datatables/export-tables/buttons.print.min.js')}}"></script>
 <script src="{{asset('public/admin/assets/js/page/datatables.js')}}"></script>
+<script src="{{  asset('public/assets/js/intlTelInput.js') }}"></script>
+<script src="{{ asset('public/assets/js/intlTelInput.js')}}"></script>
 <script>
    (function($) {
            $.fn.inputFilter = function(inputFilter) {
@@ -201,5 +211,46 @@ Juffair Gables
        return /^[+-]?\d*$/.test(value); });
    
 </script>
+<script>
+         var input = document.querySelector("#number");
+         window.intlTelInput(input, {
+         //   allowDropdown: false,
+         //   autoHideDialCode: true,
+         autoPlaceholder: "On",
+         //   dropdownContainer: document.body,
+         //   excludeCountries: ["us"],
+         //   formatOnDisplay: true,
+         geoIpLookup: function(callback) {
+           $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+             var countryCode = (resp && resp.country) ? resp.country : "";
+             callback(countryCode);
+           });
+         },
+         //   hiddenInput: "full_number",
+         //   initialCountry: "auto",
+         //   localizedCountries: { 'de': 'Deutschland' },
+         //   nationalMode: false,
+         //   onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+         placeholderNumberType: "MOBILE",
+         //   preferredCountries: ['cn', 'jp'],
+         separateDialCode: true,
+         
+         utilsScript: "build/js/utils.js",
+         });
+         
+      </script>
+      <script>
+         $(document).ready(function(){
+            let country_code = $(".iti__selected-dial-code").html()
+
+            $("input[name=country_code]").val(country_code)
+         })
+
+         $(".iti__selected-dial-code").on('DOMSubtreeModified',function(){
+            let country_code = $(".iti__selected-dial-code").html()
+
+            $("input[name=country_code]").val(country_code)
+         })
+         </script>
 @stop
 

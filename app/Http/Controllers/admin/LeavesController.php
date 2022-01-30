@@ -68,7 +68,7 @@ class LeavesController extends Controller
                 'leave_document' => 'required',
     
             ], [
-                'leave_document.required' => 'Leave document is required!',
+                'leave_document.required' => 'Medical Certificate is required!',
             ]);
         }
 
@@ -187,7 +187,7 @@ class LeavesController extends Controller
             return redirect()->back();
         }
 
-        $aleary_applied_for_leave_on_same_date_count = EmployeeLeaves::where('staff_id', Auth::user()->id)
+        $aleary_applied_for_leave_on_same_date_count = EmployeeLeaves::where('id','!=',$id)->where('staff_id', Auth::user()->id)
                                                                     ->where(function($query) use($leave_start_date,$leave_end_date) {
                                                                         $query->orWhereDate('leave_start_date', $leave_start_date)
                                                                               ->orWhereDate('leave_end_date', $leave_end_date);

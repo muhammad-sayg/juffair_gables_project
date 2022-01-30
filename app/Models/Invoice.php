@@ -9,4 +9,8 @@ class Invoice extends Model
 {
     use HasFactory;
     protected $table = 'invoice';
+
+    public function tenant(){
+        return $this->belongsTo(Tenant::class, 'tenant_id', 'id');
+    }
 }

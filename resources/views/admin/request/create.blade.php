@@ -35,7 +35,7 @@
               @csrf
                 <div class="row">
                     <div class="form-group col-md-4" id="locationDropdown">
-                        <label>Select Location</label>
+                        <label>Select Location <sup class="text-danger">*</sup></label>
                         <select class="form-control" onchange="get_locations(this)" name="location_id" id="">
                             <option value="">--- Select ---</option>
                             @foreach (\App\Models\Location::all() as $location)
@@ -44,7 +44,7 @@
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Title</label>
+                        <label>Title <sup class="text-danger">*</sup></label>
                         <input type="text" name="title" class="form-control">
                     </div>
                     
@@ -53,7 +53,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="form-group">
-                            <label>Description</label>
+                            <label>Description <sup class="text-danger">*</sup></label>
                             <textarea name="description"  class="form-control"></textarea>
                         </div>
                     </div>

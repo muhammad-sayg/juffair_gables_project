@@ -61,7 +61,7 @@ Juffair Gables
                       <th>Contract Start Date</th>
                       <th>Contract End Date</th>
                       <th>Emergancy Email</th>
-                      <th>Emergancy Contact Number</th>
+                      <!--<th>Emergancy Contact Number</th>-->
                       <th>Cpr Number</th>
                       <th>Passport Number</th>
                       <th>Apartment No</th>
@@ -84,7 +84,7 @@ Juffair Gables
                         <td data-href='{{ route('tenants.show',$tenant->id) }}'>{{ isset($tenant->lease_period_start_datetime) ? \Carbon\Carbon::parse($tenant->lease_period_start_datetime)->toFormattedDateString() : '' }}</td>
                         <td data-href='{{ route('tenants.show',$tenant->id) }}'>{{ isset($tenant->lease_period_end_datetime) ? \Carbon\Carbon::parse($tenant->lease_period_end_datetime)->toFormattedDateString() : '' }}</td>
                         <td data-href='{{ route('tenants.show',$tenant->id) }}'>{{ $tenant->emergancy_email }}</td>
-                        <td data-href='{{ route('tenants.show',$tenant->id) }}'>{{ $tenant->emergancy_contact_number }}</td>
+                        <!--<td data-href='{{ route('tenants.show',$tenant->id) }}'>{{ $tenant->emergancy_contact_number }}</td>-->
                         <td data-href='{{ route('tenants.show',$tenant->id) }}'>{{ $tenant->tenant_cpr_no }}</td>
                         <td data-href='{{ route('tenants.show',$tenant->id) }}'>{{ $tenant->tenant_passport_no }}</td>
                         <td data-href='{{ route('tenants.show',$tenant->id) }}'>{{ isset($tenant->unit) ? $tenant->unit->unit_number : '' }}</td>
@@ -133,7 +133,7 @@ Juffair Gables
                       <th>Contract Start Date</th>
                       <th>Contract End Date</th>
                       <th>Emergancy Email</th>
-                      <th>Emergancy Contact Number</th>
+                      <!--<th>Emergancy Contact Number</th>-->
                       <th>Cpr Number</th>
                       <th>Passport Number</th>
                       <th>Apartment No</th>
@@ -156,7 +156,7 @@ Juffair Gables
                       <td data-href='{{ route('tenants.show',$tenant->id) }}'>{{ isset($tenant->lease_period_start_datetime) ? \Carbon\Carbon::parse($tenant->lease_period_start_datetime)->toFormattedDateString() : '' }}</td>
                       <td data-href='{{ route('tenants.show',$tenant->id) }}'>{{ isset($tenant->lease_period_end_datetime) ? \Carbon\Carbon::parse($tenant->lease_period_end_datetime)->toFormattedDateString() : '' }}</td>
                       <td data-href='{{ route('tenants.show',$tenant->id) }}'>{{ $tenant->emergancy_email }}</td>
-                      <td data-href='{{ route('tenants.show',$tenant->id) }}'>{{ $tenant->emergancy_contact_number }}</td>
+                      <!--<td data-href='{{ route('tenants.show',$tenant->id) }}'>{{ $tenant->emergancy_contact_number }}</td>-->
                       <td data-href='{{ route('tenants.show',$tenant->id) }}'>{{ $tenant->tenant_cpr_no }}</td>
                       <td data-href='{{ route('tenants.show',$tenant->id) }}'>{{ $tenant->tenant_passport_no }}</td>
                       <td data-href='{{ route('tenants.show',$tenant->id) }}'>{{ isset($tenant->unit) ? $tenant->unit->unit_number : '' }}</td>
@@ -212,7 +212,7 @@ Juffair Gables
             },
             className: 'btn btn-default',
             exportOptions: {
-                columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]
+                columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13]
             },
             filename: function(){
                 return 'active_tenant_list';
@@ -226,7 +226,7 @@ Juffair Gables
             },
             className: 'btn btn-secondary',
             exportOptions: {
-                columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]
+                columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13]
             },
             filename: function(){
                 return 'active_tenant_list';
@@ -242,7 +242,7 @@ Juffair Gables
             orientation : 'landscape',
             pageSize : 'LEGAL',
             exportOptions: {
-                columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]
+                columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13]
             },
             filename: function(){
                 return 'active_tenant_list';
@@ -284,7 +284,7 @@ Juffair Gables
             text: 'Excel',
             className: 'btn btn-default',
             exportOptions: {
-                columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]
+                columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13]
             },
             filename: function(){
                 return 'passed_tenant_list';
@@ -295,7 +295,7 @@ Juffair Gables
             text: 'Csv',
             className: 'btn btn-secondary',
             exportOptions: {
-                columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]
+                columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13]
             },
             filename: function(){
                 return 'passed_tenant_list';
@@ -311,7 +311,7 @@ Juffair Gables
             orientation : 'landscape',
             pageSize : 'LEGAL',
             exportOptions: {
-                columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]
+                columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13]
             },
             filename: function(){
                 return 'passed_tenant_list';
@@ -333,7 +333,7 @@ Juffair Gables
                     .css('font-size', 'inherit');
             },
             exportOptions: {
-                columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]
+                columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13]
             },
             filename: function(){
                 return 'passed_tenant_list';

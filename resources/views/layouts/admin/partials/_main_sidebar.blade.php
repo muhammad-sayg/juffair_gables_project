@@ -36,9 +36,18 @@
           <li class="dropdown {!! (Request::is('tenants*') ? "active" : "") !!}">
             <a href="{{ route('tenants.list') }}" class="nav-link"><i class="fas fa-users"></i><span>Tenants</span></a>
           </li>
+          <li class="dropdown {!! (Request::is('contacts/*') ? "active" : "") !!}">
+            <a href="{{ route('contacts.list') }}" class="nav-link"><i class="
+            fas fa-address-book"></i><span>Contacts</span></a>
+          </li>
+          
           <li class="dropdown {!! (Request::is('service_contract*') ? "active" : "") !!}">
             <a href="{{ route('service_contract.list') }}" class="nav-link"><i class="
-              fas fa-plus-circle"></i><span>Add a New Service Contract</span></a>
+              fab fa-stripe-s"></i><span>Service Contracts</span></a>
+          </li>
+
+          <li class="dropdown {!! (Request::is('invoice*') ? "active" : "") !!}">
+            <a href="{{ route('invoices.list') }}" class="nav-link"><i class="fas fa-file-invoice"></i><span>Billing Invoices</span></a>
           </li>
 
           <li class="dropdown {!! (Request::is('rent/*') ? "active" : "") !!}">
@@ -68,6 +77,7 @@
         <li class="dropdown {!! (Request::is('tasks/task/*') ? "active" : "") !!}"><a href="{{ route('tasks.list') }}" class="nav-link">@if(\Auth::user()->userType != 'employee' AND \Auth::user()->userType != 'receptionist')<i class="fas fa-book"></i><span>Tasks </span>@else <i class="fas fa-book"></i><span>Active Tasks</span> @endif</a></li>
        
         @if(Auth::user()->userType == 'receptionist')
+        
         <li class="dropdown {!! (Request::is('facilities/*') ? "active" : "") !!}">
           <a href="{{ route('facilities.list') }}" class="nav-link"><i class="
             fas fa-spa"></i><span>Facilities</span></a>
@@ -77,6 +87,11 @@
           <a href="{{ route('reservation.list') }}" class="nav-link"><i class="
             far fa-registered"></i><span>Reserved  Facilities</span></a>
         </li>
+        <li class="dropdown {!! (Request::is('contacts/*') ? "active" : "") !!}">
+          <a href="{{ route('contacts.list') }}" class="nav-link"><i class="
+          fas fa-address-book"></i><span>Contacts</span></a>
+        </li>
+        
         @endif
         
         <li class="dropdown {!! (Request::is('leave/*') ? "active" : "") !!}">

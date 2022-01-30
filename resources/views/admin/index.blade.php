@@ -36,6 +36,11 @@ Juffair Gable
    {
        padding-left:20px;
    }
+   
+   .fa-clock
+   {
+       top:35px !important;
+   }
 </style>
 @stop
 @section('content')
@@ -74,7 +79,7 @@ Juffair Gable
         $total_complaint = 0;
         $total_maintenance_cost  = 0;
         $total_units = \App\Models\Unit::all()->count();
-        $total_tenant = \App\Models\Tenant::all()->count();
+        $total_tenant = \App\Models\Tenant::where('is_passed',null)->get()->count();
         
         $total_employees = \App\Models\User::whereIn('userType', ['employee','officer','receptionist'])->where('is_passed',null)->count();
         $total_complains = \App\Models\Complain::where('assigneed_id', Auth::user()->id)->whereIn('complain_status_code' , [1,2])->count();
@@ -332,7 +337,7 @@ Juffair Gable
             <div class="card-statistic-4">
               <div class="info-box7-block">
                 <h6 class="text-right  m-b-20">Average time to resolve an assigned tasks</h6>
-                <h4 class="text-right"><i class="fas fa-clock pull-left bg-cyan c-icon mt-4"></i><span>{{ isset($hours)? $hours.' '.'hours': '0' }}  {{ isset($minutes) ? $minutes.' '. 'minutes' : ''}} </span>
+                <h4 class="text-right"><i class="fas fa-clock pull-left bg-cyan c-icon"></i><span>{{ isset($hours)? $hours.' '.'hours': '0' }}  {{ isset($minutes) ? $minutes.' '. 'minutes' : ''}} </span>
                 </h4>
                 <a href="{{ route('tasks.completed_task.list') }}"  class="small-box-footer text-center d-block mt-4 pt-2">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>

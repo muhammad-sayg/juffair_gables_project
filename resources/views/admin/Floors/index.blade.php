@@ -91,7 +91,7 @@ Juffair Gables
           @csrf
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label>From</label>
+              <label>From <sup class="text-danger">*</sup></label>
             <div class="input-group">
             <div class="input-group-prepend">
             </div>
@@ -99,7 +99,7 @@ Juffair Gables
             </div>
           </div>
           <div class="form-group col-md-6">
-            <label>To</label>
+            <label>To <sup class="text-danger">*</sup></label>
             <div class="input-group-prepend">
             </div>
             <input type="number" min="0" id="to" name="to" class="form-control">
@@ -108,7 +108,7 @@ Juffair Gables
        <div>
       <div class="form-row">
         <div class="form-group col-md-6">
-            <label>Floor Type</label>
+            <label>Floor Type <sup class="text-danger">*</sup></label>
             <select class="form-control" name="floor_type">
                 @foreach ($floor_types as $floor_type)
                     <option value="{{ $floor_type->floor_type_code }}">{{ $floor_type->floor_type_name }}</option>

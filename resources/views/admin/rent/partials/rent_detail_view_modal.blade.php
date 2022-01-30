@@ -1,5 +1,7 @@
 @php
     $item = $rent;
+    $invoice = \App\Models\Invoice::where('invoice_number', $item->invoice_no)->first();
+
 @endphp
 <tr>
     <td>Receipt No #</td>
@@ -28,38 +30,17 @@
 </tr>
 <tr>
     <td>Receipt</td>
-    <td><a href="{{ route('rent.receipt',$item->id) }}" target="blank">view</a></td>
+    <td><a href="{{ route('rent.receipt',$item->id) }}">Click here to view</a></td>
+</tr>
+<tr>
+    <td>Invoice</td>
+    <td><a href="{{ route('invoices.view_invoice', $invoice->id) }}">Click here to view</a></td>
 </tr>
 @endif
 <tr>
     <td>Rent Month</td>
     <td>
-        @php
-            if($item->rent_month != null)
-            {
-            $dateMonthArray = explode('-', $item->rent_month);
-            $month = $dateMonthArray[0];
-            $year = $dateMonthArray[1];
-            $date = \Carbon\Carbon::createFromDate($year, $month, 1);
-            }
-            else 
-            {
-            $dateMonthArray = explode('-', $item->rent_start_month);
-            $month = $dateMonthArray[0];
-            $year = $dateMonthArray[1];
-            $date1 = \Carbon\Carbon::createFromDate($year, $month, 1);
-
-            $dateMonthArray = explode('-', $item->rent_end_month);
-            $month = $dateMonthArray[0];
-            $year = $dateMonthArray[1];
-            $date2 = \Carbon\Carbon::createFromDate($year, $month, 1);
-            }
-        @endphp
-        @if($item->rent_month != null)
-        {{ $date->format('M Y') }}
-        @else
-        {{ $date1->format('M Y') }} -  {{ $date2->format('M Y') }}
-        @endif
+        {{ \Carbon\Carbon::parse($item->invoice_issue_date)->formatLocalized('%d %b %Y') }}
     </td>
 </tr>
 <tr>

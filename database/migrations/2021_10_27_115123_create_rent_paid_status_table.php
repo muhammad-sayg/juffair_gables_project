@@ -27,6 +27,7 @@ class CreateRentPaidStatusTable extends Migration
         DB::table('rent_paid_status')->insert(array('rent_paid_status_id' => '2',
                                         'rent_paid_status_name' => 'Unpaid',
                                         'rent_paid_status_code' => '2'));
+                                        
         DB::table('rent_paid_status')->insert(array('rent_paid_status_id' => '3',
                                         'rent_paid_status_name' => 'Due',
                                         'rent_paid_status_code' => '3'));                              

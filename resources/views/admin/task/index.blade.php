@@ -4,6 +4,7 @@
     AMS
 @stop --}}
 {{-- page level styles --}}
+
 @section('header_styles')
 <link rel="stylesheet" href="{{ asset('public/admin/assets/') }}/bundles/datatables/datatables.min.css">
 <link rel="stylesheet" href="{{ asset('public/admin/assets/') }}/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
@@ -136,7 +137,7 @@
                         </div>
                         
                         <div class="form-group col-md-2" style="margin-top: 1.90rem !important;">
-                            <button type="submit" class="btn btn-primary">Search</button>
+                            <button type="submit" class="btn btn-primary">Filter</button>
                         </div>
                     </div>
                 </form>
@@ -226,19 +227,27 @@
                             case 6:
                               $class = 'badge-danger';
                               break;
+                              case null:
+                              $class = 'badge-warning';
+                              break;
                             default:
                               $class = 'badge-success';
                               break;
                           }
+                          
                         @endphp
+                       
                         <span class="badge {{ $class }}">
                             @if($item->task_status_code == 6)
                                Cancelled
+                            @elseif($item->task_status_code == null)
+                            unassigned
                             @else
                             {{ 
-                            isset($item->task_status) ? $item->task_status->task_status_name : ''}}
+                              isset($item->task_status) ? $item->task_status->task_status_name : '' }}
                             @endif
                             </span>
+                            
                       </td>
                       <td>
                         <div class="dropdown">
@@ -336,6 +345,9 @@
                         $class = '';
                         switch ( $item->task_status_code) {
                         case 1:
+                            $class = 'badge-warning';
+                            break;
+                        case 4:
                             $class = 'badge-warning';
                             break;
                         default:
@@ -676,6 +688,10 @@
 <script src="{{ asset('public/admin/assets/') }}/bundles/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
 <script src="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <script>
+
+    $("tr td:not(:last-child)").click(function() {
+        window.location = $(this).data("href");
+    });
   $('input[name="taskRadioButton"]').change(
    
    function(){

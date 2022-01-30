@@ -49,11 +49,11 @@
                 <h4>Login</h4>
               </div>
               <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}" class="needs-validation" novalidate="" autocomplete="off">
+                    <form method="POST" action="{{ route('login') }}" class="needs-validation" autocomplete="off">
                         @csrf
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input id="email" type="email" autocomplete="off" class="form-control @if(!empty($errors)) @error('email') is-invalid @enderror @endif" autocomplete="off" name="email" tabindex="1" required >
+                            <label for="email">Username</label>
+                            <input id="email" type="text" autocomplete="off" class="form-control @if(!empty($errors)) @error('email') is-invalid @enderror @endif" autocomplete="off" name="email" tabindex="1" required >
                             @isset($errors)
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -95,6 +95,10 @@
                             <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
                               Login
                             </button>
+                            <center>
+                                <a class="text-center mt-3" style="position:relative;top:15px;text-decoration:underline;" href="{{ url('/') }}">Visit Website</a>
+                            </center>
+                            
                         </div>
                     </form>
                     {{-- <div class="mt-5 text-muted text-center">

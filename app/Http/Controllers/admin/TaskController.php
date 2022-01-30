@@ -29,8 +29,8 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         $tasks = Task::orderBy('id', 'desc')->get();
-        $employee_list = User::where('userType', 'employee')->get();
-        $receptionist_list = User::where('userType', 'receptionist')->get();
+        $employee_list = User::where('userType', 'employee')->where('is_passed',null)->get();
+        $receptionist_list = User::where('userType', 'receptionist')->where('is_passed',null)->get();
 
 
         $task_status_list = TaskStatus::all();
@@ -338,6 +338,7 @@ class TaskController extends Controller
         $task = Task::find($id);
 
         $task->task_status_code = 4;
+        $task->assigned_task_check = 0;
         $task->complete_date = null;
         $task->complete_time = null;
         $task->comments = $request->input('reason');
@@ -370,8 +371,8 @@ class TaskController extends Controller
         {
             $floors = FloorDetail::where('floor_type_code', 2)->get();
 
-            $res = '<div class="form-group col-md-4 floor-dropdown"><label>Select Floor</label><select onchange="getUnits(this.value)" class="form-control" name="floor_id" id="floorSelect">';
-            $res1 = '<div class="form-group col-md-4 unit-dropdown"><label>Select Apartment</label><select class="form-control" name="unit_id" id="unitSelect">';
+            $res = '<div class="form-group col-md-4 floor-dropdown"><label>Select Floor <sup class="text-danger">*</sup></label><select onchange="getUnits(this.value)" class="form-control" name="floor_id" id="floorSelect">';
+            $res1 = '<div class="form-group col-md-4 unit-dropdown"><label>Select Apartment <sup class="text-danger">*</sup></label><select class="form-control" name="unit_id" id="unitSelect">';
 
             $res .= '<option value="' . 0 . '" disabled >---Select---</option>';
             foreach ($floors as $floor) {
@@ -404,7 +405,7 @@ class TaskController extends Controller
         }
         elseif($location_id == 2)
         {
-            $res = '<div class="form-group col-md-4 common_area_select"><label>Select Common Area</label><select class="form-control" name="common_area_id" id="commonAreaSelect">';
+            $res = '<div class="form-group col-md-4 common_area_select"><label>Select Common Area <sup class="text-danger">*</sup></label><select class="form-control" name="common_area_id" id="commonAreaSelect">';
             $common_areas = CommonArea::all();
             
             foreach ($common_areas as $common_area) {
@@ -417,7 +418,7 @@ class TaskController extends Controller
         }
         elseif($location_id == 3)
         {
-            $res = '<div class="form-group col-md-4 parking_floor_select"><label>Select Floor</label><select class="form-control" name="floor_id" id="parkingFloorSelect">';
+            $res = '<div class="form-group col-md-4 parking_floor_select"><label>Select Floor <sup class="text-danger">*</sup></label><select class="form-control" name="floor_id" id="parkingFloorSelect">';
             $parking_floors = FloorDetail::where('floor_type_code', 1)->get();
            
             
@@ -431,7 +432,7 @@ class TaskController extends Controller
         }
         else
         {
-            $res = '<div class="form-group col-md-4 service_area_select"><label>Select Service Area</label><select class="form-control" name="service_area_id" id="serviceAreaSelect">';
+            $res = '<div class="form-group col-md-4 service_area_select"><label>Select Service Area <sup class="text-danger">*</sup></label><select class="form-control" name="service_area_id" id="serviceAreaSelect">';
             $service_area_list = ServiceArea::all();
            
             
@@ -532,6 +533,7 @@ class TaskController extends Controller
     public function get_assign_task_data(Request $request)
     {
         $user_id = Auth::user()->id;
+        
         $assigned_task = Task::where('assigned_task_check', 0)->where('assignee_id', $user_id)->count();
         return response()->json([
             'success' => 1,
@@ -638,6 +640,7 @@ class TaskController extends Controller
 
     public function search_tasks_by_status(Request $request)
     {
+        
         $task_status_code = $request->input('task_status_code',null);
         
 
@@ -650,11 +653,12 @@ class TaskController extends Controller
 
         $tasks = $query->orderBy('id','desc')->get();
         $employee_list = User::where('userType', 'employee')->get();
+        $receptionist_list = User::where('userType', 'receptionist')->get();
 
         $task_status_list = TaskStatus::all();
         
 
-        return view('admin.task.index', compact('tasks','employee_list','task_status_list','task_status_code'));
+        return view('admin.task.index', compact('tasks','receptionist_list','employee_list','task_status_list','task_status_code'));
     }
 
    

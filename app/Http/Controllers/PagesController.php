@@ -200,7 +200,7 @@ class PagesController extends Controller
 
         $data = [ 'subject' => $request['subject'], 'message' => $request['message']];
         
-        Mail::to('mrshaheen@juffairgables.com')->send(new SendMailToGeneralManager($data));
+        Mail::to('manager@juffairgables.com')->send(new SendMailToGeneralManager($data));
  
         if (Mail::failures()) {
             return response()->Fail('Something went wrong.');

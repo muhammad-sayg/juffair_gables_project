@@ -26,16 +26,16 @@
                   <div class="card-body">
                      <div class="row">
                         <div class="form-group col-md-4">
-                           <label>Leave Start Date</label>
+                           <label>Leave Start Date <sup class="text-danger">*</sup></label>
                            <input type="text" value="{{ isset($employeeleave) ? \Carbon\Carbon::parse($employeeleave->leave_start_date)->format('Y-m-d') : ''}}"  name="leave_start_date" class="form-control datepicker">
                         </div>
                         <div class="form-group col-md-4">
-                           <label>Leave End Date</label>
+                           <label>Leave End Date <sup class="text-danger">*</sup></label>
                            <input type="text" value="{{ isset($employeeleave) ? \Carbon\Carbon::parse($employeeleave->leave_end_date)->format('Y-m-d') : ''}}"  name="leave_end_date" class="form-control datepicker">
                         </div>
                         
                            <div class="form-group col-md-4">
-                            <label>Leave Type</label>
+                            <label>Leave Type <sup class="text-danger">*</sup></label>
                             <select class="form-control"  onchange="checkLeaveType(this);" name="leave_type_code">
                                 @foreach ($leave_types as $leaveType)
                                 <option value="{{ $leaveType->leave_type_code }}" {{ (isset($employeeleave) && ($employeeleave->leave_type_code == $leaveType->leave_type_code)) ? 'selected' :'' }}>{{ $leaveType->leave_type_name }}</option>
@@ -46,7 +46,7 @@
                         
                         <div class="row">
                            <div class="form-group col-md-4 attachdocument" @if($employeeleave->leave_type_code == 2) style="display:none;" @endif>
-                           <label>Attach Medical Certificate</label>
+                           <label>Attach Medical Certificate <sup class="text-danger">*</sup></label>
                            <input type="file" name="leave_document"  class="form-control">
                            @if(isset($employeeleave->leave_document) && !empty($employeeleave->leave_document))
                            <a href="{{ url('public/admin/assets/img/documents') }}/{{ isset($employeeleave->leave_document)? $employeeleave->leave_document : '' }}" target="blank">Click here to see old attachment.</a>
@@ -56,7 +56,7 @@
                         
                         <div class="row">
                         <div class="form-group col-md-8">
-                           <label>Leave Reason</label>
+                           <label>Leave Reason <sup class="text-danger">*</sup></label>
                            <textarea name="leave_reason" class="form-control">{{ isset($employeeleave->leave_reason) ? $employeeleave->leave_reason : ''}}</textarea>
                         </div>
                      </div>

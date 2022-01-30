@@ -327,7 +327,7 @@
                            </div>
                            <div class="form-group">
                               <label>Phone</label>
-                              <input type="tel" id="phone" name="phone"  class="form-control @if(!empty($errors)) @error('phone') is-invalid @enderror @endif">
+                              <input type="tel" id="phone" maxlength="11" name="phone"  class="form-control @if(!empty($errors)) @error('phone') is-invalid @enderror @endif">
                               @isset($errors)
                                   @error('phone')
                                   <span class="invalid-feedback" role="alert">
@@ -463,6 +463,28 @@
       <script src="{{ asset('public/assets/js/main.js') }}"></script>
       <script src="{{  asset('public/assets/js/intlTelInput.js') }}"></script>
       <script src="{{ asset('public/assets/js/intlTelInput.js')}}"></script>
+      <script>
+        (function($) {
+                $.fn.inputFilter = function(inputFilter) {
+                    return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
+                    if (inputFilter(this.value)) {
+                        this.oldValue = this.value;
+                        this.oldSelectionStart = this.selectionStart;
+                        this.oldSelectionEnd = this.selectionEnd;
+                    } else if (this.hasOwnProperty("oldValue")) {
+                        this.value = this.oldValue;
+                        this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                    } else {
+                        this.value = "";
+                    }
+                    });
+                };
+            }(jQuery));
+        
+            
+            $("#phone").inputFilter(function(value) {
+            return /^[+-]?\d*$/.test(value); });
+        </script>
       <script>
          var input = document.querySelector("#phone");
          window.intlTelInput(input, {

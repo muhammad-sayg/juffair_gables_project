@@ -35,7 +35,7 @@
               @csrf
                 <div class="row">
                     <div class="form-group col-md-4" id="locationDropdown">
-                        <label>Select Location</label>
+                        <label>Select Location <sup class="text-danger">*</sup></label>
                         <select class="form-control" onchange="get_locations(this)" name="location_id" id="">
                             <option value="" disabled selected>--- Select ---</option>
                             @foreach (\App\Models\Location::all() as $location)
@@ -46,7 +46,7 @@
                     @if(isset($maintenancerequest) && $maintenancerequest->location_id == 1)
                     
                         <div class="form-group residential-selects col-md-4">
-                            <label>Select Floor</label>
+                            <label>Select Floor <sup class="text-danger">*</sup></label>
                             <select class="form-control" onchange="getUnits(this)" name="floor_id" id="floorSelect">
                                 <option value="" disabled selected>--- Select ---</option>
                                 @foreach (\App\Models\FloorDetail::where('floor_type_code', 2)->get() as $floor)
@@ -55,7 +55,7 @@
                             </select>
                         </div>
                         <div class="form-group residential-selects col-md-4">
-                        <label>Select Apartment</label>
+                        <label>Select Apartment <sup class="text-danger">*</sup></label>
                         <select class="form-control" name="unit_id" id="unitSelect">
                             <option value="" disabled selected>--- Select ---</option>
                             @foreach (\App\Models\Unit::all() as $unit)
@@ -68,7 +68,7 @@
                     @if(isset($maintenancerequest) && $maintenancerequest->location_id == 2)
                     
                         <div class="form-group area-select col-md-4">
-                            <label>Select Common Area</label>
+                            <label>Select Common Area <sup class="text-danger">*</sup></label>
                             <select class="form-control"  name="common_area_id">
                                 <option value="" disabled selected>--- Select ---</option>
                                 @foreach (\App\Models\CommonArea::all() as $common_area)
@@ -79,7 +79,7 @@
                     @endif
                     @if(isset($maintenancerequest) && $maintenancerequest->location_id == 3)
                         <div class="form-group parking-select col-md-4">
-                            <label>Select Floor</label>
+                            <label>Select Floor <sup class="text-danger">*</sup></label>
                             <select class="form-control"  name="floor_id">
                                 <option value="" disabled selected>--- Select ---</option>
                                 @foreach (\App\Models\FloorDetail::where('floor_type_code', 1)->get() as $floor)
@@ -90,7 +90,7 @@
                     @endif
                     @if(isset($maintenancerequest) && $maintenancerequest->location_id == 4)
                         <div class="form-group services-select col-md-4">
-                            <label>Select Service Area</label>
+                            <label>Select Service Area <sup class="text-danger">*</sup></label>
                             <select class="form-control"  name="service_area_id">
                                 <option value="" disabled selected>--- Select ---</option>
                                 @foreach (\App\Models\ServiceArea::all() as $service_area)
@@ -100,7 +100,7 @@
                         </div>
                     @endif
                     <div class="form-group col-md-4">
-                        <label>Title</label>
+                        <label>Title <sup class="text-danger">*</sup></label>
                         <input type="text" value="{{ isset($maintenancerequest->title) ? $maintenancerequest->title : ''}}" name="title" class="form-control">
                     </div>
                     
@@ -109,7 +109,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="form-group">
-                            <label>Description</label>
+                            <label>Description <sup class="text-danger">*</sup></label>
                             <textarea name="description" class="form-control">{{ isset($maintenancerequest->description) ? $maintenancerequest->description : ''}}</textarea>
                         </div>
                     </div>

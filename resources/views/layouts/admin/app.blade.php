@@ -152,6 +152,18 @@
         position: unset !important;
     }
     
+    sup
+    {
+        font-size:12px;
+    }
+
+    .fa-info-circle
+   {
+       position: relative;
+        top: 1px;
+        margin-left: 8px;
+   }
+    
   </style>
 </head>
 
@@ -209,7 +221,7 @@
                     <div class="col-12">
                         <center>
                             <h4>
-                                New Task Assigned To You, Check Please.
+                                You got the task, please check
                             </h4>
                             <hr>
                             <button onclick="check_assign_task()" class="btn btn-primary">Ok, let me check</button>

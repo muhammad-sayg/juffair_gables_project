@@ -3,154 +3,129 @@
 
 {{-- page level styles --}}
 @section('header_styles')
+{{-- <link rel="stylesheet" href="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.css') }}"> --}}
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="{{asset('public/admin/assets/bundles/select2/dist/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.css') }}">
 
-  <link rel="stylesheet" href="{{asset('public/admin/assets')}}/css/components.css">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <style>
-  
+  .select2-selection
+  {
+    height: 36px !important;
+  }
 </style>
 @stop
 @section('content')
-        
-            <form method="POST" enctype="multipart/form-data">
+<section class="section">
+    {{-- <ul class="breadcrumb breadcrumb-style ">
+      <li class="breadcrumb-item">
+      </li>
+      <li class="breadcrumb-item">
+        <a href="file:///F:/AMS/dashboard.html">
+          <i class="fas fa-home"></i></a>
+      </li>
+      <li class="breadcrumb-item">Utility Bills</li>
+    
+    </ul> --}}
+     <div class="row">
+       
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+           <h4>Create Invoice</h4>
+          </div>
+            
+            <div class="card-body">
+              <form action="{{ route('invoices.store') }}" autocomplete="off" method="POST" enctype="multipart/form-data" autocomplete="off">
                 @csrf
-                <div >
-                    <section class="section">
-                      <div class="section-body"> 
-                        <div class="invoice">
-                          <div class="invoice-print">
-                            <div class="row">
-                              <div class="col-lg-12">
-                                <div class="invoice-title">
-                                  <h2>Rent Invoice</h2>
-                                  <div class="invoice-number">Invoice #1</div>
-                                  <div class="col-md-24 text-md-right">
-                                      Issue Date:30 Nov 2021<br>
-                                      Paid Date:30 Nov 2021<br><br>
-                                  </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                  <div class="col-md-6">
-                                    <address>
-                                      <strong><b>Muhammad Kj</b></strong><br>
-                                      Flat 61,Juffair Gables<br>
-                                      Building 1092,Road 4022,<br>
-                                      Block 340,Juffair,<br>
-                                      Kingdom Of Bahrain
-                                    </address>
-                                  </div>
-                                  <div class="col-md-6 text-md-right">
-                                    <address>
-                                      <strong><b>Juffair Gables<b></strong><br>
-                                      Building 1092,Road 4022,<br>
-                                      Block 340,Juffair,<br>
-                                      Kingdom Of Bahrain<br>
-                                      Tel:+973 17255577 <br>
-                                      email:mrshaheen@juffairgables.com
-                                    </address>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="row mt-4">
-                              <div class="col-md-12">
-                                <div class="section-title">Order Summary</div>
-                                <p class="section-lead">All items here cannot be deleted.</p>
-                                <div class="table-responsive">
-                                  <table class="table table-striped table-hover table-md">
-                                    <tr>
-                                      <th data-width="40">#</th>
-                                      <th>Description</th>
-                                      <th class="text-center"></th>
-                                      <th class="text-center"></th>
-                                      <th class="text-right">Amount BHD</th>
-                                    </tr>
-                                    <tr>
-                                      <td>1</td>
-                                      <td>Rent of Apartment 61,Juffair Gables for the month of November</td>
-                                      <td class="text-center"></td>
-                                      <td class="text-center"></td>
-                                      <td class="text-right">650.000</td>
-                                    </tr>
-                                    <tr>
-                                      <td>2</td>
-                                      <td>EWA Bill</td>
-                                      <td class="text-center"></td>
-                                      <td class="text-center"></td>
-                                      <td  class="text-right"><input type='text'/></td>
-                                    </tr>
-                                    <tr>
-                                      <td>3</td>
-                                      <td>Utility Bill</td>
-                                      <td class="text-center"></td>
-                                      <td class="text-center"></td>
-                                     <td  class="text-right"><input type='text'/></td>
-                                    </tr>
-                                    <tr>
-                                      <td></td>
-                                      <td></td>
-                                      <td class="text-center"></td>
-                                      <td class="text-center">VAT(10%)</td>
-                                      <td  class="text-right"><input type='text'/></td>
-                                    </tr>
-                                  </table>
-                                </div>
-                                <div class="row mt-4">
-                                  <div class="col-lg-4">
-                                   <!--  <div class="section-title">Payment Method:Cash</div> -->
-                                   <div class="form-group">
-                                  <label><b>Payment Method</b></label>
-                                  <select class="form-control">
-                                    <option>Cash</option>
-                                    <option>Benefit</option>
-                                    <option>Card</option>
-                                  </select>
-                                </div>
-                                  <div class="form-group">
-                                  <label><b>Notes:</b></label>
-                                  <textarea class="form-control"></textarea>
-                                </div>
-                                <div class="form-group">
-                                  <label class="d-block">Payment Status</label>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" checked>
-                                    <label class="form-check-label" for="exampleRadios1">
-                                      Paid
-                                    </label>
-                                  </div>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" checked>
-                                    <label class="form-check-label" for="exampleRadios2">
-                                     Unpaid
-                                    </label>
-                                  </div>
-                                </div>
-                                 </div>
-                                  
-                                    <hr class="mt-3 mb-2">
-                                    <div class="invoice-detail-item">
-                                      <div class="invoice-detail-name">Grand Total</div>
-                                      <div class="invoice-detail-value invoice-detail-value-lg">BHD 650.00</div><br><br>
-                                      --------------------------<br>
-                                      SIGNATURE<br>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div> 
-                          <hr>
-                          <div class="text-md-right">
-                            <div class="float-lg-left mb-lg-0 mb-3">
-                            </div>
-                            <button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
-                          </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                          <label for="">Select Tenant <sup class="text-danger">*</sup></label>
+                          <select name="tenant_id" class="form-control select2"  id="" style="height: 37px;">
+                            <option value="">--- Select ---</option>
+                            @foreach ($tenant_list as $tenant)
+                                <option value="{{ $tenant->id }}">{{ $tenant->tenant_first_name }} {{ $tenant->tenant_last_name }}</option>
+                            @endforeach
+                          </select>
                         </div>
-                    </section>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                          <label for="">Rent Amount (BD) <sup class="text-danger">*</sup></label>
+                          <input type="text" class="form-control" name="rent_amount">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                          <label for="">Invoice Date <sup class="text-danger">*</sup></label>
+                          <input type="text" name="invoice_date" class="form-control datepicker">
+                        </div>
+                    </div>
+                    
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="custom-control custom-checkbox mb-3">
+                        <input type="checkbox" name="auto_option"  class="monthly_checkbox custom-control-input" id="customCheck1" checked>
+                        <label class="custom-control-label" for="customCheck1">Auto Generate</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="m-b-20 mt-2">
+                        <button type="submit" class="btn btn-primary btn-border-radius waves-effect">Save</button>
+                        <a href="{{ url()->previous() }}" type="button" class="btn btn-primary btn-border-radius waves-effect ml-3">Cancel</a>
+                      </div>
+                    </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 @stop
 @section('footer_scripts')
+{{-- <script src="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+
+<script src="https://foodlabriffa.ebahrain.biz/assets/bower_components/datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="{{asset('public/admin/assets/bundles/select2/dist/js/select2.full.min.js') }}"></script>
 <script>
-  
+  $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+  });
+
+  $("select[name='tenant_id']").change(function(){
+    let id = this.value
+    
+    jQuery.ajax({
+        url: "{{ route('tenant.rent') }}",
+        method: 'POST',
+        data:{id:id},
+        success: function(data){
+            if(data.success)
+            {
+              $("input[name='rent_amount']").val(Math.trunc(data.rent))
+            }
+
+        },
+            error: function(jqXHR,exception)
+        {
+            alert(jqXHR.status + "\n" + jqXHR.responseText)
+        }
+
+    })
+  })
 </script>
 @stop

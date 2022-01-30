@@ -7,7 +7,7 @@
 @section('header_styles')
 <link rel="stylesheet" href="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.css') }}">
 <link rel="stylesheet" href="{{asset('public/admin/assets/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}">
-
+<link rel="stylesheet" href="{{  asset('public/assets/css/intlTelInput.css') }}">
 <style>
    textarea.form-control {
         height: 80px !important;
@@ -17,6 +17,18 @@
    {
        height: auto;
        width: 100% !important;
+   }
+   
+   .iti--allow-dropdown
+   {
+       width:100%;
+   }
+   
+   .fa-info-circle
+   {
+       position: relative;
+        top: 1px;
+        margin-left: 8px;
    }
    
 </style>
@@ -54,8 +66,9 @@
                                 <input type="text" name="tenant_last_name" value="{{ isset($tenant->tenant_last_name)? $tenant->tenant_last_name : '' }}" class="form-control">
                             </div>
                             <div class="form-group col-md-4">
-                                <label>Contact No.</label>
-                                <input type="text" name="tenant_mobile_phone" value="{{ isset($tenant->tenant_mobile_phone)? $tenant->tenant_mobile_phone : '' }}" id= class="form-control">
+                                <label>Contact Number</label>
+                                <input type="tel" maxLength="11" name="tenant_mobile_phone" value="{{ isset($tenant->tenant_mobile_phone)? $tenant->tenant_mobile_phone : '' }}" id="contactNo" class="form-control">
+                                <input type="hidden" name="country_code" value="" >
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Tenant Email</label>
@@ -67,7 +80,8 @@
                                 <input type="text" name="tenant_date_of_birth" value="{{ isset($tenant->tenant_date_of_birth)? $tenant->tenant_date_of_birth : '' }}" class="form-control datepicker">
                             </div>
                             <div class="form-group col-md-4">
-                                <label>Image</label>
+                                <label>Image <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right"
+                      title="Image size should be 2 MB and Image should be in jpg and png format."></i></label>
                                 <input type="file" name="tenant_image"  class="form-control">
                                 @if(isset($tenant->tenant_image) && !empty($tenant->tenant_image))
                                     <img src="{{asset('public/admin/assets/img/staff/'.$tenant->tenant_image)}}" height="150" width="150">
@@ -102,10 +116,7 @@
                                 <label>Contract End Date</label>
                                 <input type="text" name="lease_period_end_datetime" value="{{ isset($tenant->lease_period_end_datetime)? $tenant->lease_period_end_datetime : '' }}" class="form-control datepicker">
                             </div>
-                            <div class="form-group col-md-4">
-                                <label>Emergency ContactNo.</label>
-                                <input type="text" name="emergancy_contact_number" value="{{ isset($tenant->emergancy_contact_number)? $tenant->emergancy_contact_number : '' }}" id="emergencyNumber"class="form-control">
-                            </div>
+                            
                             <div class="form-group col-md-4">
                                 <label>Emergency Email</label>
                                 <input type="text" name="emergancy_email" value="{{ isset($tenant->emergancy_email)? $tenant->emergancy_email : '' }}" class="form-control">
@@ -120,21 +131,24 @@
                             </div>
                             
                             <div class="form-group col-md-4">
-                                <label>Tenant Passport Copy</label>
+                                <label>Tenant Passport Copy <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right"
+                      title="Image size should be 2 MB and Image should be in jpg and png format."></i></label>
                                 <input type="file" name="tenant_passport_copy" class="form-control">
                                 @if(isset($tenant->tenant_passport_copy) && !empty($tenant->tenant_passport_copy))
                                     <a class="mt-3"  href="{{asset('public/admin/assets/img/documents/'.$tenant->tenant_passport_copy)}}" target="_blank">View Passport Copy</a>
                                 @endif 
                             </div>
                             <div class="form-group col-md-4">
-                                <label>Tenant CPR Copy</label>
+                                <label>Tenant CPR Copy <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right"
+                      title="Image size should be 2 MB and Image should be in jpg and png format."></i></label>
                                 <input type="file" name="tenant_cpr_copy" class="form-control">
                                 @if(isset($tenant->tenant_cpr_copy) && !empty($tenant->tenant_cpr_copy))
                                     <a class="mt-3"  href="{{asset('public/admin/assets/img/documents/'.$tenant->tenant_cpr_copy)}}" target="_blank">View Cpr Copy</a>
                                 @endif 
                             </div>
                             <div class="form-group col-md-4">
-                                <label>Tenant Contract Copy</label>
+                                <label>Tenant Contract Copy <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right"
+                      title="Image size should be 2 MB and Image should be in jpg and png format."></i></label>
                                 <input type="file" name="tenant_contract_copy" class="form-control">
                                 @if(isset($tenant->tenant_contract_copy) && !empty($tenant->tenant_contract_copy))
                                     <a class="mt-3"  href="{{asset('public/admin/assets/img/documents/'.$tenant->tenant_contract_copy)}}" target="_blank">View Contract Copy</a>
@@ -196,6 +210,8 @@
 @section('footer_scripts')
 <script src="{{asset('public/admin/assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <script src="{{asset('public/admin/assets/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>
+<script src="{{  asset('public/assets/js/intlTelInput.js') }}"></script>
+<script src="{{ asset('public/assets/js/intlTelInput.js')}}"></script>
 <script>
     $(".inputtags").tagsinput('items');
 </script>
@@ -261,4 +277,45 @@
             });
         }
     </script>
+    <script>
+         var input = document.querySelector("#contactNo");
+         window.intlTelInput(input, {
+         //   allowDropdown: false,
+         //   autoHideDialCode: true,
+         autoPlaceholder: "On",
+         //   dropdownContainer: document.body,
+         //   excludeCountries: ["us"],
+         //   formatOnDisplay: true,
+         geoIpLookup: function(callback) {
+           $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+             var countryCode = (resp && resp.country) ? resp.country : "";
+             callback(countryCode);
+           });
+         },
+         //   hiddenInput: "full_number",
+         //   initialCountry: "auto",
+         //   localizedCountries: { 'de': 'Deutschland' },
+         //   nationalMode: false,
+         //   onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+         placeholderNumberType: "MOBILE",
+         //   preferredCountries: ['cn', 'jp'],
+         separateDialCode: true,
+         
+         utilsScript: "build/js/utils.js",
+         });
+         
+      </script>
+      <script>
+         $(document).ready(function(){
+            let country_code = $(".iti__selected-dial-code").html()
+
+            $("input[name=country_code]").val(country_code)
+         })
+
+         $(".iti__selected-dial-code").on('DOMSubtreeModified',function(){
+            let country_code = $(".iti__selected-dial-code").html()
+
+            $("input[name=country_code]").val(country_code)
+         })
+      </script>
 @stop

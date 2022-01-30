@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 use Carbon\Carbon;
 use App\Models\Rooms;
 use App\Models\Facilities;
+use App\Models\Tenant;
 use App\Models\Reservations;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,6 +20,8 @@ class ReservationController extends Controller
     public function index()
     {
         $reservation = Reservations::orderBy('id','desc')->get();
+        
+        
         return view('admin.reservation.index',compact('reservation'));
     }
 
@@ -42,13 +45,13 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
+        
         $request->validate([
             'room_id' => 'required' ,
             'reservation_date' =>  'required' ,
             'start_time' => 'required',
             'end_time' => 'required',
             'tenant_name' => 'required',
-            'amount' => 'required',
         ], [
             'room_id.required'  => 'Please select the facility!',
             'reservation_date.required'  => 'reservation date is required!',
@@ -77,6 +80,7 @@ class ReservationController extends Controller
             'tenant_name' => $request['tenant_name'],
             'reservation_id' =>  12,
             'amount' => $request['amount'],
+            'contact_number' => $request["country_code"].$request["tenant_mobile_phone"],
         ]);
 
         $reservation->reservation_id = $reservation->id.rand(1000,9999);
@@ -101,6 +105,16 @@ class ReservationController extends Controller
             'success' => true,
             'html_response' => $html_response
         ]);
+    }
+    
+    public function search_reservation(Request $request)
+    {
+        
+        $tenant_name = $request->input('tanent_name');
+        
+        $reservation = Reservations::where('tenant_name', $tenant_name)->get();
+        
+         return view('admin.reservation.index',compact('reservation','tenant_name'));
     }
 
     /**
@@ -132,7 +146,6 @@ class ReservationController extends Controller
             'start_time' => 'required',
             'end_time' => 'required',
             'tenant_name' => 'required',
-            'amount' => 'required',
         ], [
             'room_id.required'  => 'Please select the facility!',
             'reservation_date.required'  => 'reservation date is required!',
@@ -159,6 +172,7 @@ class ReservationController extends Controller
         $reservation->end_time = Carbon::parse($request['end_time'])->format('H:i:s');
         $reservation->amount = $request['amount'];
         $reservation->tenant_name = $request['tenant_name'];
+        $reservation->contact_number = $request["country_code"].$request["tenant_mobile_phone"];
 
         $reservation->save();
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Models\Facilities;
+use App\Models\Reservations;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -96,6 +97,14 @@ class FacilitiesController extends Controller
     public function destroy($id)
     {
         $facility = Facilities::find($id);
+        
+        $count = Reservations::where('room_id', $id)->count();
+    
+        if($count > 0)
+        {
+            Toastr::error('You cannot delete this facility because it is booked someone.');
+            return back();
+        }
 
         $facility->delete();
 

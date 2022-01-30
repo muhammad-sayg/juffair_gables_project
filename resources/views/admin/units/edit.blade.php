@@ -56,7 +56,7 @@ Juffair Gables
 
                   
                   <div class="form-group col-md-6">
-                     <label for="name">Select Floor</label>
+                     <label for="name">Select Floor <sup class="text-danger">*</sup></label>
                     <select class="form-control" name="floor_id"  id="floorSelect">
                       <option value="0" selected disabled>---Select---</option>
                       @foreach ($floor_list as $floor)
@@ -66,14 +66,14 @@ Juffair Gables
                     
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="name">Apartment Number</label>
+                    <label for="name">Apartment Number <sup class="text-danger">*</sup></label>
                     <input type="text" value="{{ $unit->unit_number }}" name="unit_number" class="form-control" maxlength="4" id="unitNumber">
                   </div>
                 </div>
                 <div class="form-group row">
                     
                     <div class="form-group col-md-3">
-                      <label for="name">Apartment Type</label>
+                      <label for="name">Apartment Type <sup class="text-danger">*</sup></label>
                       <select name="apartment_type" class="form-control" id="">
                         <option value="Type 1" @if($unit->apartment_type == 'Type 1') selected @endif>Type 1</option>
                         <option value="Type 2" @if($unit->apartment_type == 'Type 2') selected @endif>Type 2</option>
@@ -83,11 +83,11 @@ Juffair Gables
                       </select>
                     </div>
                     <div class="form-group col-md-3">
-                      <label for="">Pick Color</label>
+                      <label for="">Pick Color <sup class="text-danger">*</sup></label>
                       <input type="text" value="{{ $unit->color_code }}" name="color_code" class="form-control colorpickerinput">
                     </div>
                     <div class="form-group col-md-3">
-                      <label for="name">No of bed rooms</label>
+                      <label for="name">No of bed rooms <sup class="text-danger">*</sup></label>
                       <select class="form-control" name="no_of_bed_rooms" id="">
                         @for($i= 1; $i<=10; $i++)
                         <option value="{{ $i }}" {{ (isset($unit) && ($unit->no_of_bed_rooms == $i)) ? 'selected': '' }}>{{ $i }}</option>
@@ -95,11 +95,11 @@ Juffair Gables
                       </select>
                     </div>
                     <div class="form-group col-md-3">
-                      <label for="number">Apartment Area (m<sup>2</sup>)</label>
+                      <label for="number">Apartment Area (m<sup>2</sup>) <sup class="text-danger">*</sup></label>
                       <input type="text" value="{{ $unit->unit_area }}"  name="unit_area" placeholder="" class="form-control" id="unitArea">
                     </div>
                     <div class="form-group col-md-3">
-                      <label for="number">Apartment Status</label>
+                      <label for="number">Apartment Status <sup class="text-danger">*</sup></label>
                       <select name="unit_status_code" class="form-control" id="unitStatus">
                         @foreach ($unit_status as $unit_status)
                             <option value="{{ $unit_status->unit_status_code }}" {{ (isset($unit) && ($unit->unit_status_code == $unit_status->unit_status_code)) ? 'selected': '' }}>{{ $unit_status->unit_status_name }}</option>

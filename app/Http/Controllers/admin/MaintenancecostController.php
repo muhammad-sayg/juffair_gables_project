@@ -56,7 +56,7 @@ class MaintenanceCostController extends Controller
 
         ], [
             'maintenance_title.required' => 'Maintenance title is required!',
-            'maintenance_description.required'  => 'Maintenance description is required!',
+            'maintenance_description.required'  => 'Description is required!',
             'maintenance_date.required' => 'Maintenance date is required!',
             'maintenance_cost_total_amount.required' => 'Maintenance cost is required!',
             'location_id.required' => 'Please select the location!',
@@ -134,7 +134,7 @@ class MaintenanceCostController extends Controller
             'location_id' =>  'required',
         ], [
             'maintenance_title.required' => 'Maintenance title is required!',
-            'maintenance_description.required'  => 'Maintenance description is required!',
+            'maintenance_description.required'  => 'Description is required!',
             'maintenance_date.required' => 'Maintenance date is required!',
             'maintenance_cost_total_amount.required' => 'Maintenance cost is required!',
             'location_id.required' => 'Please select the location!',

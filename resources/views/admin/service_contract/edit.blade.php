@@ -33,15 +33,15 @@
               @csrf
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label>Title</label>
+                        <label>Title <sup class="text-danger">*</sup></label>
                         <input type="text" value="{{ isset($service_contract->Title) ? $service_contract->Title: '' }}" name="title"  class="form-control">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Cost Per Period (BD)</label>
+                        <label>Cost Per Period (BD) <sup class="text-danger">*</sup></label>
                         <input type="text" name="cost_per_period" value="{{ isset($service_contract->amount) ? $service_contract->amount: '' }}" id="contractCost" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Frequency of Pay</label>
+                        <label>Frequency of Pay <sup class="text-danger">*</sup></label>
                         <select name="frequency_of_pay" id="" class="form-control">
                             <option value="monthly" @if($service_contract->frequency_of_pay == 'monthly') selected @endif>Monthly</option>
                             <option value="quarterly" @if($service_contract->frequency_of_pay == 'quarterly') selected @endif>Quarterly</option>
@@ -51,20 +51,20 @@
                         </select>
                     </div>
                     <div class="form-group col-md-4 renew_date" >
-                        <label>Contract Start Date</label>
+                        <label>Contract Start Date <sup class="text-danger">*</sup></label>
                         <input type="text" value="{{ isset($service_contract->contract_start_date) ? $service_contract->contract_start_date: '' }}" name="contract_start_date" class="form-control datepicker1">
                     </div>
                     <div class="form-group col-md-4 renew_date" >
-                        <label>Contract End Date</label>
+                        <label>Contract End Date <sup class="text-danger">*</sup></label>
                         <input type="text" name="contract_end_date" value="{{ isset($service_contract->contract_end_date) ? $service_contract->contract_end_date: '' }}" readonly class="form-control">
                     </div>
                     <div class="form-group col-md-4 attachdocument">
-                        <label>Upload Invoice/Receipt</label>
+                        <label>Upload Invoice/Receipt <sup class="text-danger">*</sup></label>
                         <input type="file" name="image"  accept="application/pdf, image/jpeg" class="form-control">
                         
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Auto Renewal</label>
+                        <label>Auto Renewal <sup class="text-danger">*</sup></label>
                         <div class="form-control">
                             <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" id="customRadioInline1" value="1" @if($service_contract->auto_renewal == '1') checked @endif name="auto_renew"

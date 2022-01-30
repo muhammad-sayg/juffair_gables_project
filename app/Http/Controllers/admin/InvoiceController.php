@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers\admin;
 
+use Carbon\Carbon;
+use App\Models\Tenant;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
+use App\Mail\SendInvoiceToTenant;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
+use Mail;
+
 class InvoiceController extends Controller
 {
     /**
@@ -15,7 +20,9 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        //
+        $invoices = Invoice::orderBy('id','desc')->get();
+        
+        return view('admin.invoice.list', compact('invoices'));
     }
 
     /**
@@ -25,9 +32,9 @@ class InvoiceController extends Controller
      */
     public function create(Request $request)
     {
-       // print_r($_GET); exit;
-        $invoice = Invoice::where('tenant_id',$request->id)->where('month',$request->month)->first();
-        return view('admin.invoice.create' ,compact('invoice'));
+         // print_r($_GET); exit;
+        $tenant_list = Tenant::where('is_passed', null)->get();
+        return view('admin.invoice.create' ,compact('tenant_list'));
     }
     /**
      * Store a newly created resource in storage.
@@ -70,6 +77,60 @@ class InvoiceController extends Controller
         return redirect()->route('rent.list');
         }
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'tenant_id' => 'required',
+            'rent_amount' => 'required',
+            'invoice_date' => 'required',
+        ],[
+            'tenant_id.required' => 'Please select the tenant.'
+        ]);
+
+        $count = Invoice::whereDate('invoice_issue_date', $request->input('invoice_date'))->count();
+        
+        if($count > 0)
+        {
+            Toastr::error('You already created invoice on this selected invoice date.');
+            return redirect()->route('invoices.create');
+        }
+
+        $invoice = new Invoice();
+        $invoice->tenant_id = $request->input('tenant_id');
+        $invoice->invoice_issue_date = Carbon::parse($request->input('invoice_date'));
+        $invoice->invoice_due_date = Carbon::parse($request->input('invoice_date'))->addDays(5);
+        $invoice->invoice_amount = $request->input('rent_amount');
+        $invoice->invoice_status_code = 1; //pending
+
+        $auto_option = $request->input('auto_option');
+
+        if(isset($auto_option) && $auto_option == "on")
+        {
+           
+            $invoice->auto_generate = "Yes";
+        }
+
+        if($invoice->save())
+        {
+            $invoice->invoice_number = 'INV-' . str_pad($invoice->id,3,0, STR_PAD_LEFT);
+            $invoice->save();
+            Toastr::success('Invoice created successfully.');
+            return redirect()->route('invoices.list');
+        }
+        else
+        {
+            Toastr::error('Something went wrong.');
+            return redirect()->route('invoices.create');
+        }
+    }
+
+    public function view_invoice($id)
+    {
+        $invoice = Invoice::find($id);
+
+        return view('admin.invoice.invoice', compact('invoice'));
+    }
    
 
     /**
@@ -80,7 +141,32 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
-        //
+        $invoice = Invoice::find($id);
+        $html_response = view('admin.invoice.partial.invoice_view_modal', compact('invoice'))->render();
+
+        return response()->json([
+            'success' => true,
+            'html_response' => $html_response
+        ]);
+    }
+
+    public function send_invoice($id)
+    {
+        $invoice = Invoice::find($id);
+
+        $tenant_email = $invoice->tenant->tenant_email_address;
+       
+        Mail::to('engrzulqarnainkhan@gmail.com')->send(new SendInvoiceToTenant($invoice));
+ 
+        if (Mail::failures()) {
+            Toastr::error('Something went wrong.');
+            return redirect()->route('invoices.list');
+        }
+        else
+        {
+            Toastr::success('Email sent successfully.');
+            return redirect()->route('invoices.list');
+        }
     }
 
     /**
@@ -91,7 +177,9 @@ class InvoiceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $invoice = Invoice::find($id);
+        $tenant_list = Tenant::where('is_passed', null)->get();
+        return view('admin.invoice.edit', compact('invoice','tenant_list'));
     }
 
     /**
@@ -103,7 +191,46 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'tenant_id' => 'required',
+            'rent_amount' => 'required',
+            'invoice_date' => 'required',
+        ],[
+            'tenant_id.required' => 'Please select the tenant.'
+        ]);
+
+        
+        $invoice = Invoice::find($id);
+        $invoice->tenant_id = $request->input('tenant_id');
+        $invoice->invoice_issue_date = Carbon::parse($request->input('invoice_date'));
+        $invoice->invoice_due_date = Carbon::parse($request->input('invoice_date'))->addDays(5);
+        $invoice->invoice_amount = $request->input('rent_amount');
+        $invoice->invoice_status_code = 1; //pending
+
+        $auto_option = $request->input('auto_option');
+
+        if(isset($auto_option) && $auto_option == "on")
+        {
+           
+            $invoice->auto_generate = "Yes";
+        }
+        else
+        {
+            $invoice->auto_generate = "No";
+        }
+
+        if($invoice->save())
+        {
+            $invoice->invoice_number = 'INV-' . str_pad($invoice->id,3,0, STR_PAD_LEFT);
+            $invoice->save();
+            Toastr::success('Invoice updated successfully.');
+            return redirect()->route('invoices.list');
+        }
+        else
+        {
+            Toastr::error('Something went wrong.');
+            return redirect()->route('invoices.create');
+        }
     }
 
     /**

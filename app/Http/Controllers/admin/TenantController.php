@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use Hash;
 use Image;
 use Session;
+use App\Models\Rent;
 use App\Models\Role;
 use App\Models\Unit;
 use App\Models\User;
@@ -73,7 +74,7 @@ class TenantController extends Controller
      */
     public function store(Request $request)
     {
-       
+        // dd($request->all());
         $request->validate([
             'tenant_first_name' => 'required',
             'tenant_last_name' => 'required',
@@ -91,21 +92,24 @@ class TenantController extends Controller
             'lease_period_start_datetime' => 'required',
             'lease_period_end_datetime' => 'required',
             // 'security_deposit' => 'required',
-            'emergancy_contact_number' => 'required',
+            // 'emergancy_contact_number' => 'required',
             'emergancy_email' => 'required',
             'tenant_type_code' => 'required',
-            'tenant_image' => 'required',
-            'tenant_passport_copy' => 'required',
-            'tenant_contract_copy' => 'required',
+            'tenant_image' => 'required|max:2048',
+            'tenant_passport_copy' => 'required|max:2048',
+            'tenant_contract_copy' => 'required|max:2048',
         ],[
-            'unit_id.required' => 'Please select the apartment first.'
+            'unit_id.required' => 'Please select the apartment first.',
+            'tenant_image.max' => "Tenant Image size should not be greater then 2 Mb.",
+            'tenant_passport_copy.max' => "Passport Copy size should not be greater then 2 Mb.",
+            'tenant_contract_copy.max' => "Contract Copy size should not be greater then 2 Mb."
         ]);
         
        
         $tenant = new Tenant();
         $tenant->tenant_first_name = $request['tenant_first_name'];
         $tenant->tenant_last_name = $request['tenant_last_name'];
-        $tenant->tenant_mobile_phone = $request['tenant_mobile_phone'];
+        $tenant->tenant_mobile_phone = $request['country_code'].$request['tenant_mobile_phone'];
         $tenant->tenant_email_address = $request['tenant_email_address'];
         $tenant->floor_id = $request['floor_id'];
         $tenant->unit_id = $request['unit_id'];
@@ -122,7 +126,7 @@ class TenantController extends Controller
         $tenant->lease_period_start_datetime = $request['lease_period_start_datetime'];
         $tenant->lease_period_end_datetime = $request['lease_period_end_datetime'];
         // $tenant->security_deposit = $request['security_deposit'];
-        $tenant->emergancy_contact_number = $request['emergancy_contact_number'];
+        // $tenant->emergancy_contact_number = $request['emergancy_contact_number'];
         $tenant->emergancy_email = $request['emergancy_email'];
         $tenant->tenant_date_of_birth = $request['tenant_date_of_birth'];
         $tenant->tenant_type_code = $request['tenant_type_code'];
@@ -165,9 +169,9 @@ class TenantController extends Controller
         {
             $file_name = time().'_'.trim($request->file('tenant_cpr_copy')->getClientOriginalName());
             
-            $image = Image::make($request->file('tenant_cpr_copy')->getRealPath());
-            $image->resize(300,200);
-            $image->save(public_path('admin/assets/img/documents/'). $file_name);
+            // $image = Image::make($request->file('tenant_cpr_copy')->getRealPath());
+            // $image->resize(300,200);
+            // $image->save(public_path('admin/assets/img/documents/'). $file_name);
             
             $request->file('tenant_cpr_copy')->move(public_path('admin/assets/img/documents/'), $file_name);
 
@@ -214,15 +218,6 @@ class TenantController extends Controller
 
             $unit->save();
 
-            // create invoice for tenants
-            $invoice = new Invoice();
-            $invoice->tenant_id = $tenant->id;
-            $invoice->invoice_issue_date = Carbon::now();
-            $invoice->invoice_due_date = Carbon::now()->addDays(5);
-            $invoice->invoice_amount = $tenant->tenant_rent;
-            $invoice->invoice_status_code = 1; //pending
-
-            $invoice->save();
         }
 
         Toastr::success('Tenant inserted successfully!');
@@ -295,7 +290,7 @@ class TenantController extends Controller
             'lease_period_start_datetime' => 'required',
             'lease_period_end_datetime' => 'required',
             // 'security_deposit' => 'required',
-            'emergancy_contact_number' => 'required',
+            // 'emergancy_contact_number' => 'required',
             'emergancy_email' => 'required|email',
             'tenant_type_code' => 'required',
         ],[
@@ -306,7 +301,7 @@ class TenantController extends Controller
         
         $tenant->tenant_first_name = $request['tenant_first_name'];
         $tenant->tenant_last_name = $request['tenant_last_name'];
-        $tenant->tenant_mobile_phone = $request['tenant_mobile_phone'];
+        $tenant->tenant_mobile_phone = $request['country_code'].$request['tenant_mobile_phone'];
         $tenant->tenant_email_address = $request['tenant_email_address'];
         $tenant->floor_id = $request['floor_id'];
         $tenant->unit_id = $request['unit_id'];
@@ -322,7 +317,7 @@ class TenantController extends Controller
         $tenant->lease_period_start_datetime = $request['lease_period_start_datetime'];
         $tenant->lease_period_end_datetime = $request['lease_period_end_datetime'];
         // $tenant->security_deposit = $request['security_deposit'];
-        $tenant->emergancy_contact_number = $request['emergancy_contact_number'];
+        // $tenant->emergancy_contact_number = $request['emergancy_contact_number'];
         $tenant->emergancy_email = $request['emergancy_email'];
         $tenant->tenant_date_of_birth = $request['tenant_date_of_birth'];
         $tenant->tenant_type_code = $request['tenant_type_code'];
@@ -491,6 +486,52 @@ class TenantController extends Controller
             return response()->json([
                 'success' => true,
                 'rent' => $rent,
+            ]);
+        }
+    }
+
+    public function get_tenant_invoice_rent(Request $request)
+    {
+        $id = $request->input('id');
+
+        if($id)
+        {
+            
+            $invoice = Invoice::find($id);
+
+            $invoice_amount = $invoice->invoice_amount;
+
+            $total_rent_collected_before = Rent::where('invoice_no', $invoice->invoice_number)->sum('received_amount');
+
+            $remaining_balance = $invoice_amount - $total_rent_collected_before;
+            return response()->json([
+                'success' => true,
+                'rent' => $remaining_balance,
+            ]);
+        }
+    }
+
+    public function get_tenant_invoices(Request $request)
+    {
+        $id = $request->input('id');
+
+        if($id)
+        {
+            $invoices = Tenant::find($id)->invoices;
+
+            $res = '<option value="' . 0 . '" selected>---Select---</option>';
+            
+            foreach($invoices->where('invoice_status_code', 1) as $item)
+            {
+                $date = '';
+                $date = Carbon::parse($item->invoice_issue_date)->formatLocalized('%d %b %Y');
+                $res .= '<option value="' . $item->id . '"  >' . $item->invoice_number . '-' . $date . '</option>';
+                
+            }
+
+            return response()->json([
+                'success' => true,
+                'options' => $res,
             ]);
         }
     }

@@ -1,217 +1,180 @@
-<!DOCTYPE html>
-<html lang="en-US">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+@extends('layouts.admin.app')
+{{-- Page title --}}
 
-<!-- jQuery library -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+{{-- page level styles --}}
+@section('header_styles')
+<link rel="stylesheet" href="{{ asset('public/admin/assets/css') }}/components.css">
+<style>
+    .main-navbar
+    {
+        background-color: #fff !important;
+        box-shadow: 0 0 10px 1px rgb(68 102 242 / 5%);
+    }
+    .navbar .nav-link .feather {
+        color: #555556 !important;
+    }
+    /* .table-striped tbody tr:nth-of-type(odd) {
+        background-color: unset !important;
+    } */
+    /* .table-striped tbody tr:nth-of-type(odd) {
+        background-color: unset !important;
+    } */
+    .invoice hr {
+        border-top-color: #000000 !important;
+        border-top: 6px solid black;
+        margin-top: 0 !important;
+    }
+    p {
+    margin-top: 0;
+    margin-bottom: 0!important;
+    }
+    
+    /* .table:not(.table-sm) thead th {
+    background-color: #0c0c0c!important;
+    color: #fff!important;
+    } */
+    /* .receipt-header {
+    background-color: black;
+    color: white;   
+    } */
+    body {
+      -webkit-print-color-adjust: exact !important;
+    }
+    @media print {
+      table tr.highlighted > th {
+        background-color: rgba(0, 0, 0, 0.8) !important;
+       }
 
-<!-- Popper JS -->
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    }
 
-<!-- Latest compiled JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-
-    <style>
-        body {
-          background: rgb(204,204,204); 
-        }
-        page[size="A4"] {
-          background: white;
-          width: 21cm;
-          height: 29.7cm;
-          display: block;
-          margin: 0 auto;
-          margin-bottom: 0.5cm;
-          box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-        }
-
-        #print
-        {
-            padding: 5px 30px;
-        }
-
-        @page {
-          size: A4;
-          margin: 0;
-        }
-
-        @media print {
-              body, page[size="A4"] {
-                margin: 0;
-                box-shadow: 0;
-              }
-            /* .page-break {page-break-before: always;} */
-            .no-print { display: none; }
-            #box
-            {
-              margin-top: 20%;
-            }
-
-        }
-        table
-        {
-          border: solid 2px black !important;
-          width: 80%;
-          margin-top:50px;
-          padding:20px;
-        }
-        td {
-          border-collapse: collapse;
-        }
-
-        .bold~tr td {
-          border: solid 1px lightgray;
-        }
-
-        td {
-          padding: 0.5em;
-        }
-
-        [colspan="4"][rowspan="2"] {
-          height: 6em;
-        }
-        hr {
-        clear: both;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-    <!--   each receipt -->
-    <!--   header -->
-      <div class="box" id="box" >
-        <center><img src="{{ asset('public/assets/img/logo.png') }}"
-          width="160px" height="90px" alt=""></center>
-        <center>
-          <table>
-            <tr>
-              <td colspan="4" rowspan="3" style="font-size: 18px;font-weight:bold;">Rent Receipt</td>
-              <td style="width:10%">Receipt No#</td>
-              <td style="border-bottom: thin solid black;border-right:solid 2px black !important;width:40%">
-                {{ $rent_details->receipt_no }}
-              </td>
-            </tr>
-  
-            <tr>
-              <td style="width:10%">Date.</td>
-              <td style="border-bottom: thin solid black;border-right:solid 2px black !important;width:40%">
-                {{ \Carbon\Carbon::parse($rent_details->received_date)->format('m-d-Y') }}
-              </td>
-            </tr>
-            <tr>
-              <td style="width:10%">Month.</td>
-              <td style="border-bottom: thin solid black;border-right:solid 2px black !important;width:40%">
-                @php
-                  if($rent_details->rent_month != null)
-                  {
-                    $dateMonthArray = explode('-', $rent_details->rent_month);
-                    $month = $dateMonthArray[0];
-                    $year = $dateMonthArray[1];
-                    $date = \Carbon\Carbon::createFromDate($year, $month, 1);
-                  }
-                  else 
-                  {
-                    $dateMonthArray = explode('-', $rent_details->rent_start_month);
-                    $month = $dateMonthArray[0];
-                    $year = $dateMonthArray[1];
-                    $date1 = \Carbon\Carbon::createFromDate($year, $month, 1);
-  
-                    $dateMonthArray = explode('-', $rent_details->rent_end_month);
-                    $month = $dateMonthArray[0];
-                    $year = $dateMonthArray[1];
-                    $date2 = \Carbon\Carbon::createFromDate($year, $month, 1);
-                  }
-                @endphp
-                @if($rent_details->rent_month != null)
-                {{ $date->format('M Y') }}
-                @else
-                {{ $date1->format('M Y') }} -  {{ $date2->format('M Y') }}
-                @endif
-              </td>
-            </tr>
-            <tr>
-              <td colspan="12" style="padding-top: 20px;border-bottom:1px solid rgba(0,0,0,.1)">
-              </td>
-            </tr>
-            <tr>
-              <td colspan="3">Received from :</td>
-              <td style="border-bottom: thin solid black;">
-                {{ isset($rent_details->tenant) ? $rent_details->tenant->tenant_first_name.' '.$rent_details->tenant->tenant_last_name : ''}}
-              </td>
-              <td colspan="8" style="border-right:thin solid black;"></td>
-            </tr>
-            <tr>
-              <td colspan="3">Rental Address :</td>
-              <td style="border-bottom: thin solid black;" colspan="9">
-                Apartment No# {{ isset($rent_details->tenant->unit) ? $rent_details->tenant->unit->unit_number : '' }}, Building 1092, Road 4022, Block 340, Juffair gables building, kingdom Of Bahrain.
-              </td>
-            </tr>
-            <tr>
-              <td colspan="3">Payment Amount :</td>
-              <td style="border-bottom: thin solid black;" colspan="9">
-                BHD {{ isset($rent_details->received_amount) ? round($rent_details->received_amount,0) : '' }}
-              </td>
-            </tr>
-            <tr>
-              <td colspan="3">Received by :</td>
-              <td style="border-bottom: thin solid black;" colspan="9">
-                Muhammad Azeem Khan
-              </td>
-            </tr>
-            <tr>
-              <td colspan="12" style="padding-top: 20px;border-bottom:1px solid rgba(0,0,0,.1)">
-              </td>
-            </tr>
-            <tr>
-              <td colspan="3" style="padding:1.9em 0 1.9em 0.5em">Signature :</td>
-              <td style="padding:1.9em 0 1.9em 0.5emborder-bottom: thin solid black;border-right: thin solid black;margin-bottom:30px;" colspan="9">
-              </td>
-            </tr>
-            
-          </table>
-        </center>
-      </div>
-      <div class="mt-3 print-button">
-          <div class="text-center">
-              <button class="btn btn-block no-print btn-primary text-center"  id="print">Print</button>
+    * {
+        color-adjust: exact!important;  
+        -webkit-print-color-adjust: exact!important; 
+         print-color-adjust: exact!important;
+      }
+   
+</style>
+@stop
+@section('content')
+<section class="section" >
+    <div class="section-body">
+      <div class="invoice" id="invoice">
+        <div class="invoice-print">
+          <div class="row">
+            <div class="col-lg-12">
+                <div style="margin-top:40px;">
+                    <img src="{{ asset('public/assets/img/logo.png') }}" width="160px" height="90px" alt="" style="float:right;position: relative;bottom: 54px;">
+                    <h3 style="color:black;">PAYMENT RECEIPT</h3>
+                    <hr>
+                </div>
+                <div style="display: flex;justify-content: space-between;" style="margin-top: 60px;">
+                    <div>
+                        To,
+                        <p ><b>Mr./Ms {{ $rent->tenant->tenant_first_name }} {{ $rent->tenant->tenant_last_name }}</b></p>
+                        <h6>(Apartment #{{ $rent->tenant->unit->unit_number }})</h6>
+                        <p>Building #1092, Road #4022, Block #340, </p>
+                        <p>Al Juffair, Manama, Kingdom of Bahrain</p>
+                        <p>Tel.+973 17255577</p>
+                    </div>
+                    <div>
+                      <p style="border-bottom: 2px  solid; margin-bottom:20px!important;"><b>{{ \Carbon\Carbon::parse($rent->rent_month)->format('F j, Y') }}</b></p>
+                      <p style="border-bottom: 2px  solid ;"><b>Receipt No. {{ $rent->receipt_no }}</b></p>
+                    </div>
+                </div>
+            </div>
           </div>
+          <div class="row" style="margin-top: 100px;">
+            <div class="col-md-12">
+              <div>
+                <table class="table table-striped table-hover table-md">
+                  <tr class="receipt-headers highlighted" style="border:2px solid;color:#fff">
+                    <th colspan="3" class="receipt-header" style="border: 2px solid;background: black !important;">Description</th>
+                    <th  class="receipt-header text-center" style="width:15%;border: 2px solid;background: black !important;">Amount(BHD)</th>
+                    
+                  </tr>
+                  <tr style="border-bottom:2px solid #d6bebe;">
+                    <td colspan="3" style="border: 2px solid;" class="">Rent of Apartment {{ $rent->tenant->unit->unit_number }}, Bldg 1092, AL JUFFAIR, Manama for the period {{ \Carbon\Carbon::parse($rent->rent_month)->formatLocalized('%d %b. %Y') }} to {{ \Carbon\Carbon::parse($rent->rent_month)->addDays(30)->formatLocalized('%d %b. %Y') }}</td>
+                    <td class="text-right" style="border: 2px solid;">
+                       {{ number_format($rent->received_amount + $rent->due_amount,2) }}
+                    </td>
+                  </tr>
+                  <tr style="border-bottom:2px solid #d6bebe">
+                    <td colspan="3" style="border: 2px solid;" class=""></td>
+                    <td class="" style="border: 2px solid;"></td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" class="text-right"><b>Sub Total</b></td>
+                    <td class="text-right" style="border-bottom: 2px solid;">{{ number_format($rent->received_amount + $rent->due_amount,2) }}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" class="text-right"><b>Paid</b></td>
+                    <td class="text-right" style="border-bottom: 2px solid;">{{ number_format($rent->received_amount,2) }}</td>
+                  </tr>
+                  <tr>
+                  <td colspan="3" class="text-right"><b>Balance Due</b></td>
+                    <td class="text-right" style="border-bottom: 2px solid;">{{ number_format($rent->due_amount,2) }}</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="row mb-3" style="margin-top: 100px;">
+                <div class="col-lg-8">
+                  <p class="section-lead"><b>Payment recieved as:</b></p>
+                  <div class="pretty p-default">
+                      <input type="checkbox" /> Cash
+                    </div>
+                 <div class="pretty p-default">
+                      <input type="checkbox" /> Cheque No.____, Bank:____, Dated:_____
+                    </div>
+                    <div class="pretty p-default">
+                      <input type="checkbox" /> Credit / Debit Card
+                    </div>
+                    <div class="pretty p-default">
+                      <input type="checkbox" /> Electronic Transfer
+                    </div>
+                </div>
+                <br><br><br><br><br>
+              <div class="mt-3 col-lg-5">
+              <br><br><br>
+                  <div >
+                  <p style="border-top: 2px solid;width: 170px;"><b>Account Department</b></p>
+                  </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <center style="margin-top: 120px;">
+            <p style="font-weight: 700">Building - 1092, Road - 4022, Block 340, Al Juffair, Manama, Kingdom of Bahrain, Tel. +973-17255577, juffairgables@gmail.com</p>
+        </center>
+        
+        <div style="display: flex;justify-content:flex-start">
+          <button class="btn btn-warning no-print btn-icon icon-left" id="print"><i class="fas fa-print" ></i> Print</button>
+          <a href="{{ url()->previous() }}" class="btn ml-3 btn-primary no-print btn-icon icon-left">Cancel</a>
+        </div>
       </div>
     </div>
-
-    
-    <script>
-        window.onload = function () {
-            document.getElementById("print").click();
-        }
-    </script>
-    
-    <script src="{{ asset("public/assets") }}/js/jquery.js"></script>
-    <script src="{{ asset("public/assets") }}/js/jQuery.print.min.js"></script>
-    
-    <script>
-    
-        $('#print').click(function(){
-            $("#box").print({
-                // globalStyles: true,
-                // mediaPrint: true,
-                // stylesheet: null,
-                // noPrintSelector: ".no-print",
-                // iframe: true,
-                // append: null,
-                // prepend: null,
-                // manuallyCopyFormValues: true,
-                // deferred: $.Deferred(),
-                // timeout: 750,
-                // title: null,
-                // doctype: '<!doctype html>'
-            });
-        });
-    </script>
-  </body>
-</html>
+  </section>
+@stop
+@section('footer_scripts')
+<script src="{{ asset("public/assets") }}/js/jquery.js"></script>
+  <script src="{{ asset("public/assets") }}/js/jQuery.print.min.js"></script>
+  
+  <script>
+      $('#print').click(function(){
+          $("#invoice").print({
+              globalStyles: true,
+              mediaPrint: true,
+              stylesheet: null,
+              noPrintSelector: ".no-print",
+              iframe: true,
+              append: null,
+              prepend: null,
+              manuallyCopyFormValues: true,
+              deferred: $.Deferred(),
+              timeout: 750,
+              title: null,
+              doctype: '<!doctype html>'
+          });
+      });
+  </script>
+@stop

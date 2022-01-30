@@ -71,6 +71,9 @@ Route::get('/login', [LoginController::class, 'showLoginForm']);
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/review/save', [TestimonialController::class, 'store'])->name('review.save');
 Route::post('/get_tenant_rent', [TenantController::class, 'get_tenant_rent'])->name('tenant.rent');
+Route::post('/get_tenant_invoice_rent', [TenantController::class, 'get_tenant_invoice_rent'])->name('tenant.invoice.rent');
+Route::post('/get_tenant_invoices', [TenantController::class, 'get_tenant_invoices'])->name('tenant.invoices');
+
 Route::get('/testimonials',[TestimonialController::class,'display_review'])->name('display_review');
 });
 Route::group(['middleware' => ['auth:web']], function() {
@@ -269,11 +272,8 @@ Route::group(['middleware' => ['auth:web']], function() {
         Route::delete('/employee/delete/{id}', [EmployeeController::class, 'destroy'])->name('delete');
      });
 
-    // Rent Collection routes
-        Route::get('/invoice', [RentController::class, 'invoice']);
-    
     Route::get('/reciept', [RentController::class, 'reciept']);
-        Route::group(['prefix' => 'rent', 'as' => 'rent.'], function () {
+    Route::group(['prefix' => 'rent', 'as' => 'rent.'], function () {
         Route::get('/rent_list', [RentController::class, 'index'])->name('list');
         Route::get('/rent/create', [RentController::class, 'create'])->name('create');
         Route::get('/receipt/{id}', [RentController::class, 'generate_receipt'])->name('receipt');
@@ -287,9 +287,17 @@ Route::group(['middleware' => ['auth:web']], function() {
     });
 
     //Invoice routes
-    Route::group(['prefix' => 'invoice', 'as' => 'invoice.'], function () {
-        Route::get('/invoice/create/{id}', [InvoiceController::class, 'create'])->name('create');
-        Route::post('/save_invoice_info', [InvoiceController::class, 'save_invoice_info'])->name('save_invoice_info');
+    Route::group(['prefix' => 'invoice', 'as' => 'invoices.'], function () {
+        Route::get('/list', [InvoiceController::class, 'index'])->name('list');
+        Route::get('/create', [InvoiceController::class, 'create'])->name('create');
+        Route::get('/show/{id}', [InvoiceController::class, 'show'])->name('show');
+        Route::get('/edit/{id}', [InvoiceController::class, 'edit'])->name('edit');
+        Route::get('/send_invoice/{id}', [InvoiceController::class, 'send_invoice'])->name('send_invoice');
+        Route::post('update/{id}', [InvoiceController::class, 'update'])->name('update');
+        
+        Route::get('/view_invoice/{id}', [InvoiceController::class, 'view_invoice'])->name('view_invoice');
+        Route::post('/save', [InvoiceController::class, 'store'])->name('store');
+        
     });
 
     // Utility bill routes
@@ -388,6 +396,7 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::post('/reservation/update/{id}', [ReservationController::class, 'update'])->name('update');
     Route::delete('/reservation/delete/{id}', [ReservationController::class, 'destroy'])->name('delete');
     Route::get('/reservation/show/{id}', [ReservationController::class, 'show'])->name('show');
+    Route::post('/search', [ReservationController::class, 'search_reservation'])->name('search_reservation');
 });
 
     //Add Room routes

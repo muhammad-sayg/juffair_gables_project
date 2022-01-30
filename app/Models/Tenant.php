@@ -37,4 +37,8 @@ class Tenant extends Model
     public function tenant_type(){
         return $this->belongsTo(TenantType::class, 'tenant_type_code', 'tenant_type_code');
     }
+
+    public function invoices(){
+        return $this->hasMany(Invoice::class, 'tenant_id', 'id');
+    }
 }

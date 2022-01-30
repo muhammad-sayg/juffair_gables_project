@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\ServiceContractAutoRenewal::class,
+        Commands\AutoInvoiceGenerator::class,
     ];
 
     /**
@@ -27,6 +28,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('service_contract_auto_renewal:cron')->daily();
+        $schedule->command('auto_generate_invoice:cron')->daily();
     }
 
     /**

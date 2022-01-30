@@ -37,20 +37,20 @@
                         </tr>
                         <tr>
                             <td style="width: 20%"></td>
-                            <td>Layla ahmad Khalil AlMaralkhi</td>
+                            <td>{{ $invoice->tenant->tenant_first_name }} {{ $invoice->tenant->tenant_last_name }}</td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td>Apartment 52, Building - 1092, Road - 4022, Block 340, Al Juffair<br> Manama<br> Kingdom of Bahrain</td>
+                            <td>Apartment {{ $invoice->tenant->unit->unit_number }}, Building - 1092, Road - 4022, Block 340, Al Juffair<br> Manama<br> Kingdom of Bahrain</td>
                         </tr>
                     </table>
                     <div style="margin-top: 50px;">
                         <p style="margin-bottom: 0px;font-weight:700">Invoice Date</p>
-                        <p style="margin-bottom: 0px">01 Dec 2021</p>
+                        <p style="margin-bottom: 0px">{{ \Carbon\Carbon::parse($invoice->invoice_issue_date)->formatLocalized('%d %b %Y') }}</p>
                         <p style="margin-bottom: 0px;font-weight:700">Invoice Number</p>
-                        <p style="margin-bottom: 0px">INV-0370</p>
+                        <p style="margin-bottom: 0px">{{ $invoice->invoice_number }}</p>
                         <p style="margin-bottom: 0px;font-weight:700">Reference</p>
-                        <p>Rent for Dec. 2021</p>
+                        <p>Rent for {{ \Carbon\Carbon::parse($invoice->invoice_issue_date)->formatLocalized('%b. %Y') }}</p>
                     </div>
                     <div style="margin-top: 50px;margin-left:40px">
                         <p style="margin-bottom: 0px">JUFFAIR GABLES<br>BUILDING #1092, ROAD #4022, BLOCK #340, AL JUFFAIR, MANAMA,<br>
@@ -74,28 +74,28 @@
                     
                   </tr>
                   <tr style="border-bottom:2px solid #d6bebe">
-                    <td>Rent of Shop 23, Bldg 1311, Ahli house, Manama for the period 01st Dec. 2021 to 31st Dec. 2021</td>
+                    <td>Rent of Apartment {{ $invoice->tenant->unit->unit_number }}, Bldg 1092, AL JUFFAIR, Manama for the period {{ \Carbon\Carbon::parse($invoice->invoice_issue_date)->formatLocalized('%d %b. %Y') }} to {{ \Carbon\Carbon::parse($invoice->invoice_issue_date)->addDays(30)->formatLocalized('%d %b. %Y') }}</td>
                     <td class="text-center">1.0</td>
-                    <td class="text-center">500.00</td>
-                    <td class="text-center">500.00</td>
+                    <td class="text-center">{{ $invoice->invoice_amount }}</td>
+                    <td class="text-center">{{ $invoice->invoice_amount }}</td>
                   </tr>
                   <tr>
                       <td></td>
                       <td></td>
                       <td class="text-center" style="border-bottom: 2px solid;">Sub Total</td>
-                      <td class="text-center" style="border-bottom: 2px solid;">500.00</td>
+                      <td class="text-center" style="border-bottom: 2px solid;">{{ $invoice->invoice_amount }}</td>
                   </tr>
                   <tr>
                     <td></td>
                     <td></td>
                     <td class="text-center" style="font-weight:900">TOTAL BHD</td>
-                    <td class="text-center" style="font-weight:900">500.00</td>
+                    <td class="text-center" style="font-weight:900">{{ $invoice->invoice_amount }}</td>
                   </tr>
                 </table>
               </div>
               <div class="row" style="margin-top: 100px;">
                 <div class="col-lg-8">
-                  <div class="section-title">Due Date: 3 Dec 2022</div>
+                  <div class="section-title">Due Date: {{ \Carbon\Carbon::parse($invoice->invoice_issue_date)->addDays(5)->formatLocalized('%d %b %Y') }}</div>
                   <p class="section-lead">Bank Transfer Details:</p>
                   <p class="section-lead" style="margin-bottom: 0px">Account Name: SH NAWAF EBRAHIM HAMAD ALKHALIFA</p>
                   <p class="section-lead" style="margin-bottom: 0px">Bank: AHLI UNITED BANK</p>
@@ -110,8 +110,9 @@
             <p style="font-weight: 700">Building - 1092, Road - 4022, Block 340, Al Juffair, Manama, Kingdom of Bahrain, Tel. +973-17255577, juffairgables@gmail.com</p>
         </center>
         <hr>
-        <div>
+        <div style="display: flex;justify-content:flex-start">
           <button class="btn btn-warning no-print btn-icon icon-left" id="print"><i class="fas fa-print" ></i> Print</button>
+          <a href="{{ url()->previous() }}" class="btn ml-3 btn-primary no-print btn-icon icon-left">Cancel</a>
         </div>
       </div>
     </div>

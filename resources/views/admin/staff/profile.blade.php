@@ -8,6 +8,7 @@ Juffair Gables
 <link rel="stylesheet" href="{{asset('public/admin/assets/bundles/datatables/datatables.min.css')}}">
 <link rel="stylesheet" href="{{asset('public/admin/assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{ asset('public/admin/assets') }}/css/components.css">
+<link rel="stylesheet" href="{{  asset('public/assets/css/intlTelInput.css') }}">
 <style>
      table.dataTable td img
     {
@@ -76,6 +77,10 @@ Juffair Gables
 .profile-image
 {
   height: 100px;
+}
+.iti--allow-dropdown
+{
+    width:100%;
 }
 </style>
 @stop
@@ -181,25 +186,26 @@ Juffair Gables
                     <div class="card-body">
                       <div class="row">
                         <div class="form-group col-md-6 col-12">
-                          <label>Email</label>
+                          <label>Email <sup class="text-danger">*</sup></label>
                           <input type="email" class="form-control" readonly value="{{isset($user_details->employee_email_address) ? $user_details->employee_email_address : '' }}">
                           <div class="invalid-feedback">
                             Please fill in the email
                           </div>
                         </div>
                         <div class="form-group col-md-6 col-12">
-                          <label>Contact Number.</label>
+                          <label>Contact Number <sup class="text-danger">*</sup></label>
                           <input type="tel" name="number"  id="contactNumber" class="form-control" value="{{isset($user_details->employee_mobile_phone) ? $user_details->employee_mobile_phone : '' }}">
+                          <input type="hidden" name="country_code" value="" >
                         </div>
                       </div>
                       <div class="row">
                         <div class="form-group col-6">
-                          <label>Present Address</label>
+                          <label>Present Address <sup class="text-danger">*</sup></label>
                           <textarea
                             name="present_address" class="form-control">{{isset($user_details->employee_present_address) ? $user_details->employee_present_address : '' }}</textarea>
                         </div>
                         <div class="form-group col-6">
-                          <label>Permanent Address</label>
+                          <label>Permanent Address <sup class="text-danger">*</sup></label>
                           <textarea
                             name="permanent_address" class="form-control">{{isset($user_details->employee_permanent_address) ? $user_details->employee_permanent_address : '' }}</textarea>
                         </div>
@@ -220,7 +226,7 @@ Juffair Gables
                     <div class="card-body">
                       <div class="row">
                         <div class="form-group col-md-6 col-12">
-                          <label>Password</label>
+                          <label>Password <sup class="text-danger">*</sup></label>
                           <div class="input-group">
                             <input type="password" name="password" autocomplete="off" id="pass_log_id" class="form-control  pwd-input">
                             <div class="input-group-prepend">
@@ -231,7 +237,7 @@ Juffair Gables
                           </div>
                         </div>
                         <div class="form-group col-md-6 col-12">
-                          <label>Confirm Password</label>
+                          <label>Confirm Password <sup class="text-danger">*</sup></label>
                           <div class="input-group">
                             <input type="password" name="confirm_password" autocomplete="off" id="confrim_pass_log_id" class="form-control  pwd-input">
                             <div class="input-group-prepend">
@@ -269,6 +275,8 @@ Juffair Gables
 <script src="{{asset('public/admin/assets/bundles/datatables/export-tables/vfs_fonts.js')}}"></script>
 <script src="{{asset('public/admin/assets/bundles/datatables/export-tables/buttons.print.min.js')}}"></script>
 <script src="{{asset('public/admin/assets/js/page/datatables.js')}}"></script>
+<script src="{{  asset('public/assets/js/intlTelInput.js') }}"></script>
+<script src="{{ asset('public/assets/js/intlTelInput.js')}}"></script>
 <script>
   $("body").on('click', '.toggle-password', function() {
     $(this).toggleClass("fa-eye fa-eye-slash");
@@ -336,4 +344,45 @@ $(".img-input").change(function(){
     $("#contactNumber").inputFilter(function(value) {
     return /^[+-]?\d*$/.test(value); });
 </script>
+<script>
+  var input = document.querySelector("#contactNumber");
+  window.intlTelInput(input, {
+  //   allowDropdown: false,
+  //   autoHideDialCode: true,
+  autoPlaceholder: "On",
+  //   dropdownContainer: document.body,
+  //   excludeCountries: ["us"],
+  //   formatOnDisplay: true,
+  geoIpLookup: function(callback) {
+    $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+      var countryCode = (resp && resp.country) ? resp.country : "";
+      callback(countryCode);
+    });
+  },
+  //   hiddenInput: "full_number",
+  //   initialCountry: "auto",
+  //   localizedCountries: { 'de': 'Deutschland' },
+  //   nationalMode: false,
+  //   onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+  placeholderNumberType: "MOBILE",
+  //   preferredCountries: ['cn', 'jp'],
+  separateDialCode: true,
+  
+  utilsScript: "build/js/utils.js",
+  });
+  
+</script>
+<script>
+  $(document).ready(function(){
+     let country_code = $(".iti__selected-dial-code").html()
+
+     $("input[name=country_code]").val(country_code)
+  })
+
+  $(".iti__selected-dial-code").on('DOMSubtreeModified',function(){
+     let country_code = $(".iti__selected-dial-code").html()
+
+     $("input[name=country_code]").val(country_code)
+  })
+  </script>
 @stop

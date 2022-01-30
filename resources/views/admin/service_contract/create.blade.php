@@ -33,15 +33,15 @@
               @csrf
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label>Title</label>
-                        <input type="text" name="title"  class="form-control">
+                        <label>Title <sup class="text-danger">*</sup></label>
+                        <input type="text" name="title" value="{{ old('title') }}"  class="form-control">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Cost Per Period (BD)</label>
-                        <input type="text" name="cost_per_period" id="contractCost" class="form-control">
+                        <label>Cost Per Period (BD) <sup class="text-danger">*</sup></label>
+                        <input type="text" name="cost_per_period" value="{{ old('cost_per_period') }}" id="contractCost" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Frequency of Pay</label>
+                        <label>Frequency of Pay <sup class="text-danger">*</sup></label>
                         <select name="frequency_of_pay" id="" class="form-control">
                             <option value="monthly">Monthly</option>
                             <option value="quarterly">Quarterly</option>
@@ -51,20 +51,20 @@
                         </select>
                     </div>
                     <div class="form-group col-md-4 renew_date" >
-                        <label>Contract Start Date</label>
+                        <label>Contract Start Date <sup class="text-danger">*</sup></label>
                         <input type="text" name="contract_start_date" class="form-control datepicker1">
                     </div>
                     <div class="form-group col-md-4 renew_date" >
-                        <label>Contract End Date</label>
+                        <label>Contract End Date <sup class="text-danger">*</sup></label>
                         <input type="text" name="contract_end_date" readonly class="form-control">
                     </div>
                     <div class="form-group col-md-4 attachdocument">
-                        <label>Upload Invoice/Receipt</label>
+                        <label>Upload Invoice/Receipt <sup class="text-danger">*</sup></label>
                         <input type="file" name="image"  accept="application/pdf, image/jpeg" class="form-control">
                         
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Auto Renewal</label>
+                        <label>Auto Renewal <sup class="text-danger">*</sup></label>
                         <div class="form-control">
                             <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" id="customRadioInline1" value="1" name="auto_renew"
@@ -80,8 +80,8 @@
                     </div>
                     
                     <div class="form-group col-md-12">
-                        <label>Description</label>
-                        <textarea name="contract_description" class="form-control" id="" cols="30" rows="10"></textarea>
+                        <label>Description </label>
+                        <textarea name="contract_description" class="form-control" id="" cols="30" rows="10">{{ old('contract_description') }}</textarea>
                     </div>
                     </div>
                     

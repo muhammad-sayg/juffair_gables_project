@@ -40,7 +40,7 @@ class CreateTenantsTable extends Migration
 
             $table->integer('rent_paid_status_code')->default(0);
 
-            $table->string('emergancy_contact_number');
+            $table->string('emergancy_contact_number')->nullable();
             $table->string('emergancy_email');
 
             $table->string('tenant_passport_copy');

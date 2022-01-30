@@ -36,27 +36,27 @@
                         @csrf
                         <div class="row">
                             <div class="form-group col-md-4">
-                                <label>Company  Name</label>
+                                <label>Company  Name <sup class="text-danger">*</sup></label>
                                 <input type="text" name="company_name" value="{{ isset($allcontacts->company_name)? $allcontacts->company_name : '' }}" class="form-control">
                             </div>
                             <div class="form-group col-md-4">
-                                <label>Contact  Person</label>
+                                <label>Contact  Person <sup class="text-danger">*</sup></label>
                                 <input type="text" name="contact_person" value="{{ isset($allcontacts->contact_person)? $allcontacts->contact_person : '' }}" class="form-control">
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-4">
-                                <label>Job  Title</label>
+                                <label>Job  Title <sup class="text-danger">*</sup></label>
                                 <input type="text" name="job_title" value="{{ isset($allcontacts->job_title)? $allcontacts->job_title : '' }}" class="form-control">
                             </div>
                             <div class="form-group col-md-4">
-                                <label>Contact  Number</label>
+                                <label>Contact  Number <sup class="text-danger">*</sup></label>
                                 <input type="text" name="number"  id="contactNo" value="{{ isset($allcontacts->number)? $allcontacts->number : '' }}" class="form-control">
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-4">
-                                <label>Scope of Work</label>
+                                <label>Scope of Work <sup class="text-danger">*</sup></label>
                                 <textarea name="scope_of_work" class="form-control">{{ isset($allcontacts->scope_of_work)? $allcontacts->scope_of_work : '' }}</textarea>
                             </div>
                         </div>
